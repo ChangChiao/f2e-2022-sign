@@ -166,6 +166,7 @@ function PDF() {
       <Box border={'2px'} >
         <canvas id="canvasPDF" ref={canvasEle} />
       </Box>
+      <Box textStyle='h1'>This is a box</Box>
     </Flex>
   );
 }

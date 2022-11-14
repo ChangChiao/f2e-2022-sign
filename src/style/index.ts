@@ -3,6 +3,7 @@ import { extendTheme, withDefaultColorScheme } from "@chakra-ui/react";
 import Button from "./components/button";
 import colors from "./colors";
 import global from "./global";
+import text from "./text";
 import { StepsStyleConfig } from "chakra-ui-steps";
 
 const CustomSteps = {
@@ -23,6 +24,7 @@ const theme = extendTheme(
   {
     colors,
     global,
+    textStyles: text,
     components: {
       Button,
       Steps: CustomSteps,
