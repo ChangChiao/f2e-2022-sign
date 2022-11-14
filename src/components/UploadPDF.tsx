@@ -32,7 +32,15 @@ function UploadPDF() {
 
   return (
     // <FileUploader hoverTitle="" handleChange={handleChange} name="file" types={fileTypes}>
-    <div {...getRootProps()}>
+    <Box
+      w={"100%"}
+      py={4}
+      borderRadius={1}
+      borderStyle={"dashed"}
+      borderWidth={"2px"}
+      borderColor={"primary.default"}
+      {...getRootProps()}
+    >
       <FormLabel htmlFor="file">
         <input {...getInputProps()} />
         {isDragActive ? (
@@ -58,21 +66,23 @@ function UploadPDF() {
       <FormErrorMessage>
         {errors.file && errors.file.message?.toString()}
       </FormErrorMessage>
-      <Flex>
-        <Image src={wrongImg} />
-        <Box>
-          <Text textStyle="h1">您的檔案無法上傳</Text>
+      <Flex alignItems={"center"}>
+        <Image w={'300px'} h={'300px'} src={wrongImg} />
+        <Box w={"2/3"}>
+          <Text textStyle="h1" color={"primary.default"}>
+            您的檔案無法上傳
+          </Text>
           <Text>
             請重新上傳檔案。確認檔案大小在10Mb以內，檔案格式為PDF、IMG。
             若還是無法上傳檔案，請聯繫快點簽
           </Text>
-          <Button>重新上傳</Button>
+          <Button w={"100%"}>重新上傳</Button>
         </Box>
       </Flex>
       <Button variant="base" size="sm" onClick={nextStep}>
         next
       </Button>
-    </div>
+    </Box>
   );
 }
 

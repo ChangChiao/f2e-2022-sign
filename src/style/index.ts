@@ -4,6 +4,7 @@ import Button from "./components/button";
 import colors from "./colors";
 import global from "./global";
 import Text from "./text";
+import Card from "./components/card";
 import { StepsStyleConfig } from "chakra-ui-steps";
 
 const CustomSteps = {
@@ -27,6 +28,7 @@ const theme = extendTheme(
     textStyles: Text,
     components: {
       Button,
+      Card,
       Steps: CustomSteps,
     },
     config: {

@@ -4,6 +4,7 @@ import UploadPDF from '../components/UploadPDF';
 import {
   Button,
 } from "@chakra-ui/react";
+import IndexSteps from '../components/IndexSteps';
 function Index() {
   return (
     <div>
@@ -11,6 +12,7 @@ function Index() {
       <UploadPDF />
       <Link to={{pathname: "/manufacture"}}>Go index</Link>
       <Button>c c c</Button>
+      <IndexSteps />
     </div>
   )
 }

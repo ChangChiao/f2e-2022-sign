@@ -4,7 +4,6 @@ import Manufacture from "./pages/Manufacture";
 import UploadPDF from "./components/UploadPDF";
 import NotFound from "./pages/NotFound";
 import Default from "./layout/Default";
-import "./App.css";
 
 function App() {
   return (
