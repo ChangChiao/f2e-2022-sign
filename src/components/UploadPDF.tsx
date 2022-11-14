@@ -7,10 +7,13 @@ import {
   FormLabel,
   FormControl,
   Input,
+  Box,
+  Flex,
+  Text,
+  Image,
   Button,
 } from "@chakra-ui/react";
-import { log } from "fabric/fabric-impl";
-
+import wrongImg from "../assets/images/Wrong.svg";
 function UploadPDF() {
   const { nextStep, prevStep, setStep, reset, activeStep } = useStep();
   const {
@@ -19,7 +22,7 @@ function UploadPDF() {
     formState: { errors, isSubmitting },
   } = useForm();
   const onDrop = useCallback((acceptedFiles: unknown) => {
-    console.log('acceptedFiles', acceptedFiles)
+    console.log("acceptedFiles", acceptedFiles);
     // Do something with the files
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -30,35 +33,45 @@ function UploadPDF() {
   return (
     // <FileUploader hoverTitle="" handleChange={handleChange} name="file" types={fileTypes}>
     <div {...getRootProps()}>
-        <FormLabel htmlFor="file">
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>Drop the files here ...</p>
-          ) : (
-            <p>Drag 'n' drop some files here, or click to select files</p>
-          )}
+      <FormLabel htmlFor="file">
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop the files here ...</p>
+        ) : (
+          <p>Drag 'n' drop some files here, or click to select files</p>
+        )}
 
-          <Button
-            mt={4}
-            w="200px"
-            h="48px"
-            bgColor={"#0B7D77"}
-            color={"#fff"}
-            colorScheme="teal"
-            isLoading={isSubmitting}
-            type="submit"
-          >
-            上傳檔案
-          </Button>
-        </FormLabel>
+        <Button
+          mt={4}
+          w="200px"
+          h="48px"
+          bgColor={"#0B7D77"}
+          color={"#fff"}
+          colorScheme="teal"
+          isLoading={isSubmitting}
+          type="submit"
+        >
+          上傳檔案
+        </Button>
+      </FormLabel>
 
-        <FormErrorMessage>
-          {errors.file && errors.file.message?.toString()}
-        </FormErrorMessage>
+      <FormErrorMessage>
+        {errors.file && errors.file.message?.toString()}
+      </FormErrorMessage>
+      <Flex>
+        <Image src={wrongImg} />
+        <Box>
+          <Text textStyle="h1">您的檔案無法上傳</Text>
+          <Text>
+            請重新上傳檔案。確認檔案大小在10Mb以內，檔案格式為PDF、IMG。
+            若還是無法上傳檔案，請聯繫快點簽
+          </Text>
+          <Button>重新上傳</Button>
+        </Box>
+      </Flex>
       <Button variant="base" size="sm" onClick={nextStep}>
         next
       </Button>
-      {/* </FileUploader> */}
     </div>
   );
 }

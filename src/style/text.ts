@@ -1,4 +1,4 @@
-const text = {
+const Text = {
     h1:{
         fontSize: ['28px', '32px'],
         fontWeight: 'bold',
@@ -24,4 +24,4 @@ const text = {
     }
   };
   
-  export default text;
+  export default Text;
