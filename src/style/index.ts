@@ -1,4 +1,4 @@
-import { extendTheme, withDefaultColorScheme } from "@chakra-ui/react";
+import { extendTheme,  StyleFunctionProps, withDefaultColorScheme } from "@chakra-ui/react";
 
 import Button from "./components/button";
 import colors from "./colors";
@@ -9,7 +9,7 @@ import { StepsStyleConfig } from "chakra-ui-steps";
 
 const CustomSteps = {
   ...StepsStyleConfig,
-  baseStyle: (props) => {
+  baseStyle: (props: StyleFunctionProps) => {
     return {
       ...StepsStyleConfig.baseStyle(props),
       icon: {
