@@ -3,7 +3,6 @@ import type { ComponentStyleConfig } from '@chakra-ui/react';
 const Button: ComponentStyleConfig = {
     // The styles all button have in common
     baseStyle: {
-      fontWeight: 'bold',
       textTransform: 'uppercase',
       borderRadius: 'base', // <-- border radius is same for all variants and sizes
     },
@@ -28,8 +27,8 @@ const Button: ComponentStyleConfig = {
     variants: {
       outline: {
         border: '2px solid',
-        borderColor: 'gray.400',
-        color: 'black',
+        borderColor: 'gray.200',
+        color: 'gray.500',
         _hover: {
           bgColor: 'gray.200',
         },

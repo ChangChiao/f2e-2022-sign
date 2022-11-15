@@ -1,10 +1,12 @@
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Box } from "@chakra-ui/react";
 import { Step, Steps } from "chakra-ui-steps";
 import Upload from "../components/Upload";
 import Confirm from "../components/Confirm";
 import Maker from "../components/Maker";
 import Download from "../components/Download";
-import  { useStep } from "../components/StepProvider";
+import Side from "./common/Side";
+import PDF from "../components/PDF";
+import { useStep } from "../components/StepProvider";
 function ProgressBar() {
   const { nextStep, prevStep, setStep, reset, activeStep } = useStep();
 
@@ -17,13 +19,20 @@ function ProgressBar() {
 
   return (
     <Flex flexDir="column" width="100%">
-      <Steps activeStep={activeStep}>
-        {steps.map(({ label, content }) => (
-          <Step label={label} key={label}>
-            {content()}
-          </Step>
-        ))}
-      </Steps>
+        <Steps w={'60%'} mx={'auto'} activeStep={activeStep} py="4" >
+          {steps.map(({ label, content }) => (
+            <Step label={label} key={label}>
+              <Flex borderTop={'1px solid'} borderColor={'gray.300'}>
+                <Box w={'72px'} h={'100%'}></Box>
+                <Box flex="1" backgroundColor={'gray.200'}>
+                  {/* {content()} */}
+                  {/* <PDF /> */}
+                </Box>
+                <Side />
+              </Flex>
+            </Step>
+          ))}
+        </Steps>
       {activeStep === steps.length ? (
         <Flex p={4}>
           <Button mx="auto" size="sm" onClick={reset}>

@@ -4,7 +4,6 @@ import Button from "./components/button";
 import colors from "./colors";
 import global from "./global";
 import Text from "./text";
-import Box from "./components/box";
 import { StepsStyleConfig } from "chakra-ui-steps";
 
 const CustomSteps = {
@@ -29,9 +28,24 @@ const theme = extendTheme(
     fonts: {
       body: 'Noto Sans TC, sans-serif',
     },
+    layerStyles: {
+      iconBox:{
+        border: "1px solid",
+        borderColor: 'gray.300',
+        width: '48px',
+        height: '48px',
+        display: 'flex',
+        fontSize: '16px',
+        borderRadius: '4px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        _hover: {
+          color: 'gray.300'
+        }
+      }
+    },
     components: {
       Button,
-      Box,
       Steps: CustomSteps,
     },
     config: {

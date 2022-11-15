@@ -3,6 +3,7 @@ import { useStep } from "../components/StepProvider";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import addFile from "../assets/images/Add file.svg";
+import { useNavigate } from "react-router-dom";
 import {
   FormErrorMessage,
   FormLabel,
@@ -16,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import wrongImg from "../assets/images/Wrong.svg";
 function UploadPDF() {
+  const navigate = useNavigate();
   const [isFail, setFail] = useState(false);
   const { nextStep, prevStep, setStep, reset, activeStep } = useStep();
   const {
@@ -32,13 +34,17 @@ function UploadPDF() {
     console.log("onSubmit");
   };
 
+  const nextPage = () => {
+    nextStep();
+    navigate("/manufacture");
+  };
   return (
     // <FileUploader hoverTitle="" handleChange={handleChange} name="file" types={fileTypes}>
     <Flex
       w={"100%"}
-      justifyContent={'center'}
-      alignItems={'center'}
-      h={'400px'}
+      justifyContent={"center"}
+      alignItems={"center"}
+      h={"400px"}
       mt={10}
       bgColor={"primary.light"}
       borderRadius={1}
@@ -54,9 +60,11 @@ function UploadPDF() {
         ) : (
           <p>Drag 'n' drop some files here, or click to select files</p>
         )} */}
-        <Flex flexDir={'column'} alignItems={'center'}>
+        <Flex flexDir={"column"} alignItems={"center"}>
           <Image src={addFile} />
-          <Text as="span" fontSize={'sm'}>將檔案拖曳到這裡</Text>
+          <Text as="span" fontSize={"sm"}>
+            將檔案拖曳到這裡
+          </Text>
           <Button
             mt={4}
             w="200px"
@@ -69,9 +77,15 @@ function UploadPDF() {
           >
             選擇檔案
           </Button>
-          <Text color={"primary.default"} pt={2} fontSize={'sm'} fontWeight="bold">
+          <Text
+            color={"primary.default"}
+            pt={2}
+            fontSize={"sm"}
+            fontWeight="bold"
+          >
             檔案大小10Mb以內，檔案格式為PDF、IMG
           </Text>
+          <Button onClick={nextPage}>go next</Button>
         </Flex>
       </FormLabel>
 
@@ -93,7 +107,7 @@ function UploadPDF() {
           </Box>
         </Flex>
       )}
-{/* 
+      {/* 
       <Button size="sm" onClick={nextStep}>
         next
       </Button> */}

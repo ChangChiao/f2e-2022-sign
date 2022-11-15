@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { jsPDF } from "jspdf";
 import { fabric } from "fabric";
-import { Canvas, log } from "fabric/fabric-impl";
+import { Canvas } from "fabric/fabric-impl";
 import * as pdfjsLib from "pdfjs-dist";
 import { Button, Flex, Box } from "@chakra-ui/react";
 // @ts-ignore

@@ -21,6 +21,10 @@ const Text = {
     },
     h6:{
         fontSize: ['18px'],
+    },
+    label: {
+        fontSize: ['14px'],
+        fontWeight: 'bold',
     }
   };
   

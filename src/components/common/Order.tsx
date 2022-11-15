@@ -1,21 +1,19 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 
 function Order({ num }: { num: number }) {
   return (
-    <Box
+    <Center 
       width={10}
       height={10}
       fontWeight="bold"
-      textAlign={'center'}
-      lineHeight={8}
       borderRadius={"50%"}
       borderWidth={"2px"}
       borderColor={"primary.default"}
       color={"primary.default"}
     >
       {num}
-    </Box>
+    </Center>
   );
 }
 
