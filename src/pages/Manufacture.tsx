@@ -2,16 +2,16 @@ import React from "react";
 import ProgressBar from "../components/ProgressBar";
 import Sign from "../components/Sign";
 import PDF from "../components/PDF";
-import Icon from "../components/common/Icon";
 import ModalBox from "../components/ModalBox";
+import BtnGroup from "../components/BtnGroup";
 function Manufacture() {
   return (
     <div>
       <ModalBox />
-      <Icon name='one' />
-      <ProgressBar />
+      {/* <ProgressBar /> */}
       <Sign />
       <PDF />
+      <BtnGroup />
     </div>
   );
 }

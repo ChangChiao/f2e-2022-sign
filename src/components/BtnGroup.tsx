@@ -1,8 +1,11 @@
 import React from 'react'
-
+import {ReactComponent as One} from "../assets/icon/one.svg";
 function BtnGroup() {
   return (
-    <div>BtnGroup</div>
+    <div>
+        <One />
+        BtnGroup
+    </div>
   )
 }
 
