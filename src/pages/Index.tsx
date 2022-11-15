@@ -7,13 +7,12 @@ import {
 import IndexSteps from '../components/IndexSteps';
 function Index() {
   return (
-    <div>
-      <h1>Index</h1>
+    <>
       <UploadPDF />
       <Link to={{pathname: "/manufacture"}}>Go index</Link>
       <Button>c c c</Button>
       <IndexSteps />
-    </div>
+    </>
   )
 }
 

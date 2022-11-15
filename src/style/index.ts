@@ -26,6 +26,9 @@ const theme = extendTheme(
     colors,
     global,
     textStyles: Text,
+    fonts: {
+      body: 'Noto Sans TC, sans-serif',
+    },
     components: {
       Button,
       Card,

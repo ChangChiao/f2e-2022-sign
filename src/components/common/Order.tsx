@@ -6,10 +6,11 @@ function Order({ num }: { num: number }) {
     <Box
       width={10}
       height={10}
+      fontWeight="bold"
       textAlign={'center'}
-      lineHeight={10}
+      lineHeight={8}
       borderRadius={"50%"}
-      border={"1px"}
+      borderWidth={"2px"}
       borderColor={"primary.default"}
       color={"primary.default"}
     >

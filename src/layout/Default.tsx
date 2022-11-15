@@ -3,15 +3,15 @@ import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Footer from "../components/common/Footer";
 import Header from "../components/common/Header";
-import { Container } from "@chakra-ui/react";
+import { Box, calc } from "@chakra-ui/react";
 function Default() {
   return (
     <>
       <Header />
-      <Container mx={"auto"} w={"90%"}>
+      <Box h="calc(100vh - 120px)" mx={"auto"} w={"90%"}>
         <Outlet />
         <ToastContainer />
-      </Container>
+      </Box>
       <Footer />
     </>
   );
