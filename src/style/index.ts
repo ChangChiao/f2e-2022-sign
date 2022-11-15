@@ -4,7 +4,7 @@ import Button from "./components/button";
 import colors from "./colors";
 import global from "./global";
 import Text from "./text";
-import Card from "./components/card";
+import Box from "./components/box";
 import { StepsStyleConfig } from "chakra-ui-steps";
 
 const CustomSteps = {
@@ -31,7 +31,7 @@ const theme = extendTheme(
     },
     components: {
       Button,
-      Card,
+      Box,
       Steps: CustomSteps,
     },
     config: {

@@ -1,5 +1,5 @@
 import type { ComponentStyleConfig } from "@chakra-ui/react";
-const Card: ComponentStyleConfig = {
+const Box: ComponentStyleConfig = {
   // The styles all Cards have in common
   baseStyle: {
     display: "flex",
@@ -9,4 +9,4 @@ const Card: ComponentStyleConfig = {
   },
 };
 
-export default Card;
+export default Box;

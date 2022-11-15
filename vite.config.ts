@@ -22,4 +22,7 @@ export default defineConfig({
       usePolling: true, //for chakra-ui,
     },
   },
+  build: {
+    target: 'esnext'
+  }
 });
