@@ -21,7 +21,7 @@ function ModalBox({ children, isOpen, onClose }: Props) {
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay>
-          <ModalContent>
+          <ModalContent maxH="500px" maxW="500px">
             <ModalCloseButton />
             <ModalBody py={10}>
               {children}

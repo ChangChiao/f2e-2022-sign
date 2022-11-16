@@ -10,7 +10,7 @@ import { ReactComponent as ArrowLeft } from "../assets/icon/ArrowLeft.svg";
 import { ReactComponent as ArrowRight } from "../assets/icon/ArrowRight.svg";
 function BtnGroup() {
   return (
-    <Flex align={"center"}>
+    <Flex align={"center"} position={'absolute'} bottom="0" left={0}>
       <HStack spacing="4px" mr="10px">
         <Box layerStyle={"iconBox"}>
           <FitScreen width={"30px"} />

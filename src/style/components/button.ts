@@ -4,6 +4,7 @@ const Button: ComponentStyleConfig = {
     // The styles all button have in common
     baseStyle: {
       textTransform: 'uppercase',
+      cursor: 'pointer',
       borderRadius: 'base', // <-- border radius is same for all variants and sizes
     },
     sizes: {

@@ -24,10 +24,9 @@ function ProgressBar() {
             <Step label={label} key={label}>
               <Flex borderTop={'1px solid'} borderColor={'gray.300'}>
                 <Box w={'72px'} h={'100%'}></Box>
-                <Box flex="1" backgroundColor={'gray.200'}>
+                
                   {/* {content()} */}
                   <PDF />
-                </Box>
                 <Side />
               </Flex>
             </Step>
