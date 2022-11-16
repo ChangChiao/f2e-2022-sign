@@ -22,12 +22,12 @@ function Sign({ getSign }: Props) {
   const isPainting = useRef(false);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [canvasSize, setCanvasSize] = useState<DOMRect | null>(null);
-
+  const strokeList = ["red", "blue", "black"];
   type Event =
     | React.MouseEvent<HTMLCanvasElement>
     | React.TouchEvent<HTMLCanvasElement>;
 
-  function getPaintPosition(e: Event) {
+  const getPaintPosition = (e: Event) => {
     const scaleX = canvasRef.current!.width / canvasSize!.width;
     const scaleY = canvasRef.current!.height / canvasSize!.height;
     if (e.nativeEvent instanceof MouseEvent) {
@@ -53,43 +53,47 @@ function Sign({ getSign }: Props) {
           scaleY,
       };
     }
-  }
+  };
 
-  function startPosition(e: Event) {
+  const startPosition = (e: Event) => {
     e.preventDefault();
     isPainting.current = true;
-  }
+  };
 
-  function finishedPosition() {
+  const finishedPosition = () => {
     isPainting.current = false;
     context!.beginPath();
-  }
+  };
 
-  function draw(e: Event) {
+  const draw = (e: Event) => {
     if (!isPainting.current) return;
 
     const paintPosition = getPaintPosition(e);
 
     context!.lineTo(paintPosition.x, paintPosition.y);
     context!.stroke();
-  }
+  };
 
   // 重新設定畫布
-  function reset() {
+  const reset = () => {
     context!.clearRect(
       0,
       0,
       canvasRef.current!.width,
       canvasRef.current!.height
     );
-  }
+  };
 
-  function saveImage() {
+  const saveImage = () => {
     const newImage = canvasRef.current!.toDataURL("image/png");
     // signImgRef.current!.src = newImage;
     localStorage.setItem("sign_img", newImage);
     getSign();
-  }
+  };
+
+  const changStrokeColor = (color: string) => {
+    context!.strokeStyle = color;
+  };
 
   useEffect(() => {
     const ctx = canvasRef.current!.getContext("2d");
@@ -141,15 +145,26 @@ function Sign({ getSign }: Props) {
                 fontSize={"sm"}
                 color={"gray.400"}
               >
-                <Flex w={'80px'} justifyContent="space-between">
-                  <Box w={4} h={4} borderRadius={'50%'} bg={'black'}></Box>
-                  <Box w={4} h={4} borderRadius={'50%'} bg={'blue'}></Box>
-                  <Box w={4} h={4} borderRadius={'50%'} bg={'Red'}></Box>
+                <Flex w={"80px"} justifyContent="space-between">
+                  {strokeList.map((color) => (
+                    <Box
+                      w={4}
+                      h={4}
+                      borderRadius={"50%"}
+                      bg={color}
+                      onClick={() => changStrokeColor(color)}
+                    ></Box>
+                  ))}
                 </Flex>
                 我了解這是一個具法律效力的本人簽名
               </Text>
               <Flex dir="row">
-                <Button variant={'disable'}  mx={"auto"} mr={'10px'} onClick={saveImage}>
+                <Button
+                  variant={"disable"}
+                  mx={"auto"}
+                  mr={"10px"}
+                  onClick={saveImage}
+                >
                   清除
                 </Button>
                 <Button mx={"auto"} onClick={saveImage}>
