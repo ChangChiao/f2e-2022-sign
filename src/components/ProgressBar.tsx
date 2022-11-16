@@ -19,7 +19,7 @@ function ProgressBar() {
 
   return (
     <Flex flexDir="column" width="100%">
-        <Steps w={'60%'} mx={'auto'} colorScheme={'teal'} activeStep={activeStep} py="4" >
+        <Steps responsive={false} w={'60%'} mx={'auto'} colorScheme={'teal'} activeStep={activeStep} py="4" >
           {steps.map(({ label, content }) => (
             <Step label={label} key={label}>
               <Flex borderTop={'1px solid'} borderColor={'gray.300'}>
