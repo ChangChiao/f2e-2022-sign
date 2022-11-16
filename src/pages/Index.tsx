@@ -10,8 +10,6 @@ function Index() {
   return (
     <Box mx={"auto"} w={"90%"}>
       <UploadPDF />
-      <Link to={{pathname: "/manufacture"}}>Go index</Link>
-      <Button>c c c</Button>
       <IndexSteps />
     </Box>
   )

@@ -6,6 +6,8 @@ import { ReactComponent as FitScreen } from "../assets/icon/FitScreen.svg";
 import { ReactComponent as FullScreen } from "../assets/icon/FullScreen.svg";
 import { ReactComponent as Remove } from "../assets/icon/Remove.svg";
 import { ReactComponent as Rotate90 } from "../assets/icon/Rotate90.svg";
+import { ReactComponent as ArrowLeft } from "../assets/icon/ArrowLeft.svg";
+import { ReactComponent as ArrowRight } from "../assets/icon/ArrowRight.svg";
 function BtnGroup() {
   return (
     <Flex align={"center"}>
@@ -26,6 +28,14 @@ function BtnGroup() {
         </Box>
         <Box layerStyle={"iconBox"}>
           <Remove width={"30px"} />
+        </Box>
+      </HStack>
+      <HStack spacing="4px" mr="10px">
+        <Box layerStyle={"iconBox"}>
+          <ArrowLeft width={"30px"} />
+        </Box>
+        <Box layerStyle={"iconBox"}>
+          <ArrowRight width={"30px"} />
         </Box>
       </HStack>
       <Box layerStyle={"iconBox"}>

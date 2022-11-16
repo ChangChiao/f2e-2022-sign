@@ -40,6 +40,13 @@ const Button: ComponentStyleConfig = {
           bgColor: 'primary.dark',
         },
       },
+      disable: {
+        bg: 'gray.200',
+        color: '#aaa',
+        _hover: {
+          bgColor: '#ddd',
+        },
+      }
     },
     // The default size and variant values
     defaultProps: {

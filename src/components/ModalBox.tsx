@@ -10,24 +10,21 @@ import {
 } from "@chakra-ui/react";
 
 type Props = {
+  isOpen: boolean,
+  onClose: () => void;
   children?: ReactNode;
 };
 
-function ModalBox({ children }: Props) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+function ModalBox({ children, isOpen, onClose }: Props) {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button variant="ghost" onClick={onOpen}>
-        Open Modal
-      </Button>
-
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay>
           <ModalContent>
             <ModalCloseButton />
-            <ModalBody>
+            <ModalBody py={10}>
               {children}
-              123
             </ModalBody>
           </ModalContent>
         </ModalOverlay>

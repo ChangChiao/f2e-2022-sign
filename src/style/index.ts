@@ -16,6 +16,12 @@ const CustomSteps = {
         // your custom styles here
         strokeWidth: "3px",
       },
+      // step: {
+      //   icon: {
+      //     ...StepsStyleConfig.baseStyle(props).icon,
+      //     backgroundColor: "#ccc",
+      //   },
+      // }
     };
   },
 };
@@ -32,6 +38,7 @@ const theme = extendTheme(
       iconBox:{
         border: "1px solid",
         borderColor: 'gray.300',
+        backgroundColor: '#fff',
         width: '48px',
         height: '48px',
         display: 'flex',

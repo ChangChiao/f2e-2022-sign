@@ -150,8 +150,8 @@ function PDF() {
   }, []);
 
   return (
-    <Flex>
-      <Button onClick={downloadPDF} variant={"base"}>
+    <Box  overflow={'hidden'} mx="auto" border="1px" w={'80%'} h={'100%'}  boxShadow={'0 0 0 2px var(--chakra-colors-dark-background)'}>
+      {/* <Button onClick={downloadPDF} variant={"base"}>
         download
       </Button>
       <Button onClick={imgOnCanvas} variant={"base"}>
@@ -162,15 +162,14 @@ function PDF() {
       </Button>
       <Button onClick={() => scale("minus")} variant={"base"}>
         縮小
-      </Button>
+      </Button> */}
       {/* <button onClick={downloadPDF}>download</button>
       <button onClick={imgOnCanvas}>add Sign</button> */}
-      <input onChange={handlePDFupload} type="file" placeholder="選擇PDF檔案" />
-      <Box border={"2px"}>
-        <canvas id="canvasPDF" ref={canvasEle} />
-      </Box>
-      <Box textStyle="h1">This is a box</Box>
-    </Flex>
+      {/* <input onChange={handlePDFupload} type="file" placeholder="選擇PDF檔案" /> */}
+      {/* <Box mx="auto" border="1px" w={'80%'} h={'100%'}  boxShadow={'0 0 0 2px var(--chakra-colors-dark-background)'}> */}
+        <canvas width={'300px'} height={'100%'} id="canvasPDF" ref={canvasEle} />
+      {/* </Box> */}
+    </Box>
   );
 }
 

@@ -11,29 +11,29 @@ function ProgressBar() {
   const { nextStep, prevStep, setStep, reset, activeStep } = useStep();
 
   const steps = [
-    { label: "Step 1", content: Upload },
-    { label: "Step 2", content: Confirm },
+    { label: "上傳檔案", content: Upload },
+    { label: "加入簽名檔案", content: Confirm },
     { label: "Step 3", content: Maker },
-    { label: "Step 4", content: Download },
+    { label: "下載檔案", content: Download },
   ];
 
   return (
     <Flex flexDir="column" width="100%">
-        <Steps w={'60%'} mx={'auto'} activeStep={activeStep} py="4" >
+        <Steps w={'60%'} mx={'auto'} colorScheme={'teal'} activeStep={activeStep} py="4" >
           {steps.map(({ label, content }) => (
             <Step label={label} key={label}>
               <Flex borderTop={'1px solid'} borderColor={'gray.300'}>
                 <Box w={'72px'} h={'100%'}></Box>
                 <Box flex="1" backgroundColor={'gray.200'}>
                   {/* {content()} */}
-                  {/* <PDF /> */}
+                  <PDF />
                 </Box>
                 <Side />
               </Flex>
             </Step>
           ))}
         </Steps>
-      {activeStep === steps.length ? (
+      {/* {activeStep === steps.length ? (
         <Flex p={4}>
           <Button mx="auto" size="sm" onClick={reset}>
             Reset
@@ -54,7 +54,7 @@ function ProgressBar() {
             {activeStep === steps.length - 1 ? "Finish" : "Next"}
           </Button>
         </Flex>
-      )}
+      )} */}
     </Flex>
   );
 }

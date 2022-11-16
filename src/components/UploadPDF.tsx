@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useStep } from "../components/StepProvider";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import addFile from "../assets/images/Add file.svg";
 import { useNavigate } from "react-router-dom";
 import { useFile } from "../components/FileProvider";
+
 import {
   FormErrorMessage,
   FormLabel,
@@ -44,6 +45,9 @@ function UploadPDF() {
     console.log("onSubmit");
   };
 
+  useEffect(()=>{
+    reset();
+  }, [])
 
   return (
     // <FileUploader hoverTitle="" handleChange={handleChange} name="file" types={fileTypes}>
