@@ -30,14 +30,14 @@ const Button: ComponentStyleConfig = {
         borderColor: 'gray.200',
         color: 'gray.500',
         _hover: {
-          bgColor: 'gray.200',
+          bgColor: 'gray.100',
         },
       },
       solid: {
         bg: 'primary.default',
         color: 'white',
         _hover: {
-          bgColor: 'primary.light',
+          bgColor: 'primary.dark',
         },
       },
     },

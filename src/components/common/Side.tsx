@@ -4,8 +4,15 @@ import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
 import { ReactComponent as CalendarToday } from "../../assets/icon/CalendarToday.svg";
 import { useStep } from "../../components/StepProvider";
 import { Box, Button, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 function Side() {
   const { nextStep, prevStep, setStep, reset, activeStep } = useStep();
+  const navigate = useNavigate();
+  const goPrevPage = () => {
+    prevStep();
+    navigate("/");
+  }
+  
   return (
     <Box w={"400px"} h="calc(100vh - 200px)" p={4}>
       <Text textStyle={"label"} pb={2}>
@@ -24,10 +31,10 @@ function Side() {
         <CalendarToday width={"30px"} />
         <Text pl={2}> 加入日期</Text>
       </Button>
-      <Button w={"full"} color={"gray.400"}
+      <Button onClick={goPrevPage} w={"full"} color={"gray.400"}
           bgColor={"gray.200"}
           variant={"outline"}>
-        <Text pl={2}> 重新上傳檔案</Text>
+        上一步
       </Button>
       <Box>
         <Button

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import addFile from "../assets/images/Add file.svg";
 import { useNavigate } from "react-router-dom";
+import { useFile } from "../components/FileProvider";
 import {
   FormErrorMessage,
   FormLabel,
@@ -17,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import wrongImg from "../assets/images/Wrong.svg";
 function UploadPDF() {
+  const { setFile } = useFile();
   const navigate = useNavigate();
   const [isFail, setFail] = useState(false);
   const { nextStep, prevStep, setStep, reset, activeStep } = useStep();
@@ -25,8 +27,16 @@ function UploadPDF() {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
+
+  const nextPage = () => {
+    nextStep();
+    navigate("/manufacture");
+  };
   const onDrop = useCallback((acceptedFiles: unknown) => {
     console.log("acceptedFiles", acceptedFiles);
+    const file = acceptedFiles as File[]
+    setFile(file[0]);
+    nextPage();
     // Do something with the files
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -34,10 +44,7 @@ function UploadPDF() {
     console.log("onSubmit");
   };
 
-  const nextPage = () => {
-    nextStep();
-    navigate("/manufacture");
-  };
+
   return (
     // <FileUploader hoverTitle="" handleChange={handleChange} name="file" types={fileTypes}>
     <Flex
@@ -85,7 +92,6 @@ function UploadPDF() {
           >
             檔案大小10Mb以內，檔案格式為PDF、IMG
           </Text>
-          <Button onClick={nextPage}>go next</Button>
         </Flex>
       </FormLabel>
 
@@ -100,7 +106,7 @@ function UploadPDF() {
               您的檔案無法上傳
             </Text>
             <Text>
-              請重新上傳檔案。確認檔案大小在10Mb以內，檔案格式為PDF、IMG。
+              請重新上傳檔案。確認檔案大小在10Mb以內，檔案格式為PDF、PNG、JPG。
               若還是無法上傳檔案，請聯繫快點簽
             </Text>
             <Button w={"100%"}>重新上傳</Button>

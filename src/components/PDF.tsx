@@ -3,6 +3,7 @@ import { jsPDF } from "jspdf";
 import { fabric } from "fabric";
 import { Canvas } from "fabric/fabric-impl";
 import * as pdfjsLib from "pdfjs-dist";
+import { useFile } from "../components/FileProvider";
 import { Button, Flex, Box } from "@chakra-ui/react";
 // @ts-ignore
 const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
@@ -20,6 +21,7 @@ let canvas: Canvas | null = null;
 let multiple = 0;
 
 function PDF() {
+  const { file } = useFile();
   const canvasEle = useRef<HTMLCanvasElement>(null);
   function readBlob(blob: Blob) {
     return new Promise((resolve, reject) => {
@@ -142,8 +144,9 @@ function PDF() {
       width: 300,
       height: 500,
       selectionLineWidth: 2,
-      selectionColor: 'blue',
+      selectionColor: "blue",
     });
+    console.log('file', file)
   }, []);
 
   return (
@@ -163,10 +166,10 @@ function PDF() {
       {/* <button onClick={downloadPDF}>download</button>
       <button onClick={imgOnCanvas}>add Sign</button> */}
       <input onChange={handlePDFupload} type="file" placeholder="選擇PDF檔案" />
-      <Box border={'2px'} >
+      <Box border={"2px"}>
         <canvas id="canvasPDF" ref={canvasEle} />
       </Box>
-      <Box textStyle='h1'>This is a box</Box>
+      <Box textStyle="h1">This is a box</Box>
     </Flex>
   );
 }
