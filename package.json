@@ -17,7 +17,6 @@
     "@types/fabric": "^4.5.12",
     "@types/pdfjs-dist": "^2.10.378",
     "bcrypt": "^5.1.0",
-    "chakra-ui-steps": "^1.8.0",
     "fabric": "^5.2.4",
     "framer-motion": "^6",
     "jspdf": "^2.5.1",

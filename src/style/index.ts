@@ -4,27 +4,6 @@ import Button from "./components/button";
 import colors from "./colors";
 import global from "./global";
 import Text from "./text";
-import { StepsStyleConfig } from "chakra-ui-steps";
-
-const CustomSteps = {
-  ...StepsStyleConfig,
-  baseStyle: (props: StyleFunctionProps) => {
-    return {
-      ...StepsStyleConfig.baseStyle(props),
-      icon: {
-        ...StepsStyleConfig.baseStyle(props).icon,
-        // your custom styles here
-        strokeWidth: "3px",
-      },
-      // step: {
-      //   icon: {
-      //     ...StepsStyleConfig.baseStyle(props).icon,
-      //     backgroundColor: "#ccc",
-      //   },
-      // }
-    };
-  },
-};
 
 const theme = extendTheme(
   {
@@ -53,7 +32,6 @@ const theme = extendTheme(
     },
     components: {
       Button,
-      Steps: CustomSteps,
     },
     config: {
       initialColorMode: "light",
