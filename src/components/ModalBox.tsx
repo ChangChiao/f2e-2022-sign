@@ -23,7 +23,7 @@ function ModalBox({ children, isOpen, onClose }: Props) {
         <ModalOverlay>
           <ModalContent maxH="500px" maxW="500px">
             <ModalCloseButton />
-            <ModalBody py={10}>
+            <ModalBody py={10} overflowY={'scroll'}>
               {children}
             </ModalBody>
           </ModalContent>

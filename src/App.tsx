@@ -4,7 +4,7 @@ import Manufacture from "./pages/Manufacture";
 import UploadPDF from "./components/UploadPDF";
 import NotFound from "./pages/NotFound";
 import Default from "./layout/Default";
-
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <BrowserRouter>
