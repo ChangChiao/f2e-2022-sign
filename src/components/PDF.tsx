@@ -184,7 +184,7 @@ function PDF() {
           ref={canvasEle}
         />
         {/* </Box> */}
-        <BtnGroup />
+        <BtnGroup scale={scale} />
       </Box>
     </Box>
   );

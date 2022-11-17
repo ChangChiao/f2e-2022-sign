@@ -12,7 +12,7 @@ const stepList = [
 function Steps() {
   const { nextStep, prevStep, reset, activeStep } = useStep();
   return (
-    <Flex>
+    <Flex py={4} justifyContent={'center'}>
       {stepList.map((item, i) => (
         <Flex justifyContent={"space-between"} alignItems={"center"}>
           <Center

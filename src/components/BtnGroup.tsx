@@ -8,7 +8,12 @@ import { ReactComponent as Remove } from "../assets/icon/Remove.svg";
 import { ReactComponent as Rotate90 } from "../assets/icon/Rotate90.svg";
 import { ReactComponent as ArrowLeft } from "../assets/icon/ArrowLeft.svg";
 import { ReactComponent as ArrowRight } from "../assets/icon/ArrowRight.svg";
-function BtnGroup() {
+
+type BtnGroupProps = {
+    scale: (oaram: string) => void;
+}
+
+function BtnGroup({scale}: BtnGroupProps) {
   return (
     <Flex align={"center"} position={'absolute'} bottom="0" left={0}>
       <HStack spacing="4px" mr="10px">
@@ -24,10 +29,10 @@ function BtnGroup() {
       </HStack>
       <HStack spacing="4px" mr="10px">
         <Box layerStyle={"iconBox"}>
-          <Add width={"30px"} />
+          <Add onClick={()=>scale('plus')} width={"30px"} />
         </Box>
         <Box layerStyle={"iconBox"}>
-          <Remove width={"30px"} />
+          <Remove onClick={()=>scale('minus')} width={"30px"} />
         </Box>
       </HStack>
       <HStack spacing="4px" mr="10px">
