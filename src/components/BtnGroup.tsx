@@ -10,41 +10,48 @@ import { ReactComponent as ArrowLeft } from "../assets/icon/ArrowLeft.svg";
 import { ReactComponent as ArrowRight } from "../assets/icon/ArrowRight.svg";
 
 type BtnGroupProps = {
-    scale: (oaram: string) => void;
-}
+  totalPages: number;
+  nowPage: number;
+  scale: (param: string) => void;
+  fitScreen: () => void;
+  setPage: (param: string) => void;
+};
 
-function BtnGroup({scale}: BtnGroupProps) {
+function BtnGroup({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupProps) {
   return (
-    <Flex align={"center"} position={'absolute'} bottom="0" left={0}>
+    <Flex align={"center"} position={"absolute"} bottom="0" left={0}>
       <HStack spacing="4px" mr="10px">
-        <Box layerStyle={"iconBox"}>
+        <Box onClick={fitScreen} layerStyle={"iconBox"}>
           <FitScreen width={"30px"} />
         </Box>
-        <Box layerStyle={"iconBox"}>
+        {/* <Box layerStyle={"iconBox"}>
           <FullScreen width={"30px"} />
         </Box>
         <Box layerStyle={"iconBox"}>
           <One width={"30px"} />
+        </Box> */}
+      </HStack>
+      <HStack spacing="4px" mr="10px">
+        <Box layerStyle={"iconBox"}>
+          <Add onClick={() => scale("plus")} width={"30px"} />
+        </Box>
+        <Box layerStyle={"iconBox"}>
+          <Remove onClick={() => scale("minus")} width={"30px"} />
         </Box>
       </HStack>
       <HStack spacing="4px" mr="10px">
         <Box layerStyle={"iconBox"}>
-          <Add onClick={()=>scale('plus')} width={"30px"} />
+          <ArrowLeft onClick={() => setPage("minus")} width={"30px"} />
         </Box>
         <Box layerStyle={"iconBox"}>
-          <Remove onClick={()=>scale('minus')} width={"30px"} />
-        </Box>
-      </HStack>
-      <HStack spacing="4px" mr="10px">
-        <Box layerStyle={"iconBox"}>
-          <ArrowLeft width={"30px"} />
-        </Box>
-        <Box layerStyle={"iconBox"}>
-          <ArrowRight width={"30px"} />
+          <ArrowRight onClick={() => setPage("plus")} width={"30px"} />
         </Box>
       </HStack>
       <Box layerStyle={"iconBox"}>
         <Rotate90 width={"30px"} />
+      </Box>
+      <Box bg={'#fff'} ml={'20px'} py={'10px'} px={'20px'} border={'1px'} borderColor={'gray.300'}>
+        {nowPage} / {totalPages} 頁
       </Box>
     </Flex>
   );

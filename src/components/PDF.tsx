@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import { fabric } from "fabric";
 import { Canvas } from "fabric/fabric-impl";
@@ -21,19 +21,24 @@ const pdf = new jsPDF();
 let canvas: Canvas | null = null;
 let multiple = 1;
 
-const PDF = () =>{
+const PDF = () => {
   const { file } = useFile();
   const canvasEle = useRef<HTMLCanvasElement>(null);
-  const readBlob  = (blob: Blob) => {
+  const pdfWrapper = useRef<HTMLDivElement>(null);
+  const [totalPages, setTotalPages] = useState(1);
+  const [nowPage, setNowPage] = useState(1);
+  const readBlob = (blob: Blob) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.addEventListener("load", () => resolve(reader.result));
       reader.addEventListener("error", reject);
       reader.readAsDataURL(blob);
     });
-  }
+  };
 
-  const printPDF = async (paramPDF: File): Promise<HTMLCanvasElement | null> => {
+  const genPDFCanvas = async (
+    paramPDF: File
+  ): Promise<HTMLCanvasElement | null> => {
     // 將檔案處理成 base64
     let pdfData = "";
     pdfData = (await readBlob(paramPDF)) as string;
@@ -44,7 +49,10 @@ const PDF = () =>{
     const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
     console.log("pdfDoc", pdfDoc);
 
-    const pdfPage = await pdfDoc.getPage(1);
+    const pdfPage = await pdfDoc.getPage(nowPage);
+    console.log("page", nowPage);
+    setTotalPages(pdfDoc.numPages);
+    console.log("pdfDoc.numPages", pdfDoc.numPages);
 
     // create canvas
     const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio });
@@ -66,9 +74,9 @@ const PDF = () =>{
     console.warn("renderTask", renderTask);
     // 回傳做好的 PDF canvas
     return renderTask.promise.then(() => newCanvas);
-  }
+  };
 
-  const pdfToImage = async(pdfData: HTMLCanvasElement) => {
+  const pdfToImage = async (pdfData: HTMLCanvasElement) => {
     // 設定 PDF 轉為圖片時的比例
     const scale = 1 / window.devicePixelRatio;
     console.log("pdfData-87777", pdfData);
@@ -79,16 +87,16 @@ const PDF = () =>{
       scaleX: scale,
       scaleY: scale,
     });
-  }
+  };
 
   // 此處 canvas 套用 fabric.js
 
-  const handlePDFupload = async () => {
+  const handlePDFInit = async () => {
     canvas!.requestRenderAll();
     if (!file.current) return;
     console.log("e.target.files[0]", file.current);
 
-    const pdfData = await printPDF(file.current);
+    const pdfData = await genPDFCanvas(file.current);
     console.log("pdfData-is", pdfData instanceof fabric.Canvas);
 
     const pdfImage = await pdfToImage(pdfData!);
@@ -98,25 +106,22 @@ const PDF = () =>{
     canvas!.setWidth(pdfImage.width! / window.devicePixelRatio);
     canvas!.setHeight(pdfImage.height! / window.devicePixelRatio);
 
-    // 將 PDF 畫面設定為背景
-    console.log("canvas222", canvas);
     canvas!.setBackgroundImage(pdfImage, canvas!.renderAll.bind(canvas));
-  }
+  };
 
-  const imgOnCanvas  = () => {
+  const imgOnCanvas = () => {
     const img = localStorage.getItem("sign_img");
     if (!img) return;
     console.log("imgOnCanvas");
 
     fabric.Image.fromURL(img, function (image) {
-      // 設定簽名出現的位置及大小，後續可調整
       image.top = 400;
       image.scaleX = 0.5;
       image.scaleY = 0.5;
       canvas!.add(image);
     });
     console.log("imgOnCanvas");
-  }
+  };
 
   const downloadPDF = () => {
     const image = canvas!.toDataURL({ format: "image/png" });
@@ -126,42 +131,67 @@ const PDF = () =>{
     pdf.addImage(image, "png", 0, 0, width, height);
 
     pdf.save("download.pdf");
-  }
+  };
 
-  const range = (number: number) => {
+  const range = (number: number, max: number, min: number) => {
     return Math.max(0.1, Math.min(number, 2));
-  }
+  };
 
-
-  const scale = (type: string)  =>{
+  const scale = (type: string) => {
     if (type === "plus") {
       multiple += 0.1;
     } else {
       multiple -= 0.1;
     }
-    multiple = range(multiple);
+    multiple = range(multiple, 2, 1);
     canvas!.setZoom(multiple);
     // canvas!.setWidth(originalWidth * canvas!.getZoom());
     // canvas!.setHeight(originalHeight * canvas!.getZoom());
-  }
+  };
+
+  const fitScreen = () => {
+    const wrapperHeight = pdfWrapper.current!.clientHeight;
+    const canvasHeiight = canvasEle.current!.clientHeight;
+    const rate = Number((wrapperHeight / canvasHeiight).toFixed(2));
+    console.log("rate", rate);
+
+    canvas!.setZoom(rate);
+  };
+
+  const setPage = (type: string) => {
+    let page = totalPages;
+    if (type === "plus") {
+      page += 1;
+    } else {
+      page -= 1;
+    }
+    page = range(page, totalPages, 1);
+    setNowPage(page);
+  };
+
+  useEffect(() => {
+    handlePDFInit();
+  }, [nowPage]);
 
   useEffect(() => {
     canvas = new fabric.Canvas("canvasPDF", {
       fill: "#000",
-      width: 300,
-      height: 500,
+      width: pdfWrapper.current?.clientWidth,
+      height: pdfWrapper.current?.clientHeight,
       selectionLineWidth: 2,
       selectionColor: "blue",
     });
-    handlePDFupload();
+    handlePDFInit();
     console.log("file", file);
   }, []);
 
   return (
-    <Box flex="1" position={'relative'} backgroundColor={"gray.200"}>
-      <Box
+    <Box flex="1" position={"relative"} backgroundColor={"gray.200"}>
+      <Flex
+        ref={pdfWrapper}
         overflow={"hidden"}
         mx="auto"
+        justifyContent={"center"}
         // border="1px"
         w={"80%"}
         h={"100%"}
@@ -181,19 +211,26 @@ const PDF = () =>{
       </Button> */}
         {/* <button onClick={downloadPDF}>download</button>
       <button onClick={imgOnCanvas}>add Sign</button> */}
-        {/* <input onChange={handlePDFupload} type="file" placeholder="選擇PDF檔案" /> */}
+        {/* <input onChange={handlePDFInit} type="file" placeholder="選擇PDF檔案" /> */}
         {/* <Box mx="auto" border="1px" w={'80%'} h={'100%'}  boxShadow={'0 0 0 2px var(--chakra-colors-dark-background)'}> */}
         <canvas
-          width={"100%"}
-          height={"100%"}
           id="canvasPDF"
+          style={{
+            margin: "auto",
+          }}
           ref={canvasEle}
         />
         {/* </Box> */}
-        <BtnGroup scale={scale} />
-      </Box>
+        <BtnGroup
+          nowPage={nowPage}
+          totalPages={totalPages}
+          fitScreen={fitScreen}
+          setPage={setPage}
+          scale={scale}
+        />
+      </Flex>
     </Box>
   );
-}
+};
 
 export default PDF;

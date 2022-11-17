@@ -14,7 +14,7 @@ function Steps() {
   return (
     <Flex py={4} justifyContent={'center'}>
       {stepList.map((item, i) => (
-        <Flex justifyContent={"space-between"} alignItems={"center"}>
+        <Flex key={i} justifyContent={"space-between"} alignItems={"center"}>
           <Center
             borderRadius={"50%"}
             w={10}
