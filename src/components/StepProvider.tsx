@@ -3,8 +3,8 @@ import { createContext, ReactNode, useContext, useState } from "react";
 
 interface StepContextInterface {
   activeStep: number;
-  prevStep: (step: number) => void;
-  nextStep: (step: number) => void;
+  prevStep: () => void;
+  nextStep: () => void;
   reset: () => void;
 }
 

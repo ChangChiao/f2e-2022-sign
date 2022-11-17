@@ -19,12 +19,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 const pdf = new jsPDF();
 let canvas: Canvas | null = null;
-let multiple = 0;
+let multiple = 1;
 
-function PDF() {
+const PDF = () =>{
   const { file } = useFile();
   const canvasEle = useRef<HTMLCanvasElement>(null);
-  function readBlob(blob: Blob) {
+  const readBlob  = (blob: Blob) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.addEventListener("load", () => resolve(reader.result));
@@ -33,7 +33,7 @@ function PDF() {
     });
   }
 
-  async function printPDF(paramPDF: File): Promise<HTMLCanvasElement | null> {
+  const printPDF = async (paramPDF: File): Promise<HTMLCanvasElement | null> => {
     // 將檔案處理成 base64
     let pdfData = "";
     pdfData = (await readBlob(paramPDF)) as string;
@@ -68,7 +68,7 @@ function PDF() {
     return renderTask.promise.then(() => newCanvas);
   }
 
-  async function pdfToImage(pdfData: HTMLCanvasElement) {
+  const pdfToImage = async(pdfData: HTMLCanvasElement) => {
     // 設定 PDF 轉為圖片時的比例
     const scale = 1 / window.devicePixelRatio;
     console.log("pdfData-87777", pdfData);
@@ -83,7 +83,7 @@ function PDF() {
 
   // 此處 canvas 套用 fabric.js
 
-  async function handlePDFupload() {
+  const handlePDFupload = async () => {
     canvas!.requestRenderAll();
     if (!file.current) return;
     console.log("e.target.files[0]", file.current);
@@ -103,7 +103,7 @@ function PDF() {
     canvas!.setBackgroundImage(pdfImage, canvas!.renderAll.bind(canvas));
   }
 
-  function imgOnCanvas() {
+  const imgOnCanvas  = () => {
     const img = localStorage.getItem("sign_img");
     if (!img) return;
     console.log("imgOnCanvas");
@@ -118,7 +118,7 @@ function PDF() {
     console.log("imgOnCanvas");
   }
 
-  function downloadPDF() {
+  const downloadPDF = () => {
     const image = canvas!.toDataURL({ format: "image/png" });
 
     const width = pdf.internal.pageSize.width;
@@ -128,12 +128,18 @@ function PDF() {
     pdf.save("download.pdf");
   }
 
-  function scale(type: string) {
+  const range = (number: number) => {
+    return Math.max(0.1, Math.min(number, 2));
+  }
+
+
+  const scale = (type: string)  =>{
     if (type === "plus") {
       multiple += 0.1;
     } else {
       multiple -= 0.1;
     }
+    multiple = range(multiple);
     canvas!.setZoom(multiple);
     // canvas!.setWidth(originalWidth * canvas!.getZoom());
     // canvas!.setHeight(originalHeight * canvas!.getZoom());
@@ -156,7 +162,7 @@ function PDF() {
       <Box
         overflow={"hidden"}
         mx="auto"
-        border="1px"
+        // border="1px"
         w={"80%"}
         h={"100%"}
         boxShadow={"0 0 0 2px var(--chakra-colors-dark-background)"}
@@ -178,7 +184,7 @@ function PDF() {
         {/* <input onChange={handlePDFupload} type="file" placeholder="選擇PDF檔案" /> */}
         {/* <Box mx="auto" border="1px" w={'80%'} h={'100%'}  boxShadow={'0 0 0 2px var(--chakra-colors-dark-background)'}> */}
         <canvas
-          width={"300px"}
+          width={"100%"}
           height={"100%"}
           id="canvasPDF"
           ref={canvasEle}

@@ -8,13 +8,18 @@ import { useNavigate } from "react-router-dom";
 import ModalBox from "../../components/ModalBox";
 import Sign from "../Sign";
 function Side() {
-  const { nextStep, prevStep, setStep, reset, activeStep } = useStep();
+  const { nextStep, prevStep, reset, activeStep } = useStep();
   const navigate = useNavigate();
   const signImgRef = useRef<HTMLImageElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const goPrevPage = () => {
     prevStep();
     navigate("/");
+  };
+
+  const goNextPage = () => {
+    nextStep();
+    navigate("/finish");
   };
 
   const getSign = () => {
@@ -61,7 +66,7 @@ function Side() {
         上一步
       </Button>
       <Box>
-        <Button w={"full"}> 下一步</Button>
+        <Button onClick={goNextPage} w={"full"}> 下一步</Button>
       </Box>
       <ModalBox isOpen={isOpen} onClose={onClose}>
         <Sign getSign={getSign} />
