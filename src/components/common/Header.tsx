@@ -52,7 +52,6 @@ function Header() {
       {location.pathname !== "/manufacture" ? (
         <>
           <Image src={logo} />
-          <Text textStyle={"h5"}>快速省時的電子簽署工具</Text>
           <Button>設定</Button>
         </>
       ) : (
