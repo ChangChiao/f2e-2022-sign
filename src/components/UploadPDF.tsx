@@ -18,7 +18,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import wrongImg from "../assets/images/Wrong.svg";
-function UploadPDF() {
+const UploadPDF = () => {
   const { setFile } = useFile();
   const navigate = useNavigate();
   const [isFail, setFail] = useState(false);

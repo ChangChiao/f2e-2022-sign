@@ -5,6 +5,7 @@ import { Canvas } from "fabric/fabric-impl";
 import * as pdfjsLib from "pdfjs-dist";
 import { useFile } from "../components/FileProvider";
 import { Button, Flex, Box } from "@chakra-ui/react";
+import { useCanvas } from "./CanvasProvider";
 import BtnGroup from "../components/BtnGroup";
 // @ts-ignore
 const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
@@ -18,11 +19,12 @@ const Base64Prefix = "data:application/pdf;base64,";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 const pdf = new jsPDF();
-let canvas: Canvas | null = null;
+// let canvas: Canvas | null = null;
 let multiple = 1;
 
 const PDF = () => {
   const { file } = useFile();
+  const { canvas, setCanvas } = useCanvas()
   const canvasEle = useRef<HTMLCanvasElement>(null);
   const pdfWrapper = useRef<HTMLDivElement>(null);
   const [totalPages, setTotalPages] = useState(1);
@@ -92,7 +94,7 @@ const PDF = () => {
   // 此處 canvas 套用 fabric.js
 
   const handlePDFInit = async () => {
-    canvas!.requestRenderAll();
+    canvas.current!.requestRenderAll();
     if (!file.current) return;
     console.log("e.target.files[0]", file.current);
 
@@ -103,10 +105,10 @@ const PDF = () => {
     console.log("pdfImage-is", pdfImage instanceof fabric.Image);
     console.log("pdfImage", pdfImage);
     // 透過比例設定 canvas 尺寸
-    canvas!.setWidth(pdfImage.width! / window.devicePixelRatio);
-    canvas!.setHeight(pdfImage.height! / window.devicePixelRatio);
+    canvas.current!.setWidth(pdfImage.width! / window.devicePixelRatio);
+    canvas.current!.setHeight(pdfImage.height! / window.devicePixelRatio);
 
-    canvas!.setBackgroundImage(pdfImage, canvas!.renderAll.bind(canvas));
+    canvas.current!.setBackgroundImage(pdfImage, canvas.current!.renderAll.bind(canvas.current));
   };
 
   const imgOnCanvas = () => {
@@ -118,19 +120,19 @@ const PDF = () => {
       image.top = 400;
       image.scaleX = 0.5;
       image.scaleY = 0.5;
-      canvas!.add(image);
+      canvas.current!.add(image);
     });
     console.log("imgOnCanvas");
   };
 
   const downloadPDF = () => {
-    const image = canvas!.toDataURL({ format: "image/png" });
+    const image = canvas.current!.toDataURL({ format: "image/png" });
+    localStorage.setItem('doc', image);
+    // const width = pdf.internal.pageSize.width;
+    // const height = pdf.internal.pageSize.height;
+    // pdf.addImage(image, "png", 0, 0, width, height);
 
-    const width = pdf.internal.pageSize.width;
-    const height = pdf.internal.pageSize.height;
-    pdf.addImage(image, "png", 0, 0, width, height);
-
-    pdf.save("download.pdf");
+    // pdf.save("download.pdf");
   };
 
   const range = (number: number, max: number, min: number) => {
@@ -144,7 +146,7 @@ const PDF = () => {
       multiple -= 0.1;
     }
     multiple = range(multiple, 2, 1);
-    canvas!.setZoom(multiple);
+    canvas.current!.setZoom(multiple);
     // canvas!.setWidth(originalWidth * canvas!.getZoom());
     // canvas!.setHeight(originalHeight * canvas!.getZoom());
   };
@@ -155,7 +157,7 @@ const PDF = () => {
     const rate = Number((wrapperHeight / canvasHeiight).toFixed(2));
     console.log("rate", rate);
 
-    canvas!.setZoom(rate);
+    canvas.current!.setZoom(rate);
   };
 
   const setPage = (type: string) => {
@@ -174,14 +176,17 @@ const PDF = () => {
   }, [nowPage]);
 
   useEffect(() => {
-    canvas = new fabric.Canvas("canvasPDF", {
+    const fabricObject = new fabric.Canvas("canvasPDF", {
       fill: "#000",
       width: pdfWrapper.current?.clientWidth,
       height: pdfWrapper.current?.clientHeight,
       selectionLineWidth: 2,
       selectionColor: "blue",
     });
-    handlePDFInit();
+    setCanvas(fabricObject);
+    // setTimeout(()=>{
+    //   handlePDFInit();
+    // }, 1000)
     console.log("file", file);
   }, []);
 

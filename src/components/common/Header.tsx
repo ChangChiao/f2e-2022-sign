@@ -10,17 +10,19 @@ import {
   useDisclosure,
   FormLabel,
 } from "@chakra-ui/react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useFile } from "../../components/FileProvider";
 import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
 import ModalBox from "../../components/ModalBox";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
-  const { file, setFile } = useFile();
+  const { file, setFile, getFile } = useFile();
+  const navigate = useNavigate();
   const [fileName, setFileName] = useState("");
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const editFileName = () => {
-    setFileName(file.current?.name ?? '')
+    setFileName(file.current?.name ?? "");
     onOpen();
   };
 
@@ -30,15 +32,15 @@ const Header = () => {
     });
     setFile(newFile);
     onClose();
-  }
+  };
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFileName(value);
-  }
+  };
   useEffect(() => {
-
-  }, [location]);
+    console.log('getFile', getFile());
+  }, []);
   return (
     <Flex
       as="header"
@@ -51,7 +53,9 @@ const Header = () => {
     >
       {location.pathname !== "/manufacture" ? (
         <>
-          <Image src={logo} />
+          <Link to="/">
+            <Image src={logo} />
+          </Link>
           <Button>設定</Button>
         </>
       ) : (
@@ -73,13 +77,24 @@ const Header = () => {
         <FormLabel pt={2} htmlFor="fileName">
           檔案
         </FormLabel>
-        <Input value={fileName} onChange={handleChange} id="fileName" maxLength={50} placeholder="請輸入檔案名稱" />
+        <Input
+          value={fileName}
+          onChange={handleChange}
+          id="fileName"
+          maxLength={50}
+          placeholder="請輸入檔案名稱"
+        />
         <Flex pt={4} justifyContent={"center"}>
-          <Button onClick={rename} variant={ fileName.length === 0 ? "disable" : "solid"}>儲存</Button>
+          <Button
+            onClick={rename}
+            variant={fileName.length === 0 ? "disable" : "solid"}
+          >
+            儲存
+          </Button>
         </Flex>
       </ModalBox>
     </Flex>
   );
-}
+};
 
 export default Header;
