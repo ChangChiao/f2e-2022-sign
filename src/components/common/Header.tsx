@@ -38,9 +38,6 @@ const Header = () => {
     const value = e.target.value;
     setFileName(value);
   };
-  useEffect(() => {
-    console.log('getFile', getFile());
-  }, []);
   return (
     <Flex
       as="header"
@@ -56,12 +53,13 @@ const Header = () => {
           <Link to="/">
             <Image src={logo} />
           </Link>
-          <Button>設定</Button>
+          <Button onClick={getFile}>設定</Button>
         </>
       ) : (
         <Flex alignItems={"center"}>
           <Text fontWeight={'bold'}  pr={2}>{file.current?.name}</Text>
           <Edit onClick={editFileName} cursor={"pointer"} width={"30px"} />
+          <Button onClick={getFile}>設定</Button>
         </Flex>
       )}
       <ModalBox isOpen={isOpen} onClose={onClose}>

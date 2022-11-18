@@ -5,7 +5,6 @@ import { useDropzone } from "react-dropzone";
 import addFile from "../assets/images/Add file.svg";
 import { useNavigate } from "react-router-dom";
 import { useFile } from "../components/FileProvider";
-
 import {
   FormErrorMessage,
   FormLabel,

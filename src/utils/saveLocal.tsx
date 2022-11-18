@@ -28,3 +28,26 @@ export const canvasToFile = (key: string) => {
     }
     const file=new Blob([new Uint8Array(array)], {type: 'image/png'});
 }
+
+
+export const fileToBase64 = (file: File) : Promise<any> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
+export const base64ToFile = (filename: string, type = 'application/pdf') => {
+    const docStr = localStorage.getItem('doc');
+    if(!docStr) return;
+    const arr = docStr.split(',')
+    const bstr = window.atob(arr[1])
+    let n = bstr.length
+    const u8arr = new Uint8Array(n) 
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new File([u8arr], filename, {
+      type,
+    })
+}
