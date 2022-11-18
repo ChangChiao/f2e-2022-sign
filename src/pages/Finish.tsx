@@ -3,8 +3,10 @@ import { Flex, Image, Button, Box, Text } from "@chakra-ui/react";
 import SharedGoals from "../assets/images/Shared goals.svg";
 import { useFile } from "../components/FileProvider";
 import { useCanvas } from "../components/CanvasProvider";
+import { useNavigate } from "react-router-dom";
 const pdf = new jsPDF();
 const Finish = () => {
+  const navigate = useNavigate();
   const { canvas } = useCanvas();
   const { file } = useFile();
   const downloadPDF = () => {
@@ -15,6 +17,10 @@ const Finish = () => {
       pdf.addImage(doc, "png", 0, 0, width, height);
       pdf.save(file.current?.name ?? "download.pdf");
     }
+  };
+
+  const goIndex = () => {
+    navigate("/");
   };
   return (
     <Flex
@@ -39,7 +45,9 @@ const Finish = () => {
           <Button mb={2} w={"100%"} onClick={downloadPDF}>
             下載檔案
           </Button>
-          <Button w={"100%"}>重新上傳</Button>
+          <Button onClick={goIndex} w={"100%"}>
+            重新上傳
+          </Button>
         </Box>
       </Flex>
     </Flex>

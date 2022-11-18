@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { jsPDF } from "jspdf";
 import { fabric } from "fabric";
-import { Canvas } from "fabric/fabric-impl";
 import * as pdfjsLib from "pdfjs-dist";
 import { useFile } from "../components/FileProvider";
-import { Button, Flex, Box } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import { useCanvas } from "./CanvasProvider";
 import BtnGroup from "../components/BtnGroup";
 // @ts-ignore
@@ -13,12 +11,8 @@ const Base64Prefix = "data:application/pdf;base64,";
 
 // pdfjsLib.GlobalWorkerOptions.workerSrc =
 //   "https://mozilla.github.io/pdf.js/build/pdf.worker.js";
-
-// pdfjsLib.GlobalWorkerOptions.workerSrc =
-//   "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.0.279/build/pdf.worker.min.js";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
-const pdf = new jsPDF();
 // let canvas: Canvas | null = null;
 let multiple = 1;
 
@@ -111,29 +105,6 @@ const PDF = () => {
     canvas.current!.setBackgroundImage(pdfImage, canvas.current!.renderAll.bind(canvas.current));
   };
 
-  const imgOnCanvas = () => {
-    const img = localStorage.getItem("sign_img");
-    if (!img) return;
-    console.log("imgOnCanvas");
-
-    fabric.Image.fromURL(img, function (image) {
-      image.top = 400;
-      image.scaleX = 0.5;
-      image.scaleY = 0.5;
-      canvas.current!.add(image);
-    });
-    console.log("imgOnCanvas");
-  };
-
-  const downloadPDF = () => {
-    const image = canvas.current!.toDataURL({ format: "image/png" });
-    localStorage.setItem('doc', image);
-    // const width = pdf.internal.pageSize.width;
-    // const height = pdf.internal.pageSize.height;
-    // pdf.addImage(image, "png", 0, 0, width, height);
-
-    // pdf.save("download.pdf");
-  };
 
   const range = (number: number, max: number, min: number) => {
     return Math.max(0.1, Math.min(number, 2));
@@ -171,9 +142,22 @@ const PDF = () => {
     setNowPage(page);
   };
 
-  useEffect(() => {
-    handlePDFInit();
-  }, [nowPage]);
+  const signOnCanvas = () => {
+    const img = localStorage.getItem("sign_img");
+    if (!img) return;
+    console.log("imgOnCanvas");
+
+    fabric.Image.fromURL(img, function (image) {
+      image.top = 500;
+      image.scaleX = 0.5;
+      image.scaleY = 0.5;
+      canvas.current!.add(image);
+    });
+  };
+
+  // useEffect(() => {
+  //   handlePDFInit();
+  // }, [nowPage]);
 
   useEffect(() => {
     const fabricObject = new fabric.Canvas("canvasPDF", {
@@ -184,9 +168,7 @@ const PDF = () => {
       selectionColor: "blue",
     });
     setCanvas(fabricObject);
-    // setTimeout(()=>{
-    //   handlePDFInit();
-    // }, 1000)
+    handlePDFInit();
     console.log("file", file);
   }, []);
 
@@ -202,22 +184,7 @@ const PDF = () => {
         h={"100%"}
         boxShadow={"0 0 0 2px var(--chakra-colors-dark-background)"}
       >
-        {/* <Button onClick={downloadPDF} variant={"base"}>
-        download
-      </Button>
-      <Button onClick={imgOnCanvas} variant={"base"}>
-        add Sign
-      </Button>
-      <Button onClick={() => scale("plus")} variant={"base"}>
-        放大
-      </Button>
-      <Button onClick={() => scale("minus")} variant={"base"}>
-        縮小
-      </Button> */}
-        {/* <button onClick={downloadPDF}>download</button>
-      <button onClick={imgOnCanvas}>add Sign</button> */}
-        {/* <input onChange={handlePDFInit} type="file" placeholder="選擇PDF檔案" /> */}
-        {/* <Box mx="auto" border="1px" w={'80%'} h={'100%'}  boxShadow={'0 0 0 2px var(--chakra-colors-dark-background)'}> */}
+        <Box onClick={signOnCanvas}>test1122</Box>
         <canvas
           id="canvasPDF"
           style={{

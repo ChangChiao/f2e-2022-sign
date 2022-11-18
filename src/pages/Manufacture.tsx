@@ -1,5 +1,3 @@
-import React from "react";
-import ProgressBar from "../components/ProgressBar";
 import Steps from "../components/common/Steps";
 import Side from "../components/common/Side";
 import PDF from "../components/PDF";

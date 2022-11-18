@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react'
+import { useStep } from "../components/StepProvider";
 import UploadPDF from '../components/UploadPDF';
 import {
   Box,
@@ -7,6 +7,10 @@ import {
 } from "@chakra-ui/react";
 import IndexSteps from '../components/IndexSteps';
 const Index = () => {
+  const { reset } = useStep();
+  useEffect(() => {
+    reset();
+  }, [])
   return (
     <Box mx={"auto"} w={"90%"}>
       <UploadPDF />

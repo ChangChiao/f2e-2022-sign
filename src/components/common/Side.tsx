@@ -1,15 +1,18 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
+import { fabric } from "fabric";
 import { ReactComponent as Add } from "../../assets/icon/Add.svg";
 import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
 import { ReactComponent as CalendarToday } from "../../assets/icon/CalendarToday.svg";
 import { useStep } from "../../components/StepProvider";
+import { useCanvas } from "../../components/CanvasProvider";
 import { Box, Image, Button, Text, useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ModalBox from "../../components/ModalBox";
 import Sign from "../Sign";
 const Side = () => {
-  const { nextStep, prevStep, reset, activeStep } = useStep();
+  const { nextStep, prevStep } = useStep();
   const navigate = useNavigate();
+  const { canvas } = useCanvas();
   const signImgRef = useRef<HTMLImageElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const goPrevPage = () => {
@@ -22,11 +25,29 @@ const Side = () => {
     navigate("/finish");
   };
 
+  const signOnCanvas = () => {
+    const img = localStorage.getItem("sign_img");
+    if (!img) return;
+    console.log("imgOnCanvas");
+
+    fabric.Image.fromURL(img, function (image) {
+      image.top = 400;
+      image.scaleX = 0.5;
+      image.scaleY = 0.5;
+      canvas.current!.add(image);
+    });
+    console.log("imgOnCanvas");
+  };
+
+
   const getSign = () => {
     const sign = localStorage.getItem("sign_img");
-    signImgRef.current!.src = sign ?? '';
+    signImgRef.current!.src = sign ?? "";
+    // signOnCanvas();
     onClose();
-  }
+  };
+
+
 
   return (
     <Box w={"400px"} h="calc(100vh - 200px)" p={4}>
@@ -36,8 +57,8 @@ const Side = () => {
       <Image
         w={"300px"}
         h={"100px"}
-        my={'14px'}
-        mx={'auto'}
+        my={"14px"}
+        mx={"auto"}
         border={"2px"}
         borderColor={"gray.300"}
         className=""
@@ -66,13 +87,16 @@ const Side = () => {
         上一步
       </Button>
       <Box>
-        <Button onClick={goNextPage} w={"full"}> 下一步</Button>
+        <Button onClick={goNextPage} w={"full"}>
+          {" "}
+          下一步
+        </Button>
       </Box>
       <ModalBox isOpen={isOpen} onClose={onClose}>
         <Sign getSign={getSign} />
       </ModalBox>
     </Box>
   );
-}
+};
 
 export default Side;
