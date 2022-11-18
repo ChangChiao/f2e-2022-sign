@@ -16,7 +16,7 @@ import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
 import ModalBox from "../../components/ModalBox";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
-  const { file, fileName, setFileName, setFile, getFile } = useFile();
+  const { file, fileName, getFileName, setFileName, setFile, getFile } = useFile();
   const navigate = useNavigate();
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,10 +26,11 @@ const Header = () => {
   };
 
   const rename = () => {
-    const newFile = new File([file.current!], fileName, {
-      type: file.current!.type,
-    });
-    setFile(newFile);
+    // const newFile = new File([file.current!], fileName, {
+    //   type: file.current!.type,
+    // });
+    // setFile(newFile);
+    getFileName();
     onClose();
   };
 

@@ -42,12 +42,13 @@ export const base64ToFile = (filename: string, type = 'application/pdf') => {
     if(!docStr) return;
     const arr = docStr.split(',')
     const bstr = window.atob(arr[1])
-    let n = bstr.length
-    const u8arr = new Uint8Array(n) 
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n)
+    
+    const buffer = new ArrayBuffer(bstr.length);
+    const ba = new Uint8Array(buffer);
+    for (let i = 0; i < bstr.length; i++) {
+        ba[i] = bstr.charCodeAt(i);
     }
-    return new File([u8arr], filename, {
+    return new File([ba], filename, {
       type,
     })
 }

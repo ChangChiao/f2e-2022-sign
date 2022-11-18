@@ -1,11 +1,19 @@
-import { createContext, RefObject, ReactNode, useContext, useRef, useState } from "react";
+import {
+  createContext,
+  RefObject,
+  ReactNode,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import { fileToBase64, base64ToFile } from "../utils/saveLocal";
 
 interface FileContextInterface {
-  file: RefObject<File> ;
+  file: RefObject<File>;
   fileName: string;
+  getFileName: () => string;
   setFileName: (name: string) => void;
-  getFile: () => void;
+  getFile: () => RefObject<File> | null;
   setFile: (file: File) => void;
 }
 
@@ -14,25 +22,41 @@ const FileContext = createContext<FileContextInterface>(
 );
 
 const FileContextProvider = ({ children }: { children: ReactNode }) => {
-  const file = useRef< File | null>(null);
-  const [fileName, setFileName] = useState('');
+  const file = useRef<File | null>(null);
+  const [fileName, setFileName] = useState("");
 
   const getFile = () => {
-    const doc = localStorage.getItem("doc")
-    if(doc){
-      const docFile = base64ToFile(doc);
-      console.log('docFile', docFile);  
+    if (file.current) return file;
+    const doc = localStorage.getItem("doc");
+    if (doc) {
+      const docFile = base64ToFile(fileName);
+      console.log("docFile", docFile);
+      file.current = docFile!;
     }
     return file;
   };
 
+  const getFileName = () => {
+    if (fileName) return fileName;
+    const local = localStorage.getItem("fileName");
+    if(local) {
+      setFileName(local);
+    }
+    return fileName;
+  };
+
+  const setFileNameLocal = (name: string) => {
+    localStorage.setItem("fileName", file.current!.name);
+    setFileName(name);
+  };
+
   const setFile = async (param: File) => {
     const name = param.name;
-    setFileName(name);
+    setFileNameLocal(name);
     file.current = param;
     try {
-      const str = await fileToBase64(param)
-      localStorage.setItem('doc', str);
+      const str = await fileToBase64(param);
+      localStorage.setItem("doc", str);
     } catch (error) {
       console.log(error);
     }
@@ -43,6 +67,7 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
       value={{
         fileName,
         setFileName,
+        getFileName,
         file,
         getFile,
         setFile,

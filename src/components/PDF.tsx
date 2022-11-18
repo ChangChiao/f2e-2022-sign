@@ -17,7 +17,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 let multiple = 1;
 
 const PDF = () => {
-  const { file } = useFile();
+  const { file, getFile } = useFile();
   const { canvas, setCanvas } = useCanvas()
   const canvasEle = useRef<HTMLCanvasElement>(null);
   const pdfWrapper = useRef<HTMLDivElement>(null);
@@ -88,10 +88,11 @@ const PDF = () => {
 
   const handlePDFInit = async () => {
     canvas.current!.requestRenderAll();
-    if (!file.current) return;
-    console.log("e.target.files[0]", file.current);
+    const docFile = getFile()
+    if (!docFile?.current) return;
+    console.log("e.target.files[0]", docFile.current);
 
-    const pdfData = await genPDFCanvas(file.current);
+    const pdfData = await genPDFCanvas(docFile.current!);
     console.log("pdfData-is", pdfData instanceof fabric.Canvas);
 
     const pdfImage = await pdfToImage(pdfData!);
