@@ -16,9 +16,8 @@ import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
 import ModalBox from "../../components/ModalBox";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
-  const { file, setFile, getFile } = useFile();
+  const { file, fileName, setFileName, setFile, getFile } = useFile();
   const navigate = useNavigate();
-  const [fileName, setFileName] = useState("");
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const editFileName = () => {
@@ -57,7 +56,7 @@ const Header = () => {
         </>
       ) : (
         <Flex alignItems={"center"}>
-          <Text fontWeight={'bold'}  pr={2}>{file.current?.name}</Text>
+          <Text fontWeight={'bold'}  pr={2}>{fileName}</Text>
           <Edit onClick={editFileName} cursor={"pointer"} width={"30px"} />
           <Button onClick={getFile}>設定</Button>
         </Flex>

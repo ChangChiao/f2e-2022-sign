@@ -8,14 +8,14 @@ const pdf = new jsPDF();
 const Finish = () => {
   const navigate = useNavigate();
   const { canvas } = useCanvas();
-  const { file } = useFile();
+  const { file, fileName } = useFile();
   const downloadPDF = () => {
     const doc = canvas.current!.toDataURL({ format: "image/png" });
     const width = pdf.internal.pageSize.width;
     const height = pdf.internal.pageSize.height;
     if (doc) {
       pdf.addImage(doc, "png", 0, 0, width, height);
-      pdf.save(file.current?.name ?? "download.pdf");
+      pdf.save(fileName ?? "download.pdf");
     }
   };
 

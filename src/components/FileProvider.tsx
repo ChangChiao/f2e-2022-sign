@@ -1,8 +1,10 @@
-import { createContext, RefObject, ReactNode, useContext, useRef } from "react";
+import { createContext, RefObject, ReactNode, useContext, useRef, useState } from "react";
 import { fileToBase64, base64ToFile } from "../utils/saveLocal";
 
 interface FileContextInterface {
   file: RefObject<File> ;
+  fileName: string;
+  setFileName: (name: string) => void;
   getFile: () => void;
   setFile: (file: File) => void;
 }
@@ -13,7 +15,7 @@ const FileContext = createContext<FileContextInterface>(
 
 const FileContextProvider = ({ children }: { children: ReactNode }) => {
   const file = useRef< File | null>(null);
-  const fileName = useRef< string>('');
+  const [fileName, setFileName] = useState('');
 
   const getFile = () => {
     const doc = localStorage.getItem("doc")
@@ -25,6 +27,8 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const setFile = async (param: File) => {
+    const name = param.name;
+    setFileName(name);
     file.current = param;
     try {
       const str = await fileToBase64(param)
@@ -33,9 +37,12 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
       console.log(error);
     }
   };
+
   return (
     <FileContext.Provider
       value={{
+        fileName,
+        setFileName,
         file,
         getFile,
         setFile,

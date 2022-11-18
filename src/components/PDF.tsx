@@ -156,6 +156,9 @@ const PDF = () => {
   };
 
   // useEffect(() => {
+  //   if(!canvas.current){
+  //     return;
+  //   }
   //   handlePDFInit();
   // }, [nowPage]);
 
@@ -172,8 +175,8 @@ const PDF = () => {
     const canvasEle = document.getElementById('canvasPDF');
     canvasEle!.style.width = `${pdfWrapper.current?.clientWidth}px`;
     canvasEle!.style.height = `${pdfWrapper.current?.clientHeight}px`;
-    handlePDFInit();
     console.log("file", file);
+    handlePDFInit();
   }, []);
 
   return (
