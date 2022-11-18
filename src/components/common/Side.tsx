@@ -7,7 +7,7 @@ import { Box, Image, Button, Text, useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ModalBox from "../../components/ModalBox";
 import Sign from "../Sign";
-function Side() {
+const Side = () => {
   const { nextStep, prevStep, reset, activeStep } = useStep();
   const navigate = useNavigate();
   const signImgRef = useRef<HTMLImageElement>(null);

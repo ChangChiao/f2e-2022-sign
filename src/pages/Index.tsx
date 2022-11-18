@@ -6,7 +6,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import IndexSteps from '../components/IndexSteps';
-function Index() {
+const Index = () => {
   return (
     <Box mx={"auto"} w={"90%"}>
       <UploadPDF />

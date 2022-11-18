@@ -22,7 +22,7 @@ const stepList = [
     img: Sending,
   },
 ];
-function IndexSteps() {
+const IndexSteps = () => {
   return (
     <Box>
       <Text textAlign={"center"} py={5} textStyle={"h2"}>

@@ -14,7 +14,7 @@ import { useLocation } from "react-router-dom";
 import { useFile } from "../../components/FileProvider";
 import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
 import ModalBox from "../../components/ModalBox";
-function Header() {
+const Header = () => {
   const { file, setFile } = useFile();
   const [fileName, setFileName] = useState("");
   const location = useLocation();

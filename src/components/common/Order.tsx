@@ -1,7 +1,7 @@
 import React from "react";
 import { Center } from "@chakra-ui/react";
 
-function Order({ num }: { num: number }) {
+const Order = ({ num }: { num: number }) => {
   return (
     <Center 
       width={10}

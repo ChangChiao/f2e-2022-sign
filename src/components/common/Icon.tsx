@@ -12,7 +12,7 @@ interface Props {
   size?: number;
 }
 
-function Icon({ size, name }: Props) {
+const Icon = ({ size, name }: Props) => {
   console.log("name");
 
   return (

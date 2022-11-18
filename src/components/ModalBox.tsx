@@ -15,7 +15,7 @@ type Props = {
   children?: ReactNode;
 };
 
-function ModalBox({ children, isOpen, onClose }: Props) {
+const ModalBox = ({ children, isOpen, onClose }: Props) => {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>

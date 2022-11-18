@@ -17,7 +17,7 @@ type BtnGroupProps = {
   setPage: (param: string) => void;
 };
 
-function BtnGroup({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupProps) {
+const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupProps) => {
   return (
     <Flex align={"center"} position={"absolute"} bottom="0" left={0}>
       <HStack spacing="4px" mr="10px">

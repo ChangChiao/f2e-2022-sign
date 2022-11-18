@@ -9,7 +9,7 @@ const stepList = [
   { label: "下載檔案" },
 ];
 
-function Steps() {
+const Steps = () => {
   const { nextStep, prevStep, reset, activeStep } = useStep();
   return (
     <Flex py={4} justifyContent={'center'}>

@@ -17,10 +17,10 @@ type Props = {
   getSign: () => void;
 };
 
-function Sign({ getSign }: Props) {
+const Sign = ({ getSign }: Props) => {
   const signImgRef = useRef<HTMLImageElement>(null);
   const [showSign, setShowSign] = useState(false);
-  let signFile = useRef<File | null >(null);
+  let signFile = useRef<File | null>(null);
   const onDrop = useCallback((acceptedFiles: unknown) => {
     console.log("acceptedFiles", acceptedFiles);
     const file = acceptedFiles as File[];
@@ -110,9 +110,9 @@ function Sign({ getSign }: Props) {
   };
 
   useEffect(() => {
-    console.log('showSign', showSign, signFile);
-    
-    if (!showSign || !signFile.current) return;    
+    console.log("showSign", showSign, signFile);
+
+    if (!showSign || !signFile.current) return;
     signImgRef.current!.src = window.URL.createObjectURL(signFile.current);
   }, [showSign]);
 
@@ -226,8 +226,14 @@ function Sign({ getSign }: Props) {
                 </Text>
               </Flex>
             ) : (
-              <Flex direction={'column'}>
-                <Image objectFit={'contain'} maxW={"100%"} ref={signImgRef} src="" alt="" />
+              <Flex direction={"column"}>
+                <Image
+                  objectFit={"contain"}
+                  maxW={"100%"}
+                  ref={signImgRef}
+                  src=""
+                  alt=""
+                />
                 <Button mt={2}>儲存</Button>
               </Flex>
             )}
@@ -236,6 +242,6 @@ function Sign({ getSign }: Props) {
       </TabPanels>
     </Tabs>
   );
-}
+};
 
 export default Sign;
