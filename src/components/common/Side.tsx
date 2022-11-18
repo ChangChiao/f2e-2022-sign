@@ -28,26 +28,20 @@ const Side = () => {
   const signOnCanvas = () => {
     const img = localStorage.getItem("sign_img");
     if (!img) return;
-    console.log("imgOnCanvas");
-
     fabric.Image.fromURL(img, function (image) {
       image.top = 400;
       image.scaleX = 0.5;
       image.scaleY = 0.5;
       canvas.current!.add(image);
     });
-    console.log("imgOnCanvas");
   };
-
 
   const getSign = () => {
     const sign = localStorage.getItem("sign_img");
     signImgRef.current!.src = sign ?? "";
-    // signOnCanvas();
+    signOnCanvas();
     onClose();
   };
-
-
 
   return (
     <Box w={"400px"} h="calc(100vh - 200px)" p={4}>
@@ -64,20 +58,21 @@ const Side = () => {
         className=""
         ref={signImgRef}
       />
-      <Button w={"full"} variant={"outline"} onClick={onOpen}>
+      <Button mb={2} w={"full"} variant={"outline"} onClick={onOpen}>
         <Add width={"30px"} />
         <Text pl={2}> 加入簽名</Text>
       </Button>
-      <Button w={"full"} variant={"outline"}>
+      <Button mb={2} w={"full"} variant={"outline"}>
         <Edit width={"30px"} />
         <Text pl={2}> 加入文字</Text>
       </Button>
 
-      <Button w={"full"} variant={"outline"}>
+      <Button mb={2} w={"full"} variant={"outline"}>
         <CalendarToday width={"30px"} />
         <Text pl={2}> 加入日期</Text>
       </Button>
       <Button
+        mb={2}
         onClick={goPrevPage}
         w={"full"}
         color={"gray.400"}

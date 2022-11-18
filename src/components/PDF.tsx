@@ -75,7 +75,6 @@ const PDF = () => {
   const pdfToImage = async (pdfData: HTMLCanvasElement) => {
     // 設定 PDF 轉為圖片時的比例
     const scale = 1 / window.devicePixelRatio;
-    console.log("pdfData-87777", pdfData);
     // 回傳圖片
     return new fabric.Image(pdfData, {
       // @ts-ignore
@@ -152,6 +151,7 @@ const PDF = () => {
       image.scaleX = 0.5;
       image.scaleY = 0.5;
       canvas.current!.add(image);
+      canvas.current!.renderAll();
     });
   };
 
@@ -161,13 +161,17 @@ const PDF = () => {
 
   useEffect(() => {
     const fabricObject = new fabric.Canvas("canvasPDF", {
-      fill: "#000",
-      width: pdfWrapper.current?.clientWidth,
-      height: pdfWrapper.current?.clientHeight,
-      selectionLineWidth: 2,
-      selectionColor: "blue",
+      // width: pdfWrapper.current?.clientWidth,
+      // height: pdfWrapper.current?.clientHeight,
     });
+    console.log('pdfWrapper.current?.clientWidth', pdfWrapper.current?.clientWidth);
+    
     setCanvas(fabricObject);
+    // canvas.current!.setHeight(pdfWrapper.current!.clientHeight);
+    // canvas.current!.setWidth(pdfWrapper.current!.clientWidth);
+    const canvasEle = document.getElementById('canvasPDF');
+    canvasEle!.style.width = `${pdfWrapper.current?.clientWidth}px`;
+    canvasEle!.style.height = `${pdfWrapper.current?.clientHeight}px`;
     handlePDFInit();
     console.log("file", file);
   }, []);
@@ -182,9 +186,7 @@ const PDF = () => {
         // border="1px"
         w={"80%"}
         h={"100%"}
-        boxShadow={"0 0 0 2px var(--chakra-colors-dark-background)"}
       >
-        <Box onClick={signOnCanvas}>test1122</Box>
         <canvas
           id="canvasPDF"
           style={{

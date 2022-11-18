@@ -60,7 +60,7 @@ const Header = () => {
         </>
       ) : (
         <Flex alignItems={"center"}>
-          <Text pr={2}>{file.current?.name}</Text>
+          <Text fontWeight={'bold'}  pr={2}>{file.current?.name}</Text>
           <Edit onClick={editFileName} cursor={"pointer"} width={"30px"} />
         </Flex>
       )}
@@ -68,6 +68,7 @@ const Header = () => {
         <Text
           pb={2}
           color={"primary.default"}
+          fontWeight={'bold'}
           borderBottom={"1px"}
           textAlign={"center"}
           borderColor={"primary.default"}

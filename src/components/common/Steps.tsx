@@ -12,10 +12,11 @@ const stepList = [
 const Steps = () => {
   const { nextStep, prevStep, reset, activeStep } = useStep();
   return (
-    <Flex py={4} justifyContent={'center'}>
+    <Flex py={4} justifyContent={"center"}>
       {stepList.map((item, i) => (
         <Flex key={i} justifyContent={"space-between"} alignItems={"center"}>
           <Center
+            fontWeight={"bold"}
             borderRadius={"50%"}
             w={10}
             h={10}
@@ -26,7 +27,7 @@ const Steps = () => {
           >
             {i >= activeStep ? i + 1 : <Check color="#fff" width={20} />}
           </Center>
-          <Text px="2" as="span">
+          <Text px="2" fontWeight={"bold"} as="span">
             {item.label}
           </Text>
           {i !== stepList.length - 1 && (
@@ -36,6 +37,6 @@ const Steps = () => {
       ))}
     </Flex>
   );
-}
+};
 
 export default Steps;

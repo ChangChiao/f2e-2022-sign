@@ -101,6 +101,9 @@ const Sign = ({ getSign }: Props) => {
   const saveImage = () => {
     const newImage = canvasRef.current!.toDataURL("image/png");
     // signImgRef.current!.src = newImage;
+    console.log('newImage--', newImage);
+    console.log('newImage--', typeof(newImage));
+    
     localStorage.setItem("sign_img", newImage);
     getSign();
   };
