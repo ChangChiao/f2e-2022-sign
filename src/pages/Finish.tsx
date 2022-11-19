@@ -8,15 +8,22 @@ const pdf = new jsPDF();
 const Finish = () => {
   const navigate = useNavigate();
   const { canvas } = useCanvas();
-  const { file, fileName } = useFile();
+  const { file, fileName, sequence } = useFile();
   const downloadPDF = () => {
-    const doc = canvas.current!.toDataURL({ format: "image/png" });
-    const width = pdf.internal.pageSize.width;
-    const height = pdf.internal.pageSize.height;
-    if (doc) {
+    console.log('sequence', sequence.length);
+    
+    sequence.forEach((doc, i)=>{
+      console.log('doc', doc);
+      
+      // const doc = canvas.current!.toDataURL({ format: "image/png" });
+      const width = pdf.internal.pageSize.width;
+      const height = pdf.internal.pageSize.height;
       pdf.addImage(doc, "png", 0, 0, width, height);
-      pdf.save(fileName ?? "download.pdf");
-    }
+      if(i!==sequence.length - 1) {
+        pdf.addPage();
+      }
+    })
+    pdf.save(fileName ?? "download.pdf");
   };
 
   const goIndex = () => {

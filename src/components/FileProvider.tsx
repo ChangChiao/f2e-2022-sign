@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { fileToBase64, base64ToFile } from "../utils/saveLocal";
+import { fileToBase64, base64ToFile } from "../utils/converFile";
 import { useCanvas } from "./CanvasProvider";
 interface FileContextInterface {
   file: RefObject<File>;
@@ -33,7 +33,7 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   const file = useRef<File | null>(null);
   const [fileName, setFileName] = useState("");
   const [sequence, setSequence] = useState<string[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [nowPage, setNowPage] = useState(1);
 
 
@@ -41,6 +41,8 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
     const target = canvas.current?.toDataURL({ format: "image/png" });
     const newArr = [...sequence];
     newArr[nowPage - 1] = target ?? "";
+    console.warn('xxxx', target);
+    
     setSequence(newArr);
   };
 

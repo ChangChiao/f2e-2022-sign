@@ -37,8 +37,8 @@ export const fileToBase64 = (file: File) : Promise<any> => new Promise((resolve,
     reader.onerror = error => reject(error);
 });
 
-export const base64ToFile = (filename: string, type = 'application/pdf') => {
-    const docStr = localStorage.getItem('doc');
+export const base64ToFile = (filename: string, fileTarget?: string, type = 'application/pdf') => {
+    const docStr = fileTarget ?? localStorage.getItem('doc');
     if(!docStr) return;
     const arr = docStr.split(',')
     const bstr = window.atob(arr[1])
