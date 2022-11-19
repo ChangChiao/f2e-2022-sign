@@ -1,4 +1,3 @@
-import { useSteps } from "chakra-ui-steps";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 interface StepContextInterface {

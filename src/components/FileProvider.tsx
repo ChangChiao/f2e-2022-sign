@@ -42,7 +42,7 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
     if(local) {
       setFileName(local);
     }
-    return local
+    return local ?? ''
   };
 
   const setFileNameLocal = (name: string) => {
