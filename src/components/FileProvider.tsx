@@ -12,7 +12,7 @@ interface FileContextInterface {
   file: RefObject<File>;
   fileName: string;
   getFileName: () => string;
-  setFileName: (name: string) => void;
+  setFileNameLocal: (name: string) => void;
   getFile: () => RefObject<File> | null;
   setFile: (file: File) => void;
 }
@@ -42,11 +42,11 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
     if(local) {
       setFileName(local);
     }
-    return fileName;
+    return local
   };
 
   const setFileNameLocal = (name: string) => {
-    localStorage.setItem("fileName", file.current!.name);
+    localStorage.setItem("fileName", name);
     setFileName(name);
   };
 
@@ -66,8 +66,8 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
     <FileContext.Provider
       value={{
         fileName,
-        setFileName,
         getFileName,
+        setFileNameLocal,
         file,
         getFile,
         setFile,

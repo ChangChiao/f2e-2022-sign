@@ -16,12 +16,14 @@ import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
 import ModalBox from "../../components/ModalBox";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
-  const { file, fileName, getFileName, setFileName, setFile, getFile } = useFile();
+  const { file, fileName, getFileName, setFileNameLocal, setFile, getFile } = useFile();
   const navigate = useNavigate();
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [editName, setEditName] = useState('');
+
   const editFileName = () => {
-    setFileName(file.current?.name ?? "");
+    setEditName(getFileName());
     onOpen();
   };
 
@@ -29,15 +31,19 @@ const Header = () => {
     // const newFile = new File([file.current!], fileName, {
     //   type: file.current!.type,
     // });
+    setFileNameLocal(editName)
     // setFile(newFile);
-    getFileName();
     onClose();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setFileName(value);
+    setEditName(value);
   };
+
+  useEffect(()=>{
+    setEditName(getFileName());
+  }, [])
   return (
     <Flex
       as="header"
@@ -59,7 +65,6 @@ const Header = () => {
         <Flex alignItems={"center"}>
           <Text fontWeight={'bold'}  pr={2}>{fileName}</Text>
           <Edit onClick={editFileName} cursor={"pointer"} width={"30px"} />
-          <Button onClick={getFile}>設定</Button>
         </Flex>
       )}
       <ModalBox isOpen={isOpen} onClose={onClose}>
@@ -77,7 +82,7 @@ const Header = () => {
           檔案
         </FormLabel>
         <Input
-          value={fileName}
+          value={editName}
           onChange={handleChange}
           id="fileName"
           maxLength={50}

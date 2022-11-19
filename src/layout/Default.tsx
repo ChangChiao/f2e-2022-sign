@@ -8,7 +8,7 @@ function Default() {
   return (
     <>
       <Header />
-      <Box min-h="calc(100vh - 120px)">
+      <Box minH="calc(100vh - 120px)">
         <Outlet />
         <ToastContainer />
       </Box>
