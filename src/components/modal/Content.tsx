@@ -13,10 +13,10 @@ type ContentData = {
 }
 
 type ContentProps = {
-  getContent: (content: string) => void;
+  setContent: (content: string, fontFamily?: string) => void;
 };
 
-const Content = ({ getContent }: ContentProps) => {
+const Content = ({ setContent }: ContentProps) => {
   const {
     handleSubmit,
     register,
@@ -24,7 +24,7 @@ const Content = ({ getContent }: ContentProps) => {
   } = useForm<ContentData>();
   const onSubmit = (data: ContentData) => {
     console.log("onSubmit", data);
-    getContent(data.content!);
+    setContent(data.content!);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

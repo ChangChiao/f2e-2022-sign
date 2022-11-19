@@ -20,8 +20,8 @@ import { checkFileSize, checkImageType } from "../../utils/checkFile";
 import { useDropzone } from "react-dropzone";
 
 type SignProps = {
-  getSign: () => void;
-  getContent: (content: string, fontFamily?: string) => void;
+  setSign: () => void;
+  setContent: (content: string, fontFamily?: string) => void;
 };
 
 type NameData = {
@@ -33,7 +33,7 @@ enum FontList {
   "Noto Serif TC",
 }
 
-const Sign = ({ getSign, getContent }: SignProps) => {
+const Sign = ({ setSign, setContent }: SignProps) => {
   const signImgRef = useRef<HTMLImageElement>(null);
   const [showSign, setShowSign] = useState(false);
   const [font, setFont] = useState(0);
@@ -125,15 +125,14 @@ const Sign = ({ getSign, getContent }: SignProps) => {
   const saveImage = () => {
     const newImage = canvasRef.current!.toDataURL("image/png");
     localStorage.setItem("sign_img", newImage);
-    getSign();
+    setSign();
   };
 
   const saveUploadImage = () => {
     const newImage = window.URL.createObjectURL(signFile.current!);
-    console.log("87777", newImage);
 
     localStorage.setItem("sign_img", newImage);
-    getSign();
+    setSign();
   };
 
   const changStrokeColor = (color: string) => {
@@ -141,7 +140,7 @@ const Sign = ({ getSign, getContent }: SignProps) => {
   };
 
   const onSubmit = (data: NameData) => {
-    getContent(data.name, FontList[font]);
+    setContent(data.name, FontList[font]);
   };
 
   useEffect(() => {

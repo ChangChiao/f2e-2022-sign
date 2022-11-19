@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import ModalBox from "@/components/modal/ModalBox";
 import Sign from "@/components/modal/Sign";
 import Content from "@/components/modal/Content";
+import DateSelect from "@/components/modal/DateSelect";
 const Side = () => {
   const { nextStep, prevStep } = useStep();
   const navigate = useNavigate();
@@ -20,6 +21,11 @@ const Side = () => {
     isOpen: isOpenCxt,
     onOpen: onOpenCxt,
     onClose: onCloseCxt,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenDate,
+    onOpen: onOpenDate,
+    onClose: onCloseDate,
   } = useDisclosure();
   const goPrevPage = () => {
     prevStep();
@@ -42,7 +48,7 @@ const Side = () => {
     });
   };
 
-  const getSign = () => {
+  const setSign = () => {
     signOnCanvas();
     onClose();
   };
@@ -58,13 +64,12 @@ const Side = () => {
     canvas.current!.add(text);
   };
 
-  const getContent = (content: string, fontFamily: string) => {
+  const setContent = (content: string, fontFamily?: string) => {
     contentOnCanvas(content, fontFamily);
-    if(fontFamily){
       onClose();
-    }else{
       onCloseCxt();
-    }
+      onCloseDate();
+    
   };
 
   return (
@@ -78,7 +83,7 @@ const Side = () => {
         <Text pl={2}> 加入文字</Text>
       </Button>
 
-      <Button mb={2} w={"full"} variant={"outline"}>
+      <Button mb={2} w={"full"} variant={"outline"} onClick={onOpenDate}>
         <CalendarToday width={"30px"} />
         <Text pl={2}> 加入日期</Text>
       </Button>
@@ -99,10 +104,13 @@ const Side = () => {
         </Button>
       </Box>
       <ModalBox isOpen={isOpen} onClose={onClose}>
-        <Sign getContent={getContent} getSign={getSign} />
+        <Sign setContent={setContent} setSign={setSign} />
       </ModalBox>
       <ModalBox isOpen={isOpenCxt} onClose={onCloseCxt}>
-        <Content getContent={getContent} />
+        <Content setContent={setContent} />
+      </ModalBox>
+      <ModalBox isOpen={isOpenDate} onClose={onCloseDate}>
+        <DateSelect setContent={setContent} />
       </ModalBox>
     </Box>
   );
