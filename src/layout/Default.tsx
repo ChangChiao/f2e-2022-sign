@@ -1,9 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Footer from "../components/common/Footer";
-import Header from "../components/common/Header";
-import { Box, calc } from "@chakra-ui/react";
+import Footer from "@/components/common/Footer";
+import Header from "@/components/common/Header";
+import { Box } from "@chakra-ui/react";
 function Default() {
   return (
     <>

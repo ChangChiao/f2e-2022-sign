@@ -1,8 +1,8 @@
 import React from "react";
 import Order from "./common/Order";
-import FileUpload from "../assets/images/File-upload.svg";
-import Signing from "../assets/images/Signing.svg";
-import Sending from "../assets/images/Sending.svg";
+import FileUpload from "@/assets/images/File-upload.svg";
+import Signing from "@/assets/images/Signing.svg";
+import Sending from "@/assets/images/Sending.svg";
 import { Flex, Text, Image, Box } from "@chakra-ui/react";
 
 const stepList = [

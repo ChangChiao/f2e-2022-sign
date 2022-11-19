@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric";
 import * as pdfjsLib from "pdfjs-dist";
-import { useFile } from "../components/FileProvider";
+import { useFile } from "@/components/FileProvider";
 import { Flex, Box } from "@chakra-ui/react";
 import { useCanvas } from "./CanvasProvider";
-import BtnGroup from "../components/BtnGroup";
+import BtnGroup from "@/components/BtnGroup";
 // @ts-ignore
 const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
 const Base64Prefix = "data:application/pdf;base64,";

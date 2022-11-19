@@ -1,13 +1,13 @@
 import React from "react";
 import { Box, Flex, HStack } from "@chakra-ui/react";
-import { ReactComponent as One } from "../assets/icon/one.svg";
-import { ReactComponent as Add } from "../assets/icon/Add.svg";
-import { ReactComponent as FitScreen } from "../assets/icon/FitScreen.svg";
-import { ReactComponent as FullScreen } from "../assets/icon/FullScreen.svg";
-import { ReactComponent as Remove } from "../assets/icon/Remove.svg";
-import { ReactComponent as Rotate90 } from "../assets/icon/Rotate90.svg";
-import { ReactComponent as ArrowLeft } from "../assets/icon/ArrowLeft.svg";
-import { ReactComponent as ArrowRight } from "../assets/icon/ArrowRight.svg";
+import { ReactComponent as One } from "@/assets/icon/one.svg";
+import { ReactComponent as Add } from "@/assets/icon/Add.svg";
+import { ReactComponent as FitScreen } from "@/assets/icon/FitScreen.svg";
+import { ReactComponent as FullScreen } from "@/assets/icon/FullScreen.svg";
+import { ReactComponent as Remove } from "@/assets/icon/Remove.svg";
+import { ReactComponent as Rotate90 } from "@/assets/icon/Rotate90.svg";
+import { ReactComponent as ArrowLeft } from "@/assets/icon/ArrowLeft.svg";
+import { ReactComponent as ArrowRight } from "@/assets/icon/ArrowRight.svg";
 
 type BtnGroupProps = {
   totalPages: number;

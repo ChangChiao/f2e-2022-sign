@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/images/Logo.png";
+import logo from "@/assets/images/Logo.png";
 import {
   Box,
   Input,
@@ -11,10 +11,10 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
-import { useFile } from "../../components/FileProvider";
-import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
-import ModalBox from "../../components/ModalBox";
+import { ReactComponent as Edit } from "@/assets/icon/Edit.svg";
 import { useNavigate } from "react-router-dom";
+import { useFile } from "@/components/FileProvider";
+import ModalBox from "@/components/modal/ModalBox";
 const Header = () => {
   const { file, fileName, getFileName, setFileNameLocal, setFile, getFile } = useFile();
   const navigate = useNavigate();

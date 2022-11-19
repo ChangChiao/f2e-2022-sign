@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { fabric } from "fabric";
-import { ReactComponent as Add } from "../../assets/icon/Add.svg";
-import { ReactComponent as Edit } from "../../assets/icon/Edit.svg";
-import { ReactComponent as CalendarToday } from "../../assets/icon/CalendarToday.svg";
-import { useStep } from "../../components/StepProvider";
-import { useCanvas } from "../../components/CanvasProvider";
+import { ReactComponent as Add } from "@/assets/icon/Add.svg";
+import { ReactComponent as Edit } from "@/assets/icon/Edit.svg";
+import { ReactComponent as CalendarToday } from "@/assets/icon/CalendarToday.svg";
+import { useStep } from "@/components/StepProvider";
+import { useCanvas } from "@/components/CanvasProvider";
 import { Box, Image, Button, Text, useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import ModalBox from "../../components/ModalBox";
-import Sign from "../Sign";
+import ModalBox from "@/components/modal/ModalBox";
+import Sign from "@/components/modal/Sign";
 const Side = () => {
   const { nextStep, prevStep } = useStep();
   const navigate = useNavigate();

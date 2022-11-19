@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useStep } from "../components/StepProvider";
+import { useState, useCallback, useEffect } from "react";
+import addFile from "@/assets/images/Add file.svg";
+import { useStep } from "@/components/StepProvider";
+import { useFile } from "@/components/FileProvider";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
-import addFile from "../assets/images/Add file.svg";
 import { useNavigate } from "react-router-dom";
-import { useFile } from "../components/FileProvider";
 import {
   FormErrorMessage,
   FormLabel,

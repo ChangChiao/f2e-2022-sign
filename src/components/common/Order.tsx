@@ -1,4 +1,3 @@
-import React from "react";
 import { Center } from "@chakra-ui/react";
 
 const Order = ({ num }: { num: number }) => {

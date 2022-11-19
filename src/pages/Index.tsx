@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useStep } from "../components/StepProvider";
-import UploadPDF from '../components/UploadPDF';
+import { useStep } from "@/components/StepProvider";
+import UploadPDF from '@/components/UploadPDF';
 import {
   Box,
   Button,
 } from "@chakra-ui/react";
-import IndexSteps from '../components/IndexSteps';
+import IndexSteps from '@/components/IndexSteps';
 const Index = () => {
   const { reset } = useStep();
   useEffect(() => {

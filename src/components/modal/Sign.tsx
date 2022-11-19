@@ -11,7 +11,7 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
-import { checkFileSize, checkImageType } from "../utils/checkFile";
+import { checkFileSize, checkImageType } from "../../utils/checkFile";
 import { useDropzone } from "react-dropzone";
 type Props = {
   getSign: () => void;

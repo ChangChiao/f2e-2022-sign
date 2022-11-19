@@ -1,6 +1,6 @@
-import Steps from "../components/common/Steps";
-import Side from "../components/common/Side";
-import PDF from "../components/PDF";
+import Steps from "@/components/common/Steps";
+import Side from "@/components/common/Side";
+import PDF from "@/components/PDF";
 import { Box, Flex } from "@chakra-ui/react";
 function Manufacture() {
   return (
