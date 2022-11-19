@@ -7,11 +7,17 @@ import {
   useState,
 } from "react";
 import { fileToBase64, base64ToFile } from "../utils/saveLocal";
-
+import { useCanvas } from "./CanvasProvider";
 interface FileContextInterface {
   file: RefObject<File>;
   fileName: string;
-  editedFile: RefObject<string[]>
+  sequence: string[];
+  totalPages: number;
+  setTotalPages: (pages: number) => void;
+  nowPage: number;
+  setNowPage: (pages: number) => void;
+  setSequence: (str: string[]) => void;
+  saveSequence: () => void;
   getFileName: () => string;
   setFileNameLocal: (name: string) => void;
   getFile: () => RefObject<File> | null;
@@ -23,8 +29,20 @@ const FileContext = createContext<FileContextInterface>(
 );
 
 const FileContextProvider = ({ children }: { children: ReactNode }) => {
+  const { canvas } = useCanvas();
   const file = useRef<File | null>(null);
   const [fileName, setFileName] = useState("");
+  const [sequence, setSequence] = useState<string[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [nowPage, setNowPage] = useState(1);
+
+
+  const saveSequence = () => {
+    const target = canvas.current?.toDataURL({ format: "image/png" });
+    const newArr = [...sequence];
+    newArr[nowPage - 1] = target ?? "";
+    setSequence(newArr);
+  };
 
   const getFile = () => {
     if (file.current) return file;
@@ -40,10 +58,10 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   const getFileName = () => {
     if (fileName) return fileName;
     const local = localStorage.getItem("fileName");
-    if(local) {
+    if (local) {
       setFileName(local);
     }
-    return local ?? ''
+    return local ?? "";
   };
 
   const setFileNameLocal = (name: string) => {
@@ -66,6 +84,13 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   return (
     <FileContext.Provider
       value={{
+        sequence,
+        setSequence,
+        saveSequence,
+        nowPage,
+        setNowPage,
+        totalPages,
+        setTotalPages,
         fileName,
         getFileName,
         setFileNameLocal,

@@ -17,12 +17,20 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 let multiple = 1;
 
 const PDF = () => {
-  const { file, getFile } = useFile();
-  const { canvas, setCanvas } = useCanvas()
+  const {
+    file,
+    getFile,
+    sequence,
+    setSequence,
+    totalPages,
+    setTotalPages,
+    nowPage,
+    setNowPage,
+    saveSequence,
+  } = useFile();
+  const { canvas, setCanvas } = useCanvas();
   const canvasEle = useRef<HTMLCanvasElement>(null);
   const pdfWrapper = useRef<HTMLDivElement>(null);
-  const [totalPages, setTotalPages] = useState(1);
-  const [nowPage, setNowPage] = useState(1);
   const readBlob = (blob: Blob) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -32,8 +40,20 @@ const PDF = () => {
     });
   };
 
+  const genSequence = (total: number) => {
+    const arr = Array.from({ length: total }, () => "");
+    setSequence(arr);
+  };
+
+  // const saveSequence = () => {
+  //   const target = canvas.current?.toDataURL({ format: "image/png" })
+  //   const newArr = [...sequence];
+  //   newArr[nowPage] = target ?? '';
+  //   setSequence(newArr);
+  // }
+
   const genPDFCanvas = async (
-    paramPDF: File
+    paramPDF: File,
   ): Promise<HTMLCanvasElement | null> => {
     // 將檔案處理成 base64
     let pdfData = "";
@@ -48,6 +68,9 @@ const PDF = () => {
     const pdfPage = await pdfDoc.getPage(nowPage);
     console.log("page", nowPage);
     setTotalPages(pdfDoc.numPages);
+    if (sequence.length === 0) {
+      genSequence(pdfDoc.numPages);
+    }
     console.log("pdfDoc.numPages", pdfDoc.numPages);
 
     // create canvas
@@ -64,8 +87,6 @@ const PDF = () => {
       canvasContext: context!,
       viewport,
     };
-    console.warn("renderContext", renderContext);
-    console.warn("pdfPage", pdfPage);
     const renderTask = pdfPage.render(renderContext);
     console.warn("renderTask", renderTask);
     // 回傳做好的 PDF canvas
@@ -88,26 +109,27 @@ const PDF = () => {
 
   const handlePDFInit = async () => {
     canvas.current!.requestRenderAll();
-    const docFile = getFile()
+    const docFile = getFile();
     if (!docFile?.current) return;
     console.log("e.target.files[0]", docFile.current);
 
     const pdfData = await genPDFCanvas(docFile.current!);
-    console.log("pdfData-is", pdfData instanceof fabric.Canvas);
 
     const pdfImage = await pdfToImage(pdfData!);
-    console.log("pdfImage-is", pdfImage instanceof fabric.Image);
-    console.log("pdfImage", pdfImage);
+    console.log('pdfImage', pdfImage);
+    
     // 透過比例設定 canvas 尺寸
     canvas.current!.setWidth(pdfImage.width! / window.devicePixelRatio);
     canvas.current!.setHeight(pdfImage.height! / window.devicePixelRatio);
 
-    canvas.current!.setBackgroundImage(pdfImage, canvas.current!.renderAll.bind(canvas.current));
+    canvas.current!.setBackgroundImage(
+      pdfImage,
+      canvas.current!.renderAll.bind(canvas.current)
+    );
   };
 
-
   const range = (number: number, max: number, min: number) => {
-    return Math.max(0.1, Math.min(number, 2));
+    return Math.max(min, Math.min(number, max));
   };
 
   const scale = (type: string) => {
@@ -140,44 +162,34 @@ const PDF = () => {
     }
     page = range(page, totalPages, 1);
     setNowPage(page);
+    // canvas.current?.clearContext()
   };
 
-  const signOnCanvas = () => {
-    const img = localStorage.getItem("sign_img");
-    if (!img) return;
-    console.log("imgOnCanvas");
-
-    fabric.Image.fromURL(img, function (image) {
-      image.top = 500;
-      image.scaleX = 0.5;
-      image.scaleY = 0.5;
-      canvas.current!.add(image);
-      canvas.current!.renderAll();
-    });
-  };
-
-  // useEffect(() => {
-  //   if(!canvas.current){
-  //     return;
-  //   }
-  //   handlePDFInit();
-  // }, [nowPage]);
+  useEffect(() => {
+    if (!canvas.current) {
+      return;
+    }
+    // if(sequence[nowPage])
+    handlePDFInit();
+    saveSequence();
+  }, [nowPage]);
 
   useEffect(() => {
     const fabricObject = new fabric.Canvas("canvasPDF", {
       // width: pdfWrapper.current?.clientWidth,
       // height: pdfWrapper.current?.clientHeight,
     });
-    console.log('pdfWrapper.current?.clientWidth', pdfWrapper.current?.clientWidth);
-    
+    console.log(
+      "pdfWrapper.current?.clientWidth",
+      pdfWrapper.current?.clientWidth
+    );
+
     setCanvas(fabricObject);
-    // canvas.current!.setHeight(pdfWrapper.current!.clientHeight);
-    // canvas.current!.setWidth(pdfWrapper.current!.clientWidth);
-    const canvasEle = document.getElementById('canvasPDF');
+    const canvasEle = document.getElementById("canvasPDF");
     canvasEle!.style.width = `${pdfWrapper.current?.clientWidth}px`;
     canvasEle!.style.height = `${pdfWrapper.current?.clientHeight}px`;
     console.log("file", file);
-    handlePDFInit();
+    // handlePDFInit();
   }, []);
 
   return (

@@ -97,7 +97,7 @@ const UploadPDF = () => {
               fontSize={"sm"}
               fontWeight="bold"
             >
-              檔案大小10Mb以內，檔案格式為PDF、IMG
+              檔案大小10Mb以內，檔案格式為PDF
             </Text>
           </Flex>
         </FormLabel>

@@ -59,7 +59,7 @@ const Header = () => {
           <Link to="/">
             <Image src={logo} />
           </Link>
-          <Button onClick={getFile}>設定</Button>
+          {/* <Button onClick={getFile}>設定</Button> */}
         </>
       ) : (
         <Flex alignItems={"center"}>

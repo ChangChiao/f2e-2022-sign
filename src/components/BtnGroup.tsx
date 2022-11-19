@@ -24,12 +24,6 @@ const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupPr
         <Box onClick={fitScreen} layerStyle={"iconBox"}>
           <FitScreen width={"30px"} />
         </Box>
-        {/* <Box layerStyle={"iconBox"}>
-          <FullScreen width={"30px"} />
-        </Box>
-        <Box layerStyle={"iconBox"}>
-          <One width={"30px"} />
-        </Box> */}
       </HStack>
       <HStack spacing="4px" mr="10px">
         <Box layerStyle={"iconBox"}>
@@ -50,7 +44,7 @@ const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupPr
       <Box layerStyle={"iconBox"}>
         <Rotate90 width={"30px"} />
       </Box>
-      <Box bg={'#fff'} ml={'20px'} py={'10px'} px={'20px'} border={'1px'} borderColor={'gray.300'}>
+      <Box bg={'#fff'} ml={'20px'} py={'10px'} px={'30px'} border={'1px'} borderColor={'gray.300'}>
         {nowPage} / {totalPages} 頁
       </Box>
     </Flex>

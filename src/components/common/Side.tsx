@@ -11,8 +11,10 @@ import ModalBox from "@/components/modal/ModalBox";
 import Sign from "@/components/modal/Sign";
 import Content from "@/components/modal/Content";
 import DateSelect from "@/components/modal/DateSelect";
+import { useFile } from "@/components/FileProvider";
 const Side = () => {
   const { nextStep, prevStep } = useStep();
+  const { saveSequence } = useFile();
   const navigate = useNavigate();
   const { canvas } = useCanvas();
   const signImgRef = useRef<HTMLImageElement>(null);
@@ -32,8 +34,10 @@ const Side = () => {
     navigate("/");
   };
 
+
   const goNextPage = () => {
     nextStep();
+    saveSequence();
     navigate("/finish");
   };
 

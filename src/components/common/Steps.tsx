@@ -5,7 +5,6 @@ import { ReactComponent as Check } from "@/assets/icon/Check.svg";
 const stepList = [
   { label: "上傳檔案" },
   { label: "加入簽名檔案" },
-  { label: "Step 3" },
   { label: "下載檔案" },
 ];
 
