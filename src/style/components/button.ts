@@ -34,6 +34,12 @@ const Button: ComponentStyleConfig = {
           bgColor: 'gray.100',
         },
       },
+      outline_active: {
+        border: '2px solid',
+        borderColor: 'primary.default',
+        bgColor: 'primary.light',
+        color: 'primary.default',
+      },
       solid: {
         bg: 'primary.default',
         color: 'white',

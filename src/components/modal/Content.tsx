@@ -4,18 +4,27 @@ import {
   FormControl,
   Textarea,
   Button,
-  Box
+  Box,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
-const Content = () => {
+type ContentData = {
+  content: string;
+}
+
+type ContentProps = {
+  getContent: (content: string) => void;
+};
+
+const Content = ({ getContent }: ContentProps) => {
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm();
-  const onSubmit = (data: object) => {
+  } = useForm<ContentData>();
+  const onSubmit = (data: ContentData) => {
     console.log("onSubmit", data);
+    getContent(data.content!);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -33,8 +42,13 @@ const Content = () => {
         <FormErrorMessage>
           {errors.content && errors.content.message?.toString()}
         </FormErrorMessage>
-        <Box textAlign={'center'}>
-          <Button mt={10} mx={"auto"} isLoading={isSubmitting} type="submit">
+        <Box textAlign={"center"}>
+          <Button
+            mt={10}
+            mx={"auto"}
+            isLoading={isSubmitting}
+            type="submit"
+          >
             新增文字
           </Button>
         </Box>

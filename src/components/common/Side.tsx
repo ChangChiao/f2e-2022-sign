@@ -16,7 +16,11 @@ const Side = () => {
   const { canvas } = useCanvas();
   const signImgRef = useRef<HTMLImageElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isOpenCxt, onOpen: onOpenCxt, onClose: onCloseCxt } = useDisclosure();
+  const {
+    isOpen: isOpenCxt,
+    onOpen: onOpenCxt,
+    onClose: onCloseCxt,
+  } = useDisclosure();
   const goPrevPage = () => {
     prevStep();
     navigate("/");
@@ -39,27 +43,32 @@ const Side = () => {
   };
 
   const getSign = () => {
-    const sign = localStorage.getItem("sign_img");
-    signImgRef.current!.src = sign ?? "";
     signOnCanvas();
     onClose();
   };
 
+  const contentOnCanvas = (content: string, fontFamily = "Noto Sans TC") => {
+    console.log('content', content);
+    
+    const text = new fabric.Text(content, {
+      top: 400,
+      fill: "black",
+      fontFamily
+    });
+    canvas.current!.add(text);
+  };
+
+  const getContent = (content: string, fontFamily: string) => {
+    contentOnCanvas(content, fontFamily);
+    if(fontFamily){
+      onClose();
+    }else{
+      onCloseCxt();
+    }
+  };
+
   return (
     <Box w={"400px"} h="calc(100vh - 200px)" p={4}>
-      <Text textStyle={"label"} pb={2}>
-        我的簽名
-      </Text>
-      <Image
-        w={"300px"}
-        h={"100px"}
-        my={"14px"}
-        mx={"auto"}
-        border={"2px"}
-        borderColor={"gray.300"}
-        className=""
-        ref={signImgRef}
-      />
       <Button mb={2} w={"full"} variant={"outline"} onClick={onOpen}>
         <Add width={"30px"} />
         <Text pl={2}> 加入簽名</Text>
@@ -90,10 +99,10 @@ const Side = () => {
         </Button>
       </Box>
       <ModalBox isOpen={isOpen} onClose={onClose}>
-        <Sign getSign={getSign} />
+        <Sign getContent={getContent} getSign={getSign} />
       </ModalBox>
       <ModalBox isOpen={isOpenCxt} onClose={onCloseCxt}>
-        <Content />
+        <Content getContent={getContent} />
       </ModalBox>
     </Box>
   );

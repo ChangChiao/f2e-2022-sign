@@ -5,22 +5,46 @@ import {
   Image,
   Button,
   Flex,
+  FormErrorMessage,
+  FormLabel,
+  FormControl,
+  Input,
   Tabs,
   TabList,
   TabPanels,
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 import { checkFileSize, checkImageType } from "../../utils/checkFile";
 import { useDropzone } from "react-dropzone";
-type Props = {
+
+type SignProps = {
   getSign: () => void;
+  getContent: (content: string, fontFamily?: string) => void;
 };
 
-const Sign = ({ getSign }: Props) => {
+type NameData = {
+  name: string;
+};
+
+enum FontList {
+  "Noto Sans TC",
+  "Noto Serif TC",
+}
+
+const Sign = ({ getSign, getContent }: SignProps) => {
   const signImgRef = useRef<HTMLImageElement>(null);
   const [showSign, setShowSign] = useState(false);
+  const [font, setFont] = useState(0);
   let signFile = useRef<File | null>(null);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm<NameData>();
+
   const onDrop = useCallback((acceptedFiles: unknown) => {
     console.log("acceptedFiles", acceptedFiles);
     const file = acceptedFiles as File[];
@@ -100,16 +124,24 @@ const Sign = ({ getSign }: Props) => {
 
   const saveImage = () => {
     const newImage = canvasRef.current!.toDataURL("image/png");
-    // signImgRef.current!.src = newImage;
-    console.log('newImage--', newImage);
-    console.log('newImage--', typeof(newImage));
-    
+    localStorage.setItem("sign_img", newImage);
+    getSign();
+  };
+
+  const saveUploadImage = () => {
+    const newImage = window.URL.createObjectURL(signFile.current!);
+    console.log("87777", newImage);
+
     localStorage.setItem("sign_img", newImage);
     getSign();
   };
 
   const changStrokeColor = (color: string) => {
     context!.strokeStyle = color;
+  };
+
+  const onSubmit = (data: NameData) => {
+    getContent(data.name, FontList[font]);
   };
 
   useEffect(() => {
@@ -131,15 +163,58 @@ const Sign = ({ getSign }: Props) => {
   return (
     <Tabs colorScheme={"green"}>
       <TabList>
-        {/* <Tab w={'1/3'}>輸入</Tab> */}
+        <Tab w={"30%"}>輸入</Tab>
         <Tab w={"30%"}>手寫</Tab>
         <Tab w={"30%"}>上傳</Tab>
       </TabList>
 
       <TabPanels>
-        {/* <TabPanel>
-      <p>one!</p>
-    </TabPanel> */}
+        <TabPanel>
+          <Box mb={4}>
+            <Button
+              onClick={() => setFont(0)}
+              variant={font === 0 ? "outline_active" : "outline"}
+              mr={2}
+            >
+              思源黑體
+            </Button>
+            <Button
+              onClick={() => setFont(1)}
+              variant={font === 1 ? "outline_active" : "outline"}
+            >
+              思源宋體
+            </Button>
+          </Box>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl mt={2} isInvalid={Boolean(errors.name)}>
+              <FormLabel fontWeight={"bold"} htmlFor="content">
+                輸入姓名
+              </FormLabel>
+              <Input
+                id="content"
+                fontFamily={FontList[font]}
+                fontSize={22}
+                placeholder="請輸入姓名"
+                {...register("name", {
+                  required: "內容不得為空",
+                })}
+              />
+              <FormErrorMessage>
+                {errors.name && errors.name.message?.toString()}
+              </FormErrorMessage>
+              <Box textAlign={"center"}>
+                <Button
+                  mt={10}
+                  mx={"auto"}
+                  isLoading={isSubmitting}
+                  type="submit"
+                >
+                  新增
+                </Button>
+              </Box>
+            </FormControl>
+          </form>
+        </TabPanel>
         <TabPanel>
           <Box>
             <Flex
@@ -207,15 +282,13 @@ const Sign = ({ getSign }: Props) => {
           </Box>
         </TabPanel>
         <TabPanel>
-          <Flex
-            {...getRootProps()}
-            border="1px"
-            flexDir={"column"}
-            p={4}
-            borderColor={"gray.200"}
-          >
+          <Flex flexDir={"column"} p={4}>
             {!showSign ? (
-              <Flex justifyContent={"center"} flexDir={"column"}>
+              <Flex
+                {...getRootProps()}
+                justifyContent={"center"}
+                flexDir={"column"}
+              >
                 <Button variant={"outline"}>上傳檔案</Button>
                 <input {...getInputProps()} />
                 <Text
@@ -230,14 +303,23 @@ const Sign = ({ getSign }: Props) => {
               </Flex>
             ) : (
               <Flex direction={"column"}>
-                <Image
-                  objectFit={"contain"}
-                  maxW={"100%"}
-                  ref={signImgRef}
-                  src=""
-                  alt=""
-                />
-                <Button mt={2}>儲存</Button>
+                <Box
+                  border="1px"
+                  borderColor={"gray.200"}
+                  h={"300px"}
+                  overflowY={"auto"}
+                >
+                  <Image
+                    objectFit={"contain"}
+                    maxW={"100%"}
+                    ref={signImgRef}
+                    src=""
+                    alt=""
+                  />
+                </Box>
+                <Button onClick={saveUploadImage} mt={2}>
+                  儲存
+                </Button>
               </Flex>
             )}
           </Flex>

@@ -7,7 +7,7 @@ const global: ChakraTheme['styles'] = {
       scrollBehavior: 'smooth',
     },
     body: {
-      // fontFamily: 'Noto Sans TC, sans-serif',
+      fontFamily: 'Noto Sans TC, sans-serif',
       h: 'full',
     },
   },
