@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -9,14 +9,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-type Props = {
+type ModalProps = {
   isOpen: boolean,
   onClose: () => void;
   children?: ReactNode;
 };
 
-const ModalBox = ({ children, isOpen, onClose }: Props) => {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
+const ModalBox = ({ children, isOpen, onClose }: ModalProps) => {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>

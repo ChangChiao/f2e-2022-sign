@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { fabric } from "fabric";
 import { ReactComponent as Add } from "@/assets/icon/Add.svg";
 import { ReactComponent as Edit } from "@/assets/icon/Edit.svg";
@@ -48,29 +48,28 @@ const Side = () => {
     });
   };
 
-  const setSign = () => {
+  const setSign = useCallback(() => {
     signOnCanvas();
     onClose();
-  };
+  }, []);
 
   const contentOnCanvas = (content: string, fontFamily = "Noto Sans TC") => {
-    console.log('content', content);
-    
+    console.log("content", content);
+
     const text = new fabric.Text(content, {
       top: 400,
       fill: "black",
-      fontFamily
+      fontFamily,
     });
     canvas.current!.add(text);
   };
 
-  const setContent = (content: string, fontFamily?: string) => {
+  const setContent = useCallback((content: string, fontFamily?: string) => {
     contentOnCanvas(content, fontFamily);
-      onClose();
-      onCloseCxt();
-      onCloseDate();
-    
-  };
+    onClose();
+    onCloseCxt();
+    onCloseDate();
+  }, []);
 
   return (
     <Box w={"400px"} h="calc(100vh - 200px)" p={4}>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, memo, useEffect, useState, useRef } from "react";
 import {
   Box,
   Text,
@@ -51,7 +51,6 @@ const Sign = ({ setSign, setContent }: SignProps) => {
     if (!checkFileSize(file[0]) || !checkImageType(file[0])) return;
     signFile.current = file[0];
     setShowSign(true);
-    console.log("trueeeee");
     // Do something with the files
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -100,6 +99,8 @@ const Sign = ({ setSign, setContent }: SignProps) => {
 
   const finishedPosition = () => {
     isPainting.current = false;
+    console.log("context", context);
+
     context!.beginPath();
   };
 
@@ -107,6 +108,7 @@ const Sign = ({ setSign, setContent }: SignProps) => {
     if (!isPainting.current) return;
 
     const paintPosition = getPaintPosition(e);
+    console.log("context-988", context);
 
     context!.lineTo(paintPosition.x, paintPosition.y);
     context!.stroke();
@@ -125,6 +127,8 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   const saveImage = () => {
     const newImage = canvasRef.current!.toDataURL("image/png");
     localStorage.setItem("sign_img", newImage);
+    console.log("saveImage", newImage);
+
     setSign();
   };
 
@@ -162,58 +166,12 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   return (
     <Tabs colorScheme={"green"}>
       <TabList>
-        <Tab w={"30%"}>輸入</Tab>
         <Tab w={"30%"}>手寫</Tab>
+        <Tab w={"30%"}>輸入</Tab>
         <Tab w={"30%"}>上傳</Tab>
       </TabList>
 
       <TabPanels>
-        <TabPanel>
-          <Box mb={4}>
-            <Button
-              onClick={() => setFont(0)}
-              variant={font === 0 ? "outline_active" : "outline"}
-              mr={2}
-            >
-              思源黑體
-            </Button>
-            <Button
-              onClick={() => setFont(1)}
-              variant={font === 1 ? "outline_active" : "outline"}
-            >
-              思源宋體
-            </Button>
-          </Box>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl mt={2} isInvalid={Boolean(errors.name)}>
-              <FormLabel fontWeight={"bold"} htmlFor="content">
-                輸入姓名
-              </FormLabel>
-              <Input
-                id="content"
-                fontFamily={FontList[font]}
-                fontSize={22}
-                placeholder="請輸入姓名"
-                {...register("name", {
-                  required: "內容不得為空",
-                })}
-              />
-              <FormErrorMessage>
-                {errors.name && errors.name.message?.toString()}
-              </FormErrorMessage>
-              <Box textAlign={"center"}>
-                <Button
-                  mt={10}
-                  mx={"auto"}
-                  isLoading={isSubmitting}
-                  type="submit"
-                >
-                  新增
-                </Button>
-              </Box>
-            </FormControl>
-          </form>
-        </TabPanel>
         <TabPanel>
           <Box>
             <Flex
@@ -269,7 +227,7 @@ const Sign = ({ setSign, setContent }: SignProps) => {
                   variant={"disable"}
                   mx={"auto"}
                   mr={"10px"}
-                  onClick={saveImage}
+                  onClick={reset}
                 >
                   清除
                 </Button>
@@ -279,6 +237,52 @@ const Sign = ({ setSign, setContent }: SignProps) => {
               </Flex>
             </Flex>
           </Box>
+        </TabPanel>
+        <TabPanel>
+          <Box mb={4}>
+            <Button
+              onClick={() => setFont(0)}
+              variant={font === 0 ? "outline_active" : "outline"}
+              mr={2}
+            >
+              思源黑體
+            </Button>
+            <Button
+              onClick={() => setFont(1)}
+              variant={font === 1 ? "outline_active" : "outline"}
+            >
+              思源宋體
+            </Button>
+          </Box>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl mt={2} isInvalid={Boolean(errors.name)}>
+              <FormLabel fontWeight={"bold"} htmlFor="content">
+                輸入姓名
+              </FormLabel>
+              <Input
+                id="content"
+                fontFamily={FontList[font]}
+                fontSize={22}
+                placeholder="請輸入姓名"
+                {...register("name", {
+                  required: "內容不得為空",
+                })}
+              />
+              <FormErrorMessage>
+                {errors.name && errors.name.message?.toString()}
+              </FormErrorMessage>
+              <Box textAlign={"center"}>
+                <Button
+                  mt={10}
+                  mx={"auto"}
+                  isLoading={isSubmitting}
+                  type="submit"
+                >
+                  新增
+                </Button>
+              </Box>
+            </FormControl>
+          </form>
         </TabPanel>
         <TabPanel>
           <Flex flexDir={"column"} p={4}>
@@ -328,4 +332,4 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   );
 };
 
-export default Sign;
+export default memo(Sign);

@@ -11,6 +11,7 @@ import { fileToBase64, base64ToFile } from "../utils/saveLocal";
 interface FileContextInterface {
   file: RefObject<File>;
   fileName: string;
+  editedFile: RefObject<string[]>
   getFileName: () => string;
   setFileNameLocal: (name: string) => void;
   getFile: () => RefObject<File> | null;
