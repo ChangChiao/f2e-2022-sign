@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, HashRouter } from "react-router-dom";
 import Index from "./pages/Index";
 import Manufacture from "./pages/Manufacture";
 import UploadPDF from "./components/UploadPDF";
@@ -8,7 +8,7 @@ import Default from "./layout/Default";
 import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route element={<Default />}>
           <Route index element={<Index />} />
@@ -17,7 +17,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
