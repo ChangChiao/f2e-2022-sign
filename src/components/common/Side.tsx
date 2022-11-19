@@ -9,12 +9,14 @@ import { Box, Image, Button, Text, useDisclosure } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ModalBox from "@/components/modal/ModalBox";
 import Sign from "@/components/modal/Sign";
+import Content from "@/components/modal/Content";
 const Side = () => {
   const { nextStep, prevStep } = useStep();
   const navigate = useNavigate();
   const { canvas } = useCanvas();
   const signImgRef = useRef<HTMLImageElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpenCxt, onOpen: onOpenCxt, onClose: onCloseCxt } = useDisclosure();
   const goPrevPage = () => {
     prevStep();
     navigate("/");
@@ -62,7 +64,7 @@ const Side = () => {
         <Add width={"30px"} />
         <Text pl={2}> 加入簽名</Text>
       </Button>
-      <Button mb={2} w={"full"} variant={"outline"}>
+      <Button mb={2} w={"full"} variant={"outline"} onClick={onOpenCxt}>
         <Edit width={"30px"} />
         <Text pl={2}> 加入文字</Text>
       </Button>
@@ -89,6 +91,9 @@ const Side = () => {
       </Box>
       <ModalBox isOpen={isOpen} onClose={onClose}>
         <Sign getSign={getSign} />
+      </ModalBox>
+      <ModalBox isOpen={isOpenCxt} onClose={onCloseCxt}>
+        <Content />
       </ModalBox>
     </Box>
   );
