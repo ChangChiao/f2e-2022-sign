@@ -21,7 +21,7 @@ const UploadPDF = () => {
   const { setFile, resetFile } = useFile();
   const navigate = useNavigate();
   const [isFail, setFail] = useState(false);
-  const { nextStep, prevStep, reset, activeStep } = useStep();
+  const { nextStep, prevStep, reset } = useStep();
   const {
     handleSubmit,
     register,

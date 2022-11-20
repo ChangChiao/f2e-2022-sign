@@ -20,7 +20,7 @@ const ModalBox = ({ children, isOpen, onClose }: ModalProps) => {
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay>
-          <ModalContent maxH="500px" maxW="500px">
+          <ModalContent w={{base:'90%', lg:'auto'}} maxH="500px" maxW="500px">
             <ModalCloseButton />
             <ModalBody py={10} overflowY={'scroll'}>
               {children}

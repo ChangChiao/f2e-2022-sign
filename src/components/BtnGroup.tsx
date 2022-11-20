@@ -19,7 +19,7 @@ type BtnGroupProps = {
 
 const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupProps) => {
   return (
-    <Flex flexWrap={'wrap'} align={"center"} position={"absolute"} bottom="0" left={0}>
+    <Flex pl={{base:'10px', lg:'0px'}} flexWrap={'wrap'} align={"center"} position={"absolute"} bottom="0" left={0}>
       <HStack spacing="4px" mr="10px">
         <Box onClick={fitScreen} layerStyle={"iconBox"}>
           <FitScreen width={"30px"} />
@@ -44,7 +44,7 @@ const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupPr
       {/* <Box layerStyle={"iconBox"}>
         <Rotate90 width={"30px"} />
       </Box> */}
-      <Box bg={'#fff'} ml={'20px'} py={'10px'} px={'30px'} border={'1px'} borderColor={'gray.300'}>
+      <Box bg={'#fff'} mt={{base:'10px', lg:'0px'}} ml={{base:'0px', lg:'20px'}} py={'10px'} px={'30px'} border={'1px'} borderColor={'gray.300'}>
         {nowPage} / {totalPages} 頁
       </Box>
     </Flex>

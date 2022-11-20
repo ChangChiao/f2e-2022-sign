@@ -14,6 +14,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { checkFileSize, checkImageType } from "../../utils/checkFile";
@@ -38,7 +39,7 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   const [showSign, setShowSign] = useState(false);
   const [font, setFont] = useState(0);
   let signFile = useRef<File | null>(null);
-
+  const [isLargerThanPad] = useMediaQuery("(min-width: 1024px)");
   const {
     handleSubmit,
     register,
@@ -59,7 +60,8 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   const isPainting = useRef(false);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [canvasSize, setCanvasSize] = useState<DOMRect | null>(null);
-  const strokeList = ["red", "blue", "black"];
+  const [strokeColor, serStrokeColor] = useState('black');
+  const strokeList = ["black", "blue", "red"];
   type Event =
     | React.MouseEvent<HTMLCanvasElement>
     | React.TouchEvent<HTMLCanvasElement>;
@@ -141,6 +143,7 @@ const Sign = ({ setSign, setContent }: SignProps) => {
 
   const changStrokeColor = (color: string) => {
     context!.strokeStyle = color;
+    serStrokeColor(color)
   };
 
   const onSubmit = (data: NameData) => {
@@ -173,70 +176,84 @@ const Sign = ({ setSign, setContent }: SignProps) => {
 
       <TabPanels>
         <TabPanel>
-          <Box>
-            <Flex
-              flexDirection={"column"}
-              align={"center"}
-              justify={"between"}
-              className="flex items-center justify-between"
-            >
-              <Box border={"1px"} p={2} borderColor={"gray.200"}>
-                <canvas
-                  id="canvas"
-                  style={{ border: "1px solid #aaa" }}
-                  width={400}
-                  height={200}
-                  onMouseDown={startPosition}
-                  onMouseUp={finishedPosition}
-                  onMouseLeave={finishedPosition}
-                  onMouseMove={draw}
-                  onTouchStart={startPosition}
-                  onTouchEnd={finishedPosition}
-                  onTouchCancel={finishedPosition}
-                  onTouchMove={draw}
-                  ref={canvasRef}
-                ></canvas>
-                <Flex
-                  pt={2}
-                  float={"right"}
-                  w={"80px"}
-                  justifyContent="space-between"
-                >
-                  {strokeList.map((color) => (
-                    <Box
-                      key={color}
-                      w={4}
-                      h={4}
-                      borderRadius={"50%"}
-                      bg={color}
-                      onClick={() => changStrokeColor(color)}
-                    ></Box>
-                  ))}
-                </Flex>
-              </Box>
-              <Text
-                textAlign={"center"}
-                py={4}
-                fontSize={"sm"}
-                color={"gray.400"}
+          <Flex
+            flexDirection={"column"}
+            align={"center"}
+            justify={"between"}
+            className="flex items-center justify-between"
+          >
+            <Box border={"1px"} p={2} borderColor={"gray.200"}>
+              <canvas
+                id="canvas"
+                style={{ border: "1px solid #aaa" }}
+                width={isLargerThanPad ? 400 : 300}
+                height={200}
+                onMouseDown={startPosition}
+                onMouseUp={finishedPosition}
+                onMouseLeave={finishedPosition}
+                onMouseMove={draw}
+                onTouchStart={startPosition}
+                onTouchEnd={finishedPosition}
+                onTouchCancel={finishedPosition}
+                onTouchMove={draw}
+                ref={canvasRef}
+              ></canvas>
+              <Flex
+                pt={2}
+                float={"right"}
+                w={"80px"}
+                justifyContent="space-between"
               >
-                我了解這是一個具法律效力的本人簽名
-              </Text>
-              <Flex dir="row">
-                <Button
-                  variant={"disable"}
-                  mx={"auto"}
-                  mr={"10px"}
-                  onClick={reset}
-                >
-                  清除
-                </Button>
-                <Button mx={"auto"} onClick={saveImage}>
-                  儲存
-                </Button>
+                {strokeList.map((color) => (
+                  <Box
+                    key={color}
+                    w={4}
+                    h={4}
+                    position={'relative'}
+                    borderRadius={"50%"}
+                    bg={color}
+                    _before={{
+                      content: `""`,
+                      position: "absolute",
+                      width: "24px",
+                      height: "24px",
+                      border: "2px solid",
+                      borderRadius: "50%",
+                      borderColor: color,
+                      left: "-4px",
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      margin: "auto",
+                      display: color === strokeColor ? "block" : "none",
+                    }}
+                    onClick={() => changStrokeColor(color)}
+                  ></Box>
+                ))}
               </Flex>
+            </Box>
+            <Text
+              textAlign={"center"}
+              py={4}
+              fontSize={"sm"}
+              color={"gray.400"}
+            >
+              我了解這是一個具法律效力的本人簽名
+            </Text>
+            <Flex dir="row">
+              <Button
+                variant={"disable"}
+                mx={"auto"}
+                mr={"10px"}
+                onClick={reset}
+              >
+                清除
+              </Button>
+              <Button mx={"auto"} onClick={saveImage}>
+                儲存
+              </Button>
             </Flex>
-          </Box>
+          </Flex>
         </TabPanel>
         <TabPanel>
           <Box mb={4}>

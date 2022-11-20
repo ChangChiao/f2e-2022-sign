@@ -6,7 +6,7 @@ function Manufacture() {
   return (
     <Box>
       <Steps />
-      <Flex borderTop={"1px solid"} borderColor={"gray.300"}>
+      <Flex position={'relative'} h="calc(100vh - 200px)" overflow={'hidden'} borderTop={"1px solid"} borderColor={"gray.300"}>
         <Box
           display={{ base: "none", lg: "block" }}
           w={"72px"}

@@ -41,7 +41,7 @@ const Finish = () => {
         flexDir={{ base: "column", lg: "row" }}
         alignItems={"center"}
       >
-        <Image maxW={"400px"} w={"1/2"} src={SharedGoals} />
+        <Image maxW={{base:'300px', lg:"400px"}} w={"1/2"} src={SharedGoals} />
         <Box w={"1/2"}>
           <Text textStyle="h1" mb={2} color={"primary.default"}>
             恭喜您！檔案已就緒

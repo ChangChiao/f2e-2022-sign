@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Text, Box, Center, useMediaQuery } from "@chakra-ui/react";
+import { Flex, Text, Box, Center } from "@chakra-ui/react";
 import { useStep } from "@/components/StepProvider";
 import { ReactComponent as Check } from "@/assets/icon/Check.svg";
 const stepList = [
@@ -10,7 +10,6 @@ const stepList = [
 ];
 
 const Steps = () => {
-  const [isLargerThanPad] = useMediaQuery("(min-width: 1024px)");
   const { activeStep } = useStep();
   return (
     <Flex py={4} justifyContent={"center"}>
@@ -31,7 +30,6 @@ const Steps = () => {
               border: "2px solid",
               borderRadius: "50%",
               borderColor: "primary.default",
-              // bgColor: 'pink',
               opacity: "0.3",
               left: "-6px",
               right: 0,

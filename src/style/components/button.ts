@@ -5,6 +5,7 @@ const Button: ComponentStyleConfig = {
     baseStyle: {
       textTransform: 'uppercase',
       cursor: 'pointer',
+      fontWeight: 700,
       borderRadius: 'base', // <-- border radius is same for all variants and sizes
     },
     sizes: {

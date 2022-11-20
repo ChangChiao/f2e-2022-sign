@@ -89,11 +89,16 @@ const Side = () => {
       position={{ base: "absolute", lg: "relative" }}
       bgColor={"#fff"}
       w={{ base: "95%", lg: "400px" }}
-      h="calc(100vh - 200px)"
+      h={'full'}
       transitionDuration={"0.5s"}
-      transform={isOpenMenu ? "translateX(5%)" : "translateX(95%)"}
+      transform={
+        isOpenMenu
+          ? { sm: "translateX(5%)", lg: "translateX(0)" }
+          : { sm: "translateX(95%)", lg: "translateX(0)" }
+      }
       boxShadow={"-2px 0px 5px 2px rgba(0,0,0,.2)"}
-      pl={{ base: "60px", lg: "0" }}
+      p={{ base: 0, lg: 4 }}
+      pl={{ base: "60px", lg: 4 }}
     >
       <Flex
         alignItems={"center"}
