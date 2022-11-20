@@ -22,6 +22,7 @@ interface FileContextInterface {
   setFileNameLocal: (name: string) => void;
   getFile: () => RefObject<File> | null;
   setFile: (file: File) => void;
+  resetFile: () => void;
 }
 
 const FileContext = createContext<FileContextInterface>(
@@ -83,6 +84,14 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const resetFile = () => {
+    setSequence([]);
+    setNowPage(1)
+    setTotalPages(0)
+    setFileNameLocal('');
+    file.current = null;
+  }
+
   return (
     <FileContext.Provider
       value={{
@@ -99,6 +108,7 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
         file,
         getFile,
         setFile,
+        resetFile
       }}
     >
       {children}

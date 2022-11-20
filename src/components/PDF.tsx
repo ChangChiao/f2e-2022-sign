@@ -33,6 +33,7 @@ const PDF = () => {
     saveSequence,
   } = useFile();
   const { canvas, setCanvas } = useCanvas();
+  const initFlag = useRef(false);
   const canvasEle = useRef<HTMLCanvasElement>(null);
   const pdfWrapper = useRef<HTMLDivElement>(null);
   const readBlob = (blob: Blob) => {
@@ -44,10 +45,9 @@ const PDF = () => {
     });
   };
 
-
   const genPDFCanvas = async (
     paramPDF: File,
-    isFromSequence? : boolean
+    isFromSequence?: boolean
   ): Promise<HTMLCanvasElement | null> => {
     // 將檔案處理成 base64
     let pdfData = "";
@@ -114,8 +114,7 @@ const PDF = () => {
 
   const getFromSequence = () => {
     const target = sequence[nowPage - 1];
-    console.warn('target', target);
-    
+
     const width = pdf.internal.pageSize.width;
     const height = pdf.internal.pageSize.height;
     if (target) {
@@ -175,6 +174,10 @@ const PDF = () => {
       page -= 1;
     }
     page = range(page, totalPages, 1);
+    // if(initFlag.current){
+    console.log("sequence== init----");
+    saveSequence();
+    // }
     setNowPage(page);
     // canvas.current?.remove();
   };
@@ -183,15 +186,22 @@ const PDF = () => {
     if (!canvas.current) {
       return;
     }
+
     if (sequence[nowPage - 1]) {
       canvas.current.clear();
       getFromSequence();
     } else {
-      console.log("init----");
       const docFile = getFile();
       handlePDFInit(docFile?.current!);
     }
-    saveSequence();
+
+    setTimeout(() => {
+      console.warn("sequence==", sequence);
+      console.warn("sequence== .length", sequence.length);
+      console.warn("sequence== index", nowPage - 1);
+    }, 1000);
+
+    initFlag.current = true;
   }, [nowPage]);
 
   useEffect(() => {

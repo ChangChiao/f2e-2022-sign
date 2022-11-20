@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import wrongImg from "../assets/images/Wrong.svg";
 const UploadPDF = () => {
-  const { setFile, setSequence } = useFile();
+  const { setFile, resetFile } = useFile();
   const navigate = useNavigate();
   const [isFail, setFail] = useState(false);
   const { nextStep, prevStep, reset, activeStep } = useStep();
@@ -45,7 +45,7 @@ const UploadPDF = () => {
   };
 
   useEffect(() => {
-    setSequence([]);
+    resetFile();
     reset();
   }, []);
 
