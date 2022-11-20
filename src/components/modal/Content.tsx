@@ -24,13 +24,8 @@ const Content = ({ setContent }: ContentProps) => {
     formState: { errors, isSubmitting },
   } = useForm<ContentData>();
   const onSubmit = (data: ContentData) => {
-  console.log("onSubmit", data);
     setContent(data.content!);
   };
-  useEffect(()=>{
-    console.log('text');
-    
-  }, [])
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl mt={2} isInvalid={Boolean(errors.content)}>

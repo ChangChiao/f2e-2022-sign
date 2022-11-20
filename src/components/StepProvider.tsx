@@ -28,7 +28,6 @@ const StepContextProvider = ({ children }: { children: ReactNode }) => {
     setActiveStep(0)
   }
 
-  console.log("useMap");
 
   return (
     <StepContext.Provider

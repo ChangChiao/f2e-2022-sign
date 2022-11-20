@@ -38,14 +38,12 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   const [nowPage, setNowPage] = useState(1);
 
   const saveSequence = (order?: number, canvasEle?:HTMLCanvasElement) => {
-    console.log('targetPage--canvasEle', canvasEle);
-    
     const canvasEleURL = canvasEle?.toDataURL();;
     const canvasURL = canvas.current!.toDataURL({ format: "image/png" });
+    // if(!canvasEleURL) canvas.current!.setZoom(1);
     const target = canvasEleURL ?? canvasURL;
     const newArr = [...sequence];
     newArr[(order ?? nowPage) - 1] = target ?? "";
-    console.warn("targetPage--xxxx", order);
 
     setSequence(newArr);
   };
@@ -55,7 +53,6 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
     const doc = localStorage.getItem("doc");
     if (doc) {
       const docFile = base64ToFile(fileName);
-      console.log("docFile", docFile);
       file.current = docFile!;
     }
     return file;

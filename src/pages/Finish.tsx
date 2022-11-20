@@ -9,12 +9,7 @@ const Finish = () => {
   const navigate = useNavigate();
   const { file, fileName, sequence } = useFile();
   const downloadPDF = () => {
-    console.log("sequence", sequence.length);
-
     sequence.forEach((doc, i) => {
-      console.log("doc", doc);
-
-      // const doc = canvas.current!.toDataURL({ format: "image/png" });
       const width = pdf.internal.pageSize.width;
       const height = pdf.internal.pageSize.height;
       pdf.addImage(doc, "png", 0, 0, width, height);

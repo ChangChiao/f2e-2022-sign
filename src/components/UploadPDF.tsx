@@ -33,7 +33,6 @@ const UploadPDF = () => {
     navigate("/manufacture");
   };
   const onDrop = useCallback((acceptedFiles: unknown) => {
-    console.log("acceptedFiles", acceptedFiles);
     const file = acceptedFiles as File[];
     if (file[0].type !== "application/pdf") {
       setFail(true);
@@ -44,9 +43,6 @@ const UploadPDF = () => {
     // Do something with the files
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  const onSubmit = () => {
-    console.log("onSubmit");
-  };
 
   useEffect(() => {
     resetFile();

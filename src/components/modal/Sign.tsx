@@ -56,7 +56,6 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   } = useForm<NameData>();
 
   const onDrop = useCallback((acceptedFiles: unknown) => {
-    console.log("acceptedFiles", acceptedFiles);
     const file = acceptedFiles as File[];
     if (!checkFileSize(file[0]) || !checkImageType(file[0])) return;
     signFile.current = file[0];
@@ -105,7 +104,6 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   const finishedPosition = () => {
     if(!isPainting.current) return;
     isPainting.current = false;
-    // console.log("context", context);
     context.current!.beginPath();
     addHistory();
   };
@@ -114,7 +112,6 @@ const Sign = ({ setSign, setContent }: SignProps) => {
     if (!isPainting.current) return;
 
     const paintPosition = getPaintPosition(e);
-    console.log("context-988", context);
 
     context.current!.lineTo(paintPosition.x, paintPosition.y);
     context.current!.stroke();
@@ -133,20 +130,15 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   const saveImage = () => {
     const newImage = canvasRef.current!.toDataURL("image/png");
     localStorage.setItem("sign_img", newImage);
-    console.log("saveImage", newImage);
 
     setSign();
   };
 
   const undo = () => {
-    console.log('undo');
-    
     reset();
     const temp = [...history.current];
     temp.splice(temp.length - 1, 1);
     const latest =  temp[temp.length - 1]
-    console.log('addHistory -latest', latest);
-    console.log('addHistory -temp', temp);
     history.current = temp
     if (!latest) {
       return
@@ -167,8 +159,6 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   };
 
   const addHistory = () => {    
-    console.log("addHistory");
-    
       const dataUrl = canvasRef.current!.toDataURL()
       const img = document.createElement('img')
       img.src = dataUrl
@@ -181,8 +171,6 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   };
 
   useEffect(() => {
-    console.log("showSign", showSign, signFile);
-
     if (!showSign || !signFile.current) return;
     signImgRef.current!.src = window.URL.createObjectURL(signFile.current);
   }, [showSign]);
@@ -190,13 +178,11 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   useEffect(() => {
     const ctx = canvasRef.current!.getContext("2d");
     canvasSize.current! = canvasRef.current!.getBoundingClientRect()
-    // setCanvasSize(canvasRef.current!.getBoundingClientRect());
     if (ctx) {
       ctx.lineWidth = 4;
       ctx.lineCap = "round";
     }
     context.current = ctx;
-    console.log('render!!!!');
     
   }, []);
   return (

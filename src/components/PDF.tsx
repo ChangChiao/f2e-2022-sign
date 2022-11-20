@@ -53,34 +53,26 @@ const PDF = () => {
     // 將檔案處理成 base64
     let pdfData = "";
     pdfData = (await readBlob(paramPDF)) as string;
-    console.log("pdfData===readBlob", pdfData);
     // 將 base64 中的前綴刪去，並進行解碼
     const data = window.atob(pdfData.substring(Base64Prefix.length));
 
     const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
-    console.log("pdfDoc", pdfDoc);
 
     let targetPage = nowPage;
     if (isFromSequence) targetPage = 1;
     if (order) targetPage = order;
-    console.warn("targetPage - order", targetPage);
-    console.warn("targetPage - nowPage", nowPage);
     const pdfPage = await pdfDoc.getPage(targetPage);
-    console.warn("targetPage - pdfPage", pdfPage);
-    console.warn("page", isFromSequence ? 1 : nowPage);
+
 
     if (totalPages === 0) {
       setTotalPages(pdfDoc.numPages);
     }
-    console.log("pdfDoc.numPages", pdfDoc.numPages);
 
     // create canvas
     const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio });
-    console.log("viewport", viewport);
 
     const newCanvas = document.createElement("canvas");
     const context = newCanvas.getContext("2d");
-    console.warn("context", context);
 
     newCanvas.height = viewport.height;
     newCanvas.width = viewport.width;
@@ -89,7 +81,6 @@ const PDF = () => {
       viewport,
     };
     const renderTask = pdfPage.render(renderContext);
-    console.warn("renderTask", renderTask);
     // 回傳做好的 PDF canvas
     return renderTask.promise.then(() => newCanvas);
   };
@@ -108,9 +99,6 @@ const PDF = () => {
 
   const handleCanvasWidth = (pdfImage: fabric.Image, order?: number) => {
     // 透過比例設定 canvas 尺寸
-    console.log("pdfImage!!!", pdfImage);
-
-    console.log("pdfImage.width", pdfImage.width);
     canvas.current!.setWidth(pdfImage.width! / window.devicePixelRatio);
     canvas.current!.setHeight(pdfImage.height! / window.devicePixelRatio);
 
@@ -125,11 +113,9 @@ const PDF = () => {
     isFromSequence?: boolean,
     order?: number
   ) => {
-    console.warn("handlePDFInit", order);
-    canvas.current!.renderAll();
+    canvas.current!.remove(...canvas.current!.getObjects());
     canvas.current!.requestRenderAll();
     if (!fileParam) return;
-    console.warn("handlePDFInit--targetPage", order);
 
     const pdfData = await genPDFCanvas(fileParam!, isFromSequence, order);
     if(order){
@@ -137,7 +123,6 @@ const PDF = () => {
       return
     }
     const pdfImage = await pdfToImage(pdfData!);
-    console.log("pdfImage", pdfImage);
     handleCanvasWidth(pdfImage, order);
   };
 
@@ -178,7 +163,6 @@ const PDF = () => {
   };
 
   const setPage = (type: string) => {
-    console.log("setPage", type);
 
     let page = nowPage;
     if (type === "plus") {
@@ -192,7 +176,6 @@ const PDF = () => {
   };
 
   const collectSequence = (pages: number) => {
-    console.log("pages", pages);
 
     const docFile = getFile();
     Array.from({ length: pages }, (doc, i) => {
@@ -210,19 +193,12 @@ const PDF = () => {
     }
 
     if (sequence[nowPage - 1]) {
-      console.log('targetPage--noway!!!');
-      
       getFromSequence();
     } else {
       const docFile = getFile();
       handlePDFInit(docFile?.current!);
     }
 
-    setTimeout(() => {
-      console.warn("sequence==", sequence);
-      console.warn("sequence== .length", sequence.length);
-      console.warn("sequence== index", nowPage - 1);
-    }, 1000);
   }, [nowPage]);
 
   useEffect(() => {
@@ -230,14 +206,11 @@ const PDF = () => {
       // width: pdfWrapper.current?.clientWidth,
       // height: pdfWrapper.current?.clientHeight,
     });
-    console.log('pdf==init');
 
     setCanvas(fabricObject);
     const canvasEle = document.getElementById("canvasPDF");
     canvasEle!.style.width = `${pdfWrapper.current?.clientWidth}px`;
     canvasEle!.style.height = `${pdfWrapper.current?.clientHeight}px`;
-    console.log("file", file);
-    // collectSequence();
   }, []);
 
   return (

@@ -70,7 +70,6 @@ const Side = () => {
   }, []);
 
   const contentOnCanvas = (content: string, fontFamily = "Noto Sans TC") => {
-    console.log("content", content);
 
     const text = new fabric.Text(content, {
       top: 400,
@@ -87,10 +86,6 @@ const Side = () => {
     onCloseDate();
   }, []);
 
-  useEffect(()=>{
-    console.log('side==init');
-    
-  }, [])
 
   return (
     <Box

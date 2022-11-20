@@ -11,7 +11,6 @@ export function checkFileSize(file: File) {
 
 export function checkImageType(file: File) {
   const validType = ["image/jpg", "image/jpeg", "image/png"];
-  console.log('file.type', file.type);
   
   if (!validType.includes(file.type)) {
     toast.error("檔案類型不符，請重新上傳");
