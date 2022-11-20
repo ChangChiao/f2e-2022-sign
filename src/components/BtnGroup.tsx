@@ -19,20 +19,20 @@ type BtnGroupProps = {
 
 const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupProps) => {
   return (
-    <Flex pl={{base:'10px', lg:'0px'}} flexWrap={'wrap'} align={"center"} position={"absolute"} bottom="0" left={0}>
-      <HStack spacing="4px" mr="10px">
+    <Flex pl={{base:'10px', lg:'0px'}}  alignItems={'center'} position={"absolute"} bottom="0" left={0}>
+      {/* <HStack spacing="4px" mr="10px">
         <Box onClick={fitScreen} layerStyle={"iconBox"}>
           <FitScreen width={"30px"} />
         </Box>
-      </HStack>
-      <HStack spacing="4px" mr="10px">
+      </HStack> */}
+      {/* <HStack spacing="4px" mr="10px">
         <Box layerStyle={"iconBox"}>
           <Add onClick={() => scale("plus")} width={"30px"} />
         </Box>
         <Box layerStyle={"iconBox"}>
           <Remove onClick={() => scale("minus")} width={"30px"} />
         </Box>
-      </HStack>
+      </HStack> */}
       <HStack spacing="4px" mr="10px">
         <Box layerStyle={"iconBox"}>
           <ArrowLeft onClick={() => setPage("minus")} width={"30px"} />
@@ -44,7 +44,7 @@ const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupPr
       {/* <Box layerStyle={"iconBox"}>
         <Rotate90 width={"30px"} />
       </Box> */}
-      <Box bg={'#fff'} mt={{base:'10px', lg:'0px'}} ml={{base:'0px', lg:'20px'}} py={'10px'} px={'30px'} border={'1px'} borderColor={'gray.300'}>
+      <Box bg={'#fff'}  ml={{base:'0px', lg:'20px'}} py={'10px'} px={'30px'} border={'1px'} borderColor={'gray.300'}>
         {nowPage} / {totalPages} 頁
       </Box>
     </Flex>

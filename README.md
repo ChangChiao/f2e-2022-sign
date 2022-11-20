@@ -5,13 +5,13 @@
 👉 [作品連結](https://f2e-2022-sign.vercel.app/)
 
 ## 作品說明
-- 使用者可以上傳pdf檔案，線上簽署並且下載檔案
+ 使用者可以上傳pdf檔案，線上簽署並且下載檔案
 
 ![image](./public/Thumbnail.jpg)
 
 ## Designer
 
-👏 [Coral](https://2022.thef2e.com/users/12061549261449593305)
+👏  [Coral](https://2022.thef2e.com/users/12061549261449593305)
 
 
 ## 系統說明
@@ -22,19 +22,13 @@
 - 執行： `yarn dev`
 
 ## 使用技術
+- 框架： react
 
-- react
-- typescript
-- vite
+- 樣式： chakra-ui
 
-### 樣式
-- chakra-ui
+- canvas套件： fabric
 
-### canvas
-- fabric
+- pdf套件：jspdf、pdfjs
 
-### pdf
-- jspdf
-- pdfjs
-- react-hook-form
+- 表單驗證： react-hook-form
 

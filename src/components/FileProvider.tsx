@@ -17,7 +17,7 @@ interface FileContextInterface {
   nowPage: number;
   setNowPage: (pages: number) => void;
   setSequence: (str: string[]) => void;
-  saveSequence: () => void;
+  saveSequence: (order?: number, canvas?:HTMLCanvasElement) => void;
   getFileName: () => string;
   setFileNameLocal: (name: string) => void;
   getFile: () => RefObject<File> | null;
@@ -37,13 +37,16 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [nowPage, setNowPage] = useState(1);
 
-
-  const saveSequence = () => {
-    const target = canvas.current?.toDataURL({ format: "image/png" });
-    const newArr = [...sequence];
-    newArr[nowPage - 1] = target ?? "";
-    console.warn('xxxx', target);
+  const saveSequence = (order?: number, canvasEle?:HTMLCanvasElement) => {
+    console.log('targetPage--canvasEle', canvasEle);
     
+    const canvasEleURL = canvasEle?.toDataURL();;
+    const canvasURL = canvas.current!.toDataURL({ format: "image/png" });
+    const target = canvasEleURL ?? canvasURL;
+    const newArr = [...sequence];
+    newArr[(order ?? nowPage) - 1] = target ?? "";
+    console.warn("targetPage--xxxx", order);
+
     setSequence(newArr);
   };
 
@@ -86,11 +89,11 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
 
   const resetFile = () => {
     setSequence([]);
-    setNowPage(1)
-    setTotalPages(0)
-    setFileNameLocal('');
+    setNowPage(1);
+    setTotalPages(0);
+    setFileNameLocal("");
     file.current = null;
-  }
+  };
 
   return (
     <FileContext.Provider
@@ -108,7 +111,7 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
         file,
         getFile,
         setFile,
-        resetFile
+        resetFile,
       }}
     >
       {children}

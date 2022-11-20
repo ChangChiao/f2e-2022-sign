@@ -94,12 +94,13 @@ const Header = () => {
           重新命名檔案
         </Text>
         <FormLabel pt={2} htmlFor="fileName">
-          檔案
+          
         </FormLabel>
         <Input
           value={editName}
           onChange={handleChange}
           id="fileName"
+          w={'300px'}
           maxLength={50}
           placeholder="請輸入檔案名稱"
         />

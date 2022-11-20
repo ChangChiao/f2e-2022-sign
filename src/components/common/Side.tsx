@@ -45,6 +45,10 @@ const Side = () => {
     navigate("/");
   };
 
+  const collectSequence = () => {
+
+  }
+
   const goNextPage = () => {
     nextStep();
     saveSequence();

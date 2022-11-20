@@ -38,6 +38,8 @@ const Content = ({ setContent }: ContentProps) => {
           新增文字
         </FormLabel>
         <Textarea
+          w={{base: '300px', lg: '400px'}}
+          maxLength={100}
           id="content"
           placeholder="請輸入內容"
           {...register("content", {
