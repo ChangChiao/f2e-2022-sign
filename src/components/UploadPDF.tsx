@@ -35,6 +35,10 @@ const UploadPDF = () => {
   const onDrop = useCallback((acceptedFiles: unknown) => {
     console.log("acceptedFiles", acceptedFiles);
     const file = acceptedFiles as File[];
+    if (file[0].type !== "application/pdf") {
+      setFail(true);
+      return;
+    }
     setFile(file[0]);
     nextPage();
     // Do something with the files
@@ -73,61 +77,59 @@ const UploadPDF = () => {
         borderColor={"primary.default"}
         {...getRootProps()}
       >
-        <FormLabel htmlFor="file">
-          <input {...getInputProps()} />
-          {/* {isDragActive ? (
-          <p>Drop the files here ...</p>
-        ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
-        )} */}
-          <Flex flexDir={"column"} alignItems={"center"}>
-            <Image src={addFile} />
-            <Text
-              as="span"
-              color={"gray.500"}
-              fontWeight={"400"}
-              fontSize={"sm"}
-            >
-              將檔案拖曳到這裡
-            </Text>
-            <Button
-              mt={4}
-              w="200px"
-              h="48px"
-              bgColor={"#0B7D77"}
-              color={"#fff"}
-              colorScheme="teal"
-              isLoading={isSubmitting}
-              type="submit"
-            >
-              選擇檔案
-            </Button>
-            <Text
-              color={"primary.default"}
-              pt={2}
-              fontSize={"sm"}
-              fontWeight="700"
-            >
-              檔案大小MB以內，檔案格式為PDF
-            </Text>
-          </Flex>
-        </FormLabel>
+        {!isFail ? (
+          <>
+            <FormLabel htmlFor="file">
+              <input {...getInputProps()} />
+              <Flex flexDir={"column"} alignItems={"center"}>
+                <Image src={addFile} />
+                <Text
+                  as="span"
+                  color={"gray.500"}
+                  fontWeight={"400"}
+                  fontSize={"sm"}
+                >
+                  將檔案拖曳到這裡
+                </Text>
+                <Button
+                  mt={4}
+                  w="200px"
+                  h="48px"
+                  bgColor={"#0B7D77"}
+                  color={"#fff"}
+                  colorScheme="teal"
+                  isLoading={isSubmitting}
+                  type="submit"
+                >
+                  選擇檔案
+                </Button>
+                <Text
+                  color={"primary.default"}
+                  pt={2}
+                  fontSize={"sm"}
+                  fontWeight="700"
+                >
+                  檔案大小MB以內，檔案格式為PDF
+                </Text>
+              </Flex>
+            </FormLabel>
 
-        <FormErrorMessage>
-          {errors.file && errors.file.message?.toString()}
-        </FormErrorMessage>
-        {isFail && (
+            <FormErrorMessage>
+              {errors.file && errors.file.message?.toString()}
+            </FormErrorMessage>
+          </>
+        ) : (
           <Flex flexDir={{ base: "column", lg: "row" }} alignItems={"center"}>
-            <Image w={"300px"} h={"300px"} src={wrongImg} />
-            <Box w={"2/3"}>
+            <Image w={{base:'150px', lg:'300px'}} src={wrongImg} />
+            <Box w={"300px"} pl={4}>
               <Text textStyle="h1" color={"primary.default"}>
                 您的檔案無法上傳
               </Text>
-              <Text>
-                請重新上傳檔案。確認檔案大小在10MB以內，檔案格式為PDF、PNG、JPG。
+              <Text color={'gray.500'} pb={10}>
+                請重新上傳檔案。確認檔案大小在10MB以內，檔案格式為PDF。
                 若還是無法上傳檔案，請聯繫快點簽
               </Text>
-              <Button w={"100%"}>重新上傳</Button>
+              <Button w={"100%"} onClick={()=>setFail(false)}>重新上傳</Button>
             </Box>
           </Flex>
         )}

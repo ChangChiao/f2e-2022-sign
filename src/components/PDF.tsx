@@ -230,7 +230,7 @@ const PDF = () => {
         mx="auto"
         justifyContent={"center"}
         // border="1px"
-        w={"80%"}
+        w={{base:'100%', lg:"80%"}}
         h={"100%"}
       >
         <canvas

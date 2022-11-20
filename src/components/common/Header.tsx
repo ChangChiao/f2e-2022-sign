@@ -48,9 +48,9 @@ const Header = () => {
   return (
     <Flex
       as="header"
-      position={'relative'}
+      position={"relative"}
       alignItems={"center"}
-      justifyContent={"space-between"}
+      justifyContent={{ base: "center", lg: "space-between" }}
       borderBottom={"1px"}
       borderColor={"gray.300"}
       height={"80px"}
@@ -66,10 +66,10 @@ const Header = () => {
             display={{ base: "none", lg: "block" }}
             textAlign={"center"}
             color={"gray.400"}
-            textStyle={'h1'}
+            textStyle={"h1"}
             left={0}
             right={0}
-            mx={'auto'}
+            mx={"auto"}
           >
             快速省時的電子簽署工具
           </Text>

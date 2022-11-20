@@ -7,7 +7,11 @@ function Manufacture() {
     <Box>
       <Steps />
       <Flex borderTop={"1px solid"} borderColor={"gray.300"}>
-        <Box w={"72px"} h={"100%"}></Box>
+        <Box
+          display={{ base: "none", lg: "block" }}
+          w={"72px"}
+          h={"100%"}
+        ></Box>
         <PDF />
         <Side />
       </Flex>
