@@ -5,7 +5,14 @@ import { ReactComponent as Edit } from "@/assets/icon/Edit.svg";
 import { ReactComponent as CalendarToday } from "@/assets/icon/CalendarToday.svg";
 import { useStep } from "@/components/StepProvider";
 import { useCanvas } from "@/components/CanvasProvider";
-import { Box, Image, Button, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Flex,
+  Button,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ModalBox from "@/components/modal/ModalBox";
 import Sign from "@/components/modal/Sign";
@@ -13,7 +20,7 @@ import Content from "@/components/modal/Content";
 import DateSelect from "@/components/modal/DateSelect";
 import { useFile } from "@/components/FileProvider";
 const Side = () => {
-  const { nextStep, prevStep } = useStep();
+  const { nextStep, prevStep, activeStep } = useStep();
   const { saveSequence } = useFile();
   const navigate = useNavigate();
   const { canvas } = useCanvas();
@@ -34,11 +41,9 @@ const Side = () => {
     navigate("/");
   };
 
-
   const goNextPage = () => {
     nextStep();
     saveSequence();
-    navigate("/finish");
   };
 
   const signOnCanvas = () => {
@@ -76,7 +81,7 @@ const Side = () => {
   }, []);
 
   return (
-    <Box w={"400px"} h="calc(100vh - 200px)" p={4}>
+    <Box position={"relative"} w={"400px"} h="calc(100vh - 200px)" p={4}>
       <Button mb={2} w={"full"} variant={"outline"} onClick={onOpen}>
         <Add width={"30px"} />
         <Text pl={2}> 加入簽名</Text>
@@ -90,22 +95,68 @@ const Side = () => {
         <CalendarToday width={"30px"} />
         <Text pl={2}> 加入日期</Text>
       </Button>
-      <Button
-        mb={2}
-        onClick={goPrevPage}
-        w={"full"}
-        color={"gray.400"}
-        bgColor={"gray.200"}
-        variant={"outline"}
-      >
-        上一步
-      </Button>
-      <Box>
-        <Button onClick={goNextPage} w={"full"}>
-          {" "}
+      <Box mt={4}>
+        <Button mb={2} onClick={goNextPage} w={"full"}>
           下一步
         </Button>
+        <Button
+          onClick={goPrevPage}
+          w={"full"}
+          color={"gray.400"}
+          bgColor={"gray.200"}
+          variant={"outline"}
+        >
+          上一步
+        </Button>
       </Box>
+      {activeStep === 2 && (
+        <Flex
+          position={"absolute"}
+          top={0}
+          left={0}
+          w={"full"}
+          h={"full"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Box
+            position={"absolute"}
+            bgColor={"rgba(11, 125, 119, 0.1)"}
+            w={"full"}
+            h={"full"}
+            backdropFilter="auto"
+            backdropBlur="6px"
+          ></Box>
+          <Box
+            position={"relative"}
+            zIndex={10}
+            bgColor={"#fff"}
+            w={"80%"}
+            p={8}
+            borderRadius={"6px"}
+            bg={""}
+            textAlign={"center"}
+          >
+            <Text pb={2} color={"primary.default"} textStyle={"h2"}>
+              請確認您的檔案
+            </Text>
+            <Text pb={2} color={"gray.500"}>
+              確認後將無法修改
+            </Text>
+            <Button
+              w={"full"}
+              mb={2}
+              variant={"solid"}
+              onClick={() => navigate("/finish")}
+            >
+              確認
+            </Button>
+            <Button w={"full"} variant={"outline"} onClick={() => prevStep()}>
+              返回
+            </Button>
+          </Box>
+        </Flex>
+      )}
       <ModalBox isOpen={isOpen} onClose={onClose}>
         <Sign setContent={setContent} setSign={setSign} />
       </ModalBox>

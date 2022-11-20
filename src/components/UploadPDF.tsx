@@ -51,8 +51,13 @@ const UploadPDF = () => {
 
   return (
     // <FileUploader hoverTitle="" handleChange={handleChange} name="file" types={fileTypes}>
-    <Box>
-      <Text pt={2} textAlign={"center"} textStyle={"h5"}>
+    <Box pt={10}>
+      <Text
+        display={{ base: "block", lg: "none" }}
+        textAlign={"center"}
+        textStyle={"h1"}
+        fontSize={"2xl"}
+      >
         快速省時的電子簽署工具
       </Text>
       <Flex
@@ -77,7 +82,12 @@ const UploadPDF = () => {
         )} */}
           <Flex flexDir={"column"} alignItems={"center"}>
             <Image src={addFile} />
-            <Text as="span" fontSize={"sm"}>
+            <Text
+              as="span"
+              color={"gray.500"}
+              fontWeight={"400"}
+              fontSize={"sm"}
+            >
               將檔案拖曳到這裡
             </Text>
             <Button
@@ -96,9 +106,9 @@ const UploadPDF = () => {
               color={"primary.default"}
               pt={2}
               fontSize={"sm"}
-              fontWeight="bold"
+              fontWeight="700"
             >
-              檔案大小10Mb以內，檔案格式為PDF
+              檔案大小MB以內，檔案格式為PDF
             </Text>
           </Flex>
         </FormLabel>
@@ -114,7 +124,7 @@ const UploadPDF = () => {
                 您的檔案無法上傳
               </Text>
               <Text>
-                請重新上傳檔案。確認檔案大小在10Mb以內，檔案格式為PDF、PNG、JPG。
+                請重新上傳檔案。確認檔案大小在10MB以內，檔案格式為PDF、PNG、JPG。
                 若還是無法上傳檔案，請聯繫快點簽
               </Text>
               <Button w={"100%"}>重新上傳</Button>
@@ -124,6 +134,6 @@ const UploadPDF = () => {
       </Flex>
     </Box>
   );
-}
+};
 
 export default UploadPDF;

@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 
 export function checkFileSize(file: File) {
-  const maxSize = 1024 * 1024; //1mb
+  const maxSize = 1024 * 1024 * 10; //10mb
   if (file.size > maxSize) {
-    toast.error("尺寸超過1MB!請壓縮檔案再重新上傳");
+    toast.error("尺寸超過10MB!請壓縮檔案再重新上傳");
     return false;
   }
   return true;

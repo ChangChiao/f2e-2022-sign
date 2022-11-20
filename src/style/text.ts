@@ -1,26 +1,19 @@
 const Text = {
     h1:{
-        fontSize: ['28px', '32px'],
-        fontWeight: 'bold',
+        fontSize: ['24px'],
+        fontWeight: '700',
     },
     h2:{
-        fontSize: [ '28px'],
-        fontWeight: 'bold',
+        fontSize: [ '22px'],
+        fontWeight: '700',
     },
     h3:{
-        fontSize: [ '24px'],
-        fontWeight: 'bold',
+        fontSize: [ '20px'],
+        fontWeight: '400',
     },
     h4:{
-        fontSize: ['22px'],
-        fontWeight: 'bold',
-    },
-    h5:{
-        fontSize: [ '20px'],
-        fontWeight: 'bold',
-    },
-    h6:{
         fontSize: ['18px'],
+        fontWeight: '400',
     },
     label: {
         fontSize: ['14px'],

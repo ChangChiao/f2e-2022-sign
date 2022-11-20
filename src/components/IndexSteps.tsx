@@ -24,8 +24,8 @@ const stepList = [
 ];
 const IndexSteps = () => {
   return (
-    <Box>
-      <Text textAlign={"center"} py={5} textStyle={"h2"}>
+    <Box pt={10}>
+      <Text textAlign={"center"} py={5} textStyle={'h1'}>
         輕鬆幾步驟，完成您的簽署
       </Text>
       <Flex
@@ -36,7 +36,7 @@ const IndexSteps = () => {
         {stepList.map((item, i) => (
           <Flex key={i} flexDir={"column"} alignItems={"center"}>
             <Order num={i + 1} />
-            <Text textStyle="h5" py="2">
+            <Text fontWeight={700} fontSize={'18px'} py="2">
               {item.title}
             </Text>
             <Text as="span">{item.content}</Text>

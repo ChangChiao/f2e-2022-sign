@@ -16,11 +16,12 @@ import { useNavigate } from "react-router-dom";
 import { useFile } from "@/components/FileProvider";
 import ModalBox from "@/components/modal/ModalBox";
 const Header = () => {
-  const { file, fileName, getFileName, setFileNameLocal, setFile, getFile } = useFile();
+  const { file, fileName, getFileName, setFileNameLocal, setFile, getFile } =
+    useFile();
   const navigate = useNavigate();
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [editName, setEditName] = useState('');
+  const [editName, setEditName] = useState("");
 
   const editFileName = () => {
     setEditName(getFileName());
@@ -31,7 +32,7 @@ const Header = () => {
     // const newFile = new File([file.current!], fileName, {
     //   type: file.current!.type,
     // });
-    setFileNameLocal(editName)
+    setFileNameLocal(editName);
     // setFile(newFile);
     onClose();
   };
@@ -41,12 +42,13 @@ const Header = () => {
     setEditName(value);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setEditName(getFileName());
-  }, [])
+  }, []);
   return (
     <Flex
       as="header"
+      position={'relative'}
       alignItems={"center"}
       justifyContent={"space-between"}
       borderBottom={"1px"}
@@ -59,11 +61,24 @@ const Header = () => {
           <Link to="/">
             <Image src={logo} />
           </Link>
-          {/* <Button onClick={getFile}>設定</Button> */}
+          <Text
+            position={"absolute"}
+            display={{ base: "none", lg: "block" }}
+            textAlign={"center"}
+            color={"gray.400"}
+            textStyle={'h1'}
+            left={0}
+            right={0}
+            mx={'auto'}
+          >
+            快速省時的電子簽署工具
+          </Text>
         </>
       ) : (
         <Flex alignItems={"center"}>
-          <Text fontWeight={'bold'}  pr={2}>{fileName}</Text>
+          <Text fontWeight={"bold"} pr={2}>
+            {fileName}
+          </Text>
           <Edit onClick={editFileName} cursor={"pointer"} width={"30px"} />
         </Flex>
       )}
@@ -71,7 +86,7 @@ const Header = () => {
         <Text
           pb={2}
           color={"primary.default"}
-          fontWeight={'bold'}
+          fontWeight={"bold"}
           borderBottom={"1px"}
           textAlign={"center"}
           borderColor={"primary.default"}

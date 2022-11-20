@@ -5,7 +5,7 @@ const Order = ({ num }: { num: number }) => {
     <Center 
       width={10}
       height={10}
-      fontWeight="bold"
+      fontWeight={700}
       borderRadius={"50%"}
       borderWidth={"2px"}
       borderColor={"primary.default"}

@@ -15,18 +15,36 @@ const Steps = () => {
       {stepList.map((item, i) => (
         <Flex key={i} justifyContent={"space-between"} alignItems={"center"}>
           <Center
+            position={'relative'}
             fontWeight={"bold"}
             borderRadius={"50%"}
             w={10}
             h={10}
+            _before={{
+              content: `""`,
+              position: "absolute",
+              width: "48px",
+              height: "48px",
+              border: "2px solid",
+              borderRadius: '50%',
+              borderColor: "primary.default",
+              // bgColor: 'pink',
+              opacity: "0.3",
+              left: '-6px',
+              right: 0,
+              top: 0,
+              bottom: 0,
+              margin: 'auto',
+              display: i === activeStep ? "block" : "none"
+            }}
             color={i <= activeStep ? "white" : "gray.500"}
-            bgColor={i <= activeStep ? "primary.default" : "gray.200"}
-            border={i === activeStep ? "2px " : "0px"}
-            borderColor={i <= activeStep ? "primary.default" : "gray.200"}
+            bgColor={i <= activeStep ? "primary.default" : "white"}
+            border={i === activeStep ? "2px " : "2px"}
+            borderColor={i <= activeStep ? "primary.default" : "gray.300"}
           >
             {i >= activeStep ? i + 1 : <Check color="#fff" width={20} />}
           </Center>
-          <Text px="2" fontWeight={"bold"} as="span">
+          <Text px="2" fontWeight={400} as="span">
             {item.label}
           </Text>
           {i !== stepList.length - 1 && (
