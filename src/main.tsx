@@ -18,5 +18,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </StepContextProvider>
       </ChakraProvider>
     </CanvasContextProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

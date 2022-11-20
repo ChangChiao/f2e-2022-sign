@@ -230,10 +230,7 @@ const PDF = () => {
       // width: pdfWrapper.current?.clientWidth,
       // height: pdfWrapper.current?.clientHeight,
     });
-    console.log(
-      "pdfWrapper.current?.clientWidth",
-      pdfWrapper.current?.clientWidth
-    );
+    console.log('pdf==init');
 
     setCanvas(fabricObject);
     const canvasEle = document.getElementById("canvasPDF");

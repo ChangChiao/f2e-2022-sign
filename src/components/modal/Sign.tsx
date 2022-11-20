@@ -39,6 +39,15 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   const [showSign, setShowSign] = useState(false);
   const [font, setFont] = useState(0);
   let signFile = useRef<File | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  // const signImgRef = useRef<HTMLImageElement>(null);
+  const isPainting = useRef(false);
+  const context = useRef<CanvasRenderingContext2D | null>(null);
+  const canvasSize = useRef<DOMRect | null>(null);
+  const [strokeColor, serStrokeColor] = useState('black');
+  const history = useRef<HTMLImageElement[]>([]);
+  const strokeList = ["black", "blue", "red"];
+
   const [isLargerThanPad] = useMediaQuery("(min-width: 1024px)");
   const {
     handleSubmit,
@@ -55,40 +64,34 @@ const Sign = ({ setSign, setContent }: SignProps) => {
     // Do something with the files
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  // const signImgRef = useRef<HTMLImageElement>(null);
-  const isPainting = useRef(false);
-  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-  const [canvasSize, setCanvasSize] = useState<DOMRect | null>(null);
-  const [strokeColor, serStrokeColor] = useState('black');
-  const strokeList = ["black", "blue", "red"];
+
   type Event =
     | React.MouseEvent<HTMLCanvasElement>
     | React.TouchEvent<HTMLCanvasElement>;
 
   const getPaintPosition = (e: Event) => {
-    const scaleX = canvasRef.current!.width / canvasSize!.width;
-    const scaleY = canvasRef.current!.height / canvasSize!.height;
+    const scaleX = canvasRef.current!.width / canvasSize.current!.width;
+    const scaleY = canvasRef.current!.height / canvasSize.current!.height;
     if (e.nativeEvent instanceof MouseEvent) {
       return {
         x:
           ((e as React.MouseEvent<HTMLCanvasElement>).clientX -
-            canvasSize!.left) *
+            canvasSize.current!.left) *
           scaleX,
         y:
           ((e as React.MouseEvent<HTMLCanvasElement>).clientY -
-            canvasSize!.top) *
+            canvasSize.current!.top) *
           scaleY,
       };
     } else {
       return {
         x:
           ((e as React.TouchEvent<HTMLCanvasElement>).touches[0].clientX -
-            canvasSize!.left) *
+            canvasSize.current!.left) *
           scaleX,
         y:
           ((e as React.TouchEvent<HTMLCanvasElement>).touches[0].clientY -
-            canvasSize!.top) *
+            canvasSize.current!.top) *
           scaleY,
       };
     }
@@ -100,10 +103,11 @@ const Sign = ({ setSign, setContent }: SignProps) => {
   };
 
   const finishedPosition = () => {
+    if(!isPainting.current) return;
     isPainting.current = false;
-    console.log("context", context);
-
-    context!.beginPath();
+    // console.log("context", context);
+    context.current!.beginPath();
+    addHistory();
   };
 
   const draw = (e: Event) => {
@@ -112,13 +116,13 @@ const Sign = ({ setSign, setContent }: SignProps) => {
     const paintPosition = getPaintPosition(e);
     console.log("context-988", context);
 
-    context!.lineTo(paintPosition.x, paintPosition.y);
-    context!.stroke();
+    context.current!.lineTo(paintPosition.x, paintPosition.y);
+    context.current!.stroke();
   };
 
   // 重新設定畫布
   const reset = () => {
-    context!.clearRect(
+    context.current!.clearRect(
       0,
       0,
       canvasRef.current!.width,
@@ -134,17 +138,43 @@ const Sign = ({ setSign, setContent }: SignProps) => {
     setSign();
   };
 
+  const undo = () => {
+    console.log('undo');
+    
+    reset();
+    const temp = [...history.current];
+    temp.splice(temp.length - 1, 1);
+    const latest =  temp[temp.length - 1]
+    console.log('addHistory -latest', latest);
+    console.log('addHistory -temp', temp);
+    history.current = temp
+    if (!latest) {
+      return
+    }
+    
+    context.current!.drawImage(latest, 0, 0)
+  }
+
   const saveUploadImage = () => {
     const newImage = window.URL.createObjectURL(signFile.current!);
-
     localStorage.setItem("sign_img", newImage);
     setSign();
   };
 
   const changStrokeColor = (color: string) => {
-    context!.strokeStyle = color;
+    context.current!.strokeStyle = color;
     serStrokeColor(color)
   };
+
+  const addHistory = () => {    
+    console.log("addHistory");
+    
+      const dataUrl = canvasRef.current!.toDataURL()
+      const img = document.createElement('img')
+      img.src = dataUrl
+      history.current =  [...history.current, img]
+   }
+
 
   const onSubmit = (data: NameData) => {
     setContent(data.name, FontList[font]);
@@ -159,12 +189,15 @@ const Sign = ({ setSign, setContent }: SignProps) => {
 
   useEffect(() => {
     const ctx = canvasRef.current!.getContext("2d");
-    setCanvasSize(canvasRef.current!.getBoundingClientRect());
+    canvasSize.current! = canvasRef.current!.getBoundingClientRect()
+    // setCanvasSize(canvasRef.current!.getBoundingClientRect());
     if (ctx) {
       ctx.lineWidth = 4;
       ctx.lineCap = "round";
     }
-    setContext(ctx);
+    context.current = ctx;
+    console.log('render!!!!');
+    
   }, []);
   return (
     <Tabs colorScheme={"green"}>
@@ -183,6 +216,7 @@ const Sign = ({ setSign, setContent }: SignProps) => {
             className="flex items-center justify-between"
           >
             <Box border={"1px"} p={2} borderColor={"gray.200"}>
+              <Text cursor={'pointer'} onClick={undo} pb={2} textAlign={'right'} color={'primary.default'}>回上一步</Text>
               <canvas
                 id="canvas"
                 style={{ border: "1px solid #aaa" }}

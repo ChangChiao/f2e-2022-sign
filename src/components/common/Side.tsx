@@ -22,6 +22,7 @@ import Content from "@/components/modal/Content";
 import DateSelect from "@/components/modal/DateSelect";
 import { useFile } from "@/components/FileProvider";
 import { useState } from "react";
+import { useEffect } from "react";
 const Side = () => {
   const { nextStep, prevStep, activeStep } = useStep();
   const { saveSequence } = useFile();
@@ -45,9 +46,7 @@ const Side = () => {
     navigate("/");
   };
 
-  const collectSequence = () => {
 
-  }
 
   const goNextPage = () => {
     nextStep();
@@ -87,6 +86,11 @@ const Side = () => {
     onCloseCxt();
     onCloseDate();
   }, []);
+
+  useEffect(()=>{
+    console.log('side==init');
+    
+  }, [])
 
   return (
     <Box
