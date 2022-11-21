@@ -220,9 +220,12 @@ const PDF = () => {
       // width: pdfWrapper.current?.clientWidth,
       // height: pdfWrapper.current?.clientHeight,
     });
-
+    console.log('fabricObject', fabricObject);
+    
     setCanvas(fabricObject);
     const canvasEle = document.getElementById("canvasPDF");
+    console.log('canvasEle', canvasEle);
+    
     canvasEle!.style.width = `${pdfWrapper.current?.clientWidth}px`;
     canvasEle!.style.height = `${pdfWrapper.current?.clientHeight}px`;
   }
@@ -235,6 +238,8 @@ const PDF = () => {
     console.log('canvas.current', canvas.current);
     
     if (!canvas.current) {
+      console.log('initFabric', initFabric);
+      
       initFabric()
       return;
     }
@@ -273,12 +278,6 @@ const PDF = () => {
         },
       }}
     >
-      {/* <Flex
-        ref={pdfWrapper}
-        mx="auto"
-        justifyContent={"center"}
-
-      > */}
         <canvas
           id="canvasPDF"
           style={{
@@ -288,7 +287,6 @@ const PDF = () => {
         />
         {/* </Box> */}
         <Image w={"100%"} h={"100%"} visibility={"hidden"} id="temp" />
-      {/* </Flex> */}
       <BtnGroup
         nowPage={nowPage}
         totalPages={totalPages}
