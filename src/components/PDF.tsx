@@ -207,7 +207,8 @@ const PDF = () => {
   ) => {
     const img = document.createElement("img");
     // img.src = CheckedSome;
-    img.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzMzMzhfMTQ2MjEpIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxXzMzMzhfMTQ2MjEpIj4KPHBhdGggZD0iTTggOEg0MFY0MEg4VjhaIiBmaWxsPSIjMEI3RDc3Ii8+CjxwYXRoIGQ9Ik0zMy4zMzM0IDI1LjMzMzJIMTQuNjY2N1YyMi42NjY1SDMzLjMzMzRWMjUuMzMzMloiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHBhdGggZD0iTTM4IDEwVjM4SDEwVjEwSDM4Wk0zOCA2SDEwQzcuOCA2IDYgNy44IDYgMTBWMzhDNiA0MC4yIDcuOCA0MiAxMCA0MkgzOEM0MC4yIDQyIDQyIDQwLjIgNDIgMzhWMTBDNDIgNy44IDQwLjIgNiAzOCA2WiIgZmlsbD0iIzBCN0Q3NyIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzMzMzhfMTQ2MjEiPgo8cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjxjbGlwUGF0aCBpZD0iY2xpcDFfMzMzOF8xNDYyMSI+CjxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDggOCkiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"
+    img.src =
+      "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzMzMzhfMTQ2MjEpIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxXzMzMzhfMTQ2MjEpIj4KPHBhdGggZD0iTTggOEg0MFY0MEg4VjhaIiBmaWxsPSIjMEI3RDc3Ii8+CjxwYXRoIGQ9Ik0zMy4zMzM0IDI1LjMzMzJIMTQuNjY2N1YyMi42NjY1SDMzLjMzMzRWMjUuMzMzMloiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHBhdGggZD0iTTM4IDEwVjM4SDEwVjEwSDM4Wk0zOCA2SDEwQzcuOCA2IDYgNy44IDYgMTBWMzhDNiA0MC4yIDcuOCA0MiAxMCA0MkgzOEM0MC4yIDQyIDQyIDQwLjIgNDIgMzhWMTBDNDIgNy44IDQwLjIgNiAzOCA2WiIgZmlsbD0iIzBCN0Q3NyIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzMzMzhfMTQ2MjEiPgo8cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjxjbGlwUGF0aCBpZD0iY2xpcDFfMzMzOF8xNDYyMSI+CjxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDggOCkiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K";
     const size = 30;
     ctx.save();
     ctx.translate(left, top);
@@ -247,14 +248,29 @@ const PDF = () => {
   }, []);
 
   return (
-    <Box flex="1" position={"relative"} backgroundColor={"gray.200"}>
+    <Box
+      flex="1"
+      overflowY={"scroll"}
+      position={"relative"}
+      backgroundColor={"gray.200"}
+      css={{
+        "&::-webkit-scrollbar": {
+          width: "4px",
+        },
+        "&::-webkit-scrollbar-track": {
+          width: "6px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background: "gray.300",
+          borderRadius: "24px",
+        },
+      }}
+    >
       <Flex
         ref={pdfWrapper}
-        overflow={"hidden"}
         mx="auto"
         justifyContent={"center"}
         w={{ base: "100%", lg: "80%" }}
-        h={"100%"}
       >
         <canvas
           id="canvasPDF"
@@ -265,14 +281,14 @@ const PDF = () => {
         />
         {/* </Box> */}
         <Image w={"100%"} h={"100%"} visibility={"hidden"} id="temp" />
-        <BtnGroup
-          nowPage={nowPage}
-          totalPages={totalPages}
-          fitScreen={fitScreen}
-          setPage={setPage}
-          scale={scale}
-        />
       </Flex>
+      <BtnGroup
+        nowPage={nowPage}
+        totalPages={totalPages}
+        fitScreen={fitScreen}
+        setPage={setPage}
+        scale={scale}
+      />
     </Box>
   );
 };

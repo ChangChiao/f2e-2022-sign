@@ -19,7 +19,7 @@ type BtnGroupProps = {
 
 const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupProps) => {
   return (
-    <Flex pl={{base:'10px', lg:'0px'}}  alignItems={'center'} position={"absolute"} bottom="0" left={0}>
+    <Flex pl={{base:'10px', lg:'0px'}}  alignItems={'center'} position={"fixed"} left="20" bottom="14" >
       {/* <HStack spacing="4px" mr="10px">
         <Box onClick={fitScreen} layerStyle={"iconBox"}>
           <FitScreen width={"30px"} />
