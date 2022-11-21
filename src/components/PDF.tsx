@@ -6,8 +6,6 @@ import { useFile } from "@/components/FileProvider";
 import { Flex, Box, Image } from "@chakra-ui/react";
 import { useCanvas } from "./CanvasProvider";
 import BtnGroup from "@/components/BtnGroup";
-import { base64ToFile } from "@/utils/converFile";
-import { number } from "yup/lib/locale";
 const pdf = new jsPDF();
 // @ts-ignore
 const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
@@ -63,7 +61,6 @@ const PDF = () => {
     if (order) targetPage = order;
     const pdfPage = await pdfDoc.getPage(targetPage);
 
-
     if (totalPages === 0) {
       setTotalPages(pdfDoc.numPages);
     }
@@ -118,9 +115,9 @@ const PDF = () => {
     if (!fileParam) return;
 
     const pdfData = await genPDFCanvas(fileParam!, isFromSequence, order);
-    if(order){
+    if (order) {
       saveSequence(order, pdfData!);
-      return
+      return;
     }
     const pdfImage = await pdfToImage(pdfData!);
     handleCanvasWidth(pdfImage, order);
@@ -163,7 +160,6 @@ const PDF = () => {
   };
 
   const setPage = (type: string) => {
-
     let page = nowPage;
     if (type === "plus") {
       page += 1;
@@ -176,11 +172,48 @@ const PDF = () => {
   };
 
   const collectSequence = (pages: number) => {
-
     const docFile = getFile();
     Array.from({ length: pages }, (doc, i) => {
       handlePDFInit(docFile?.current!, false, i + 1);
     });
+  };
+
+  const deleteObject = (eventData: MouseEvent, transform: fabric.Transform) => {
+    const target = transform.target;
+    const objCanvas = target.canvas;
+    objCanvas!.remove(target);
+    objCanvas!.requestRenderAll();
+    return true;
+  };
+
+  const addDeleteBtn = () => {
+    fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+      x: 0.5,
+      y: -0.5,
+      offsetY: 16,
+      cursorStyle: "pointer",
+      mouseUpHandler: deleteObject,
+      render: renderCloseBtn,
+      // cornerSize: 24
+    });
+  };
+
+  const renderCloseBtn = (
+    ctx: CanvasRenderingContext2D,
+    left: number,
+    top: number,
+    styleOverride: unknown,
+    fabricObject: fabric.Object
+  ) => {
+    const img = document.createElement("img");
+    // img.src = CheckedSome;
+    img.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzMzMzhfMTQ2MjEpIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxXzMzMzhfMTQ2MjEpIj4KPHBhdGggZD0iTTggOEg0MFY0MEg4VjhaIiBmaWxsPSIjMEI3RDc3Ii8+CjxwYXRoIGQ9Ik0zMy4zMzM0IDI1LjMzMzJIMTQuNjY2N1YyMi42NjY1SDMzLjMzMzRWMjUuMzMzMloiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHBhdGggZD0iTTM4IDEwVjM4SDEwVjEwSDM4Wk0zOCA2SDEwQzcuOCA2IDYgNy44IDYgMTBWMzhDNiA0MC4yIDcuOCA0MiAxMCA0MkgzOEM0MC4yIDQyIDQyIDQwLjIgNDIgMzhWMTBDNDIgNy44IDQwLjIgNiAzOCA2WiIgZmlsbD0iIzBCN0Q3NyIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzMzMzhfMTQ2MjEiPgo8cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjxjbGlwUGF0aCBpZD0iY2xpcDFfMzMzOF8xNDYyMSI+CjxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDggOCkiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"
+    const size = 30;
+    ctx.save();
+    ctx.translate(left, top);
+    ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle!));
+    ctx.drawImage(img, -size / 2, -size / 2, size, size);
+    ctx.restore();
   };
 
   useEffect(() => {
@@ -198,7 +231,6 @@ const PDF = () => {
       const docFile = getFile();
       handlePDFInit(docFile?.current!);
     }
-
   }, [nowPage]);
 
   useEffect(() => {
@@ -211,6 +243,7 @@ const PDF = () => {
     const canvasEle = document.getElementById("canvasPDF");
     canvasEle!.style.width = `${pdfWrapper.current?.clientWidth}px`;
     canvasEle!.style.height = `${pdfWrapper.current?.clientHeight}px`;
+    addDeleteBtn();
   }, []);
 
   return (
