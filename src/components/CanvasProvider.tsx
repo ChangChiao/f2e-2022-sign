@@ -4,7 +4,7 @@ import { Canvas } from "fabric/fabric-impl";
 interface CanvasContextInterface {
   canvas: RefObject<Canvas> ;
   getCanvas: () => void;
-  setCanvas: (file: Canvas) => void;
+  setCanvas: (file: Canvas | null) => void;
 }
 
 const CanvasContext = createContext<CanvasContextInterface>(
