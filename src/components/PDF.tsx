@@ -238,10 +238,8 @@ const PDF = () => {
     console.log('canvas.current', canvas.current);
     
     if (!canvas.current) {
-      console.log('initFabric', initFabric);
-      
       initFabric()
-      return;
+      // return;
     }
 
     if (sequence[nowPage - 1]) {
@@ -250,7 +248,7 @@ const PDF = () => {
       const docFile = getFile();      
       handlePDFInit(docFile?.current!);
     }
-  }, [nowPage, canvas.current]);
+  }, [nowPage]);
 
   useEffect(() => {
     addDeleteBtn();
