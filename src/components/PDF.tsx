@@ -215,6 +215,18 @@ const PDF = () => {
     ctx.restore();
   };
 
+  const initFabric = () => {
+    const fabricObject = new fabric.Canvas("canvasPDF", {
+      // width: pdfWrapper.current?.clientWidth,
+      // height: pdfWrapper.current?.clientHeight,
+    });
+
+    setCanvas(fabricObject);
+    const canvasEle = document.getElementById("canvasPDF");
+    canvasEle!.style.width = `${pdfWrapper.current?.clientWidth}px`;
+    canvasEle!.style.height = `${pdfWrapper.current?.clientHeight}px`;
+  }
+
   useEffect(() => {
     totalPages !== 0 && collectSequence(totalPages);
   }, [totalPages]);
@@ -223,6 +235,7 @@ const PDF = () => {
     console.log('canvas.current', canvas.current);
     
     if (!canvas.current) {
+      initFabric()
       return;
     }
 
@@ -235,15 +248,6 @@ const PDF = () => {
   }, [nowPage, canvas.current]);
 
   useEffect(() => {
-    const fabricObject = new fabric.Canvas("canvasPDF", {
-      // width: pdfWrapper.current?.clientWidth,
-      // height: pdfWrapper.current?.clientHeight,
-    });
-
-    setCanvas(fabricObject);
-    const canvasEle = document.getElementById("canvasPDF");
-    canvasEle!.style.width = `${pdfWrapper.current?.clientWidth}px`;
-    canvasEle!.style.height = `${pdfWrapper.current?.clientHeight}px`;
     addDeleteBtn();
   }, []);
 
