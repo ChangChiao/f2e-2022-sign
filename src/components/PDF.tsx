@@ -220,6 +220,8 @@ const PDF = () => {
   }, [totalPages]);
 
   useEffect(() => {
+    console.log('canvas.current', canvas.current);
+    
     if (!canvas.current) {
       return;
     }
@@ -228,6 +230,9 @@ const PDF = () => {
       getFromSequence();
     } else {
       const docFile = getFile();
+      console.log('docFile?.current', docFile?.current);
+      console.log('handlePDFInit');
+      
       handlePDFInit(docFile?.current!);
     }
   }, [nowPage]);
