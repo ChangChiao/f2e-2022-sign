@@ -110,12 +110,19 @@ const PDF = () => {
     isFromSequence?: boolean,
     order?: number
   ) => {
-    canvas.current!.remove(...canvas.current!.getObjects());
+    if(canvas.current!.getObjects()){
+      canvas.current!.remove(...canvas.current!.getObjects());
+    }
     canvas.current!.requestRenderAll();
     if (!fileParam) return;
 
     const pdfData = await genPDFCanvas(fileParam!, isFromSequence, order);
     if (order) {
+      console.warn('order', order);
+      setTimeout(() => {
+          console.warn('sequence.length', sequence.length);
+          
+      }, 2000);
       saveSequence(order, pdfData!);
       return;
     }
@@ -172,6 +179,8 @@ const PDF = () => {
   };
 
   const collectSequence = (pages: number) => {
+    console.log('pages', pages);
+    
     const docFile = getFile();
     Array.from({ length: pages }, (doc, i) => {
       handlePDFInit(docFile?.current!, false, i + 1);
@@ -245,13 +254,18 @@ const PDF = () => {
     if (sequence[nowPage - 1]) {
       getFromSequence();
     } else {
+      
       const docFile = getFile();      
+      console.log('docFile', docFile?.current!);
       handlePDFInit(docFile?.current!);
     }
   }, [nowPage]);
 
   useEffect(() => {
     addDeleteBtn();
+    return () => {
+      setCanvas(null)
+    }
   }, []);
 
   return (

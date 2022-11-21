@@ -12,22 +12,18 @@ const StepContext = createContext<StepContextInterface>(
 );
 
 const StepContextProvider = ({ children }: { children: ReactNode }) => {
-
   const [activeStep, setActiveStep] = useState(0);
   const prevStep = () => {
-    const newStep = activeStep > 0 ? activeStep - 1 : 0;
-    setActiveStep(newStep);
+    setActiveStep((activeStep) => (activeStep > 0 ? activeStep - 1 : 0));
   };
 
   const nextStep = () => {
-    const newStep = activeStep + 1;
-    setActiveStep(newStep);
+    setActiveStep((prevState) => prevState + 1);
   };
 
   const reset = () => {
-    setActiveStep(0)
-  }
-
+    setActiveStep(0);
+  };
 
   return (
     <StepContext.Provider
