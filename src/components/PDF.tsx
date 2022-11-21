@@ -229,13 +229,10 @@ const PDF = () => {
     if (sequence[nowPage - 1]) {
       getFromSequence();
     } else {
-      const docFile = getFile();
-      console.log('docFile?.current', docFile?.current);
-      console.log('handlePDFInit');
-      
+      const docFile = getFile();      
       handlePDFInit(docFile?.current!);
     }
-  }, [nowPage]);
+  }, [nowPage, canvas.current]);
 
   useEffect(() => {
     const fabricObject = new fabric.Canvas("canvasPDF", {
