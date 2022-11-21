@@ -24,7 +24,7 @@ const stepList = [
 ];
 const IndexSteps = () => {
   return (
-    <Box pt={10}>
+    <Box pt={4}>
       <Text textAlign={"center"} py={5} textStyle={'h1'}>
         輕鬆幾步驟，完成您的簽署
       </Text>

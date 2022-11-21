@@ -190,11 +190,9 @@ const PDF = () => {
     fabric.Object.prototype.controls.deleteControl = new fabric.Control({
       x: 0.5,
       y: -0.5,
-      offsetY: 16,
       cursorStyle: "pointer",
       mouseUpHandler: deleteObject,
       render: renderCloseBtn,
-      // cornerSize: 24
     });
   };
 
@@ -250,7 +248,10 @@ const PDF = () => {
   return (
     <Box
       flex="1"
+      ref={pdfWrapper}
+      w={{ base: "90%", lg: "auto" }}
       overflowY={"scroll"}
+      overflowX={{ base: "scroll", lg: "hidden" }}
       position={"relative"}
       backgroundColor={"gray.200"}
       css={{
@@ -266,12 +267,12 @@ const PDF = () => {
         },
       }}
     >
-      <Flex
+      {/* <Flex
         ref={pdfWrapper}
         mx="auto"
         justifyContent={"center"}
-        w={{ base: "100%", lg: "80%" }}
-      >
+
+      > */}
         <canvas
           id="canvasPDF"
           style={{
@@ -281,7 +282,7 @@ const PDF = () => {
         />
         {/* </Box> */}
         <Image w={"100%"} h={"100%"} visibility={"hidden"} id="temp" />
-      </Flex>
+      {/* </Flex> */}
       <BtnGroup
         nowPage={nowPage}
         totalPages={totalPages}

@@ -51,7 +51,7 @@ const UploadPDF = () => {
 
   return (
     // <FileUploader hoverTitle="" handleChange={handleChange} name="file" types={fileTypes}>
-    <Box pt={10}>
+    <Box pt={4}>
       <Text
         display={{ base: "block", lg: "none" }}
         textAlign={"center"}

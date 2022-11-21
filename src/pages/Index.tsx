@@ -12,7 +12,7 @@ const Index = () => {
     reset();
   }, [])
   return (
-    <Box mx={"auto"} w={"90%"}>
+    <Box mx={"auto"} w={"90%"}  h="calc(100vh - 120px)">
       <UploadPDF />
       <IndexSteps />
     </Box>
