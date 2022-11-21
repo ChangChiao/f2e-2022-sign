@@ -119,11 +119,11 @@ const PDF = () => {
     const pdfData = await genPDFCanvas(fileParam!, isFromSequence, order);
     if (order) {
       console.warn('sequence-- order', order);
+      saveSequence(order, pdfData!);
       setTimeout(() => {
           console.warn('sequence-- .length', sequence.length);
           
-      }, 2000);
-      saveSequence(order, pdfData!);
+      }, 5000);
       return;
     }
     const pdfImage = await pdfToImage(pdfData!);
