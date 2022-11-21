@@ -110,7 +110,7 @@ const PDF = () => {
     isFromSequence?: boolean,
     order?: number
   ) => {
-    if(canvas.current!.getObjects()){
+    if(canvas.current?.getObjects()){
       canvas.current!.remove(...canvas.current!.getObjects());
     }
     canvas.current!.requestRenderAll();
