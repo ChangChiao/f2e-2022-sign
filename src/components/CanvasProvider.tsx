@@ -18,7 +18,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         return canvas;
     };
 
-  const setCanvas = (param: Canvas) => {
+  const setCanvas = (param: Canvas | null) => {
     canvas.current = param;
   };
   return (

@@ -118,9 +118,9 @@ const PDF = () => {
 
     const pdfData = await genPDFCanvas(fileParam!, isFromSequence, order);
     if (order) {
-      console.warn('order', order);
+      console.warn('sequence-- order', order);
       setTimeout(() => {
-          console.warn('sequence.length', sequence.length);
+          console.warn('sequence-- .length', sequence.length);
           
       }, 2000);
       saveSequence(order, pdfData!);
@@ -183,6 +183,7 @@ const PDF = () => {
     
     const docFile = getFile();
     Array.from({ length: pages }, (doc, i) => {
+      console.warn('sequence-- i', i);
       handlePDFInit(docFile?.current!, false, i + 1);
     });
   };
