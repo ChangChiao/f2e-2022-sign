@@ -2,9 +2,9 @@ import { createContext, RefObject, ReactNode, useContext, useRef } from "react";
 import { Canvas } from "fabric/fabric-impl";
 
 interface CanvasContextInterface {
-  canvas: RefObject<Canvas> ;
+  canvas: RefObject<Canvas[]> ;
   getCanvas: () => void;
-  setCanvas: (file: Canvas | null) => void;
+  setCanvas: (file: Canvas, order: number) => void;
 }
 
 const CanvasContext = createContext<CanvasContextInterface>(
@@ -12,14 +12,16 @@ const CanvasContext = createContext<CanvasContextInterface>(
 );
 
 const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
-  const canvas = useRef<Canvas | null>(null);
+  const canvas = useRef<Canvas[] | null>(null);
 
     const getCanvas = () => {
         return canvas;
     };
 
-  const setCanvas = (param: Canvas | null) => {
-    canvas.current = param;
+  const setCanvas = (param: Canvas, order: number) => {
+    const temp = !canvas.current? [] : [...canvas.current];
+    temp[order] = param;
+    canvas.current = temp;
   };
   return (
     <CanvasContext.Provider
