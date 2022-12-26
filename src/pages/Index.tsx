@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
-import { useStep } from "@/components/StepProvider";
+import { useStep } from "@/provider/StepProvider";
+import { useFile } from "@/provider/FileProvider";
 import UploadPDF from '@/components/UploadPDF';
-import { useFile } from "@/components/FileProvider";
-import FileContextProvider from '@/components/FileProvider';
 import {
   Box,
   Button,

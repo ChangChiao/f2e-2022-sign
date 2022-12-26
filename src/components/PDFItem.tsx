@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import { fabric } from "fabric";
-import { useCanvas } from "./CanvasProvider";
-import { useFile } from "@/components/FileProvider";
+import { useCanvas } from "../provider/CanvasProvider";
+import { useFile } from "@/provider/FileProvider";
 import { Box, calc } from "@chakra-ui/react";
 import * as pdfjsLib from "pdfjs-dist";
 
@@ -17,6 +17,10 @@ function PDFItem({ order }: { order: number }) {
   const pdfWrapper = useRef<HTMLDivElement>(null);
   const { getFile, saveSequence, nowPage } = useFile();
   const { canvas, setCanvas } = useCanvas();
+
+  const pageOrder = useMemo(() => {
+    return order + 1;
+  }, [order]);
 
   const readBlob = (blob: Blob) => {
     return new Promise((resolve, reject) => {
@@ -41,23 +45,16 @@ function PDFItem({ order }: { order: number }) {
   };
 
   const handleCanvasWidth = (pdfImage: fabric.Image) => {
-    const target = canvas.current?.[order]
+    const target = canvas.current?.[order];
     console.warn("canvas.current", canvas.current);
     console.warn("pdfImage===", pdfImage);
-    console.warn('devicePixelRatio', devicePixelRatio);
-    
-    // 透過比例設定 canvas 尺寸
-    target!.setWidth(
-      pdfImage.width! / window.devicePixelRatio
-    );
-    target!.setHeight(
-      pdfImage.height! / window.devicePixelRatio
-    );
+    console.warn("devicePixelRatio", devicePixelRatio);
 
-    target!.setBackgroundImage(
-      pdfImage,
-      target!.renderAll.bind(target)
-    );
+    // 透過比例設定 canvas 尺寸
+    target!.setWidth(pdfImage.width! / window.devicePixelRatio);
+    target!.setHeight(pdfImage.height! / window.devicePixelRatio);
+
+    target!.setBackgroundImage(pdfImage, target!.renderAll.bind(target));
   };
 
   const pdfToImage = async (pdfData: HTMLCanvasElement) => {
@@ -113,7 +110,6 @@ function PDFItem({ order }: { order: number }) {
     const pdfImage = await pdfToImage(pdfData!);
     console.log("pdfData", pdfData);
     console.log("pdfImage", pdfImage);
-    
 
     saveSequence(order, pdfData!);
     handleCanvasWidth(pdfImage);
@@ -162,18 +158,18 @@ function PDFItem({ order }: { order: number }) {
     handlePDFInit(docFile?.current!);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.warn("xxxxxxx", canvas.current);
-    
-  }, [canvas.current])
+  }, [canvas.current]);
 
   return (
     <Box
       height="calc(100vh - 152px)"
       mb={"100px"}
-      position={'relative'}
+      position={nowPage === pageOrder ? "relative" : "absolute"}
+      hidden={nowPage !== pageOrder}
       ref={pdfWrapper}
-    //   w={{ base: "100%", lg: "auto" }}
+      // w={{ base: "100%", lg: "auto" }}
     >
       <canvas
         id={"canvasPDF_" + order}

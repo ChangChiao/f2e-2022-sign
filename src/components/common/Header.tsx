@@ -13,7 +13,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { ReactComponent as Edit } from "@/assets/icon/Edit.svg";
 import { useNavigate } from "react-router-dom";
-import { useFile } from "@/components/FileProvider";
+import { useFile } from "@/provider/FileProvider";
 import ModalBox from "@/components/modal/ModalBox";
 const Header = () => {
   const { file, fileName, getFileName, setFileNameLocal, setFile, getFile } =

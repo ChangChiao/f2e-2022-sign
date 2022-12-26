@@ -3,8 +3,8 @@ import { fabric } from "fabric";
 import { ReactComponent as Add } from "@/assets/icon/Add.svg";
 import { ReactComponent as Edit } from "@/assets/icon/Edit.svg";
 import { ReactComponent as CalendarToday } from "@/assets/icon/CalendarToday.svg";
-import { useStep } from "@/components/StepProvider";
-import { useCanvas } from "@/components/CanvasProvider";
+import { useStep } from "@/provider/StepProvider";
+import { useCanvas } from "@/provider/CanvasProvider";
 import { ReactComponent as ArrowLeft } from "@/assets/icon/ArrowLeft.svg";
 import { ReactComponent as ArrowRight } from "@/assets/icon/ArrowRight.svg";
 import {
@@ -20,7 +20,7 @@ import ModalBox from "@/components/modal/ModalBox";
 import Sign from "@/components/modal/Sign";
 import Content from "@/components/modal/Content";
 import DateSelect from "@/components/modal/DateSelect";
-import { useFile } from "@/components/FileProvider";
+import { useFile } from "@/provider/FileProvider";
 import { useState } from "react";
 import { useEffect } from "react";
 const Side = () => {

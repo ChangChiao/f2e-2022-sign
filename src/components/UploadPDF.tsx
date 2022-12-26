@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import addFile from "@/assets/images/Add file.svg";
-import { useStep } from "@/components/StepProvider";
-import { useFile } from "@/components/FileProvider";
+import { useStep } from "@/provider/StepProvider";
+import { useFile } from "@/provider/FileProvider";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router-dom";
