@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import wrongImg from "../assets/images/Wrong.svg";
 const UploadPDF = () => {
-  const { setFile, resetFile } = useFile();
+  const { setFile, resetFile, clearSequence } = useFile();
   const navigate = useNavigate();
   const [isFail, setFail] = useState(false);
   const { nextStep, prevStep, reset } = useStep();
@@ -47,6 +47,7 @@ const UploadPDF = () => {
   useEffect(() => {
     resetFile();
     reset();
+    clearSequence()
   }, []);
 
   return (
@@ -105,7 +106,7 @@ const UploadPDF = () => {
                   fontSize={"sm"}
                   fontWeight="700"
                 >
-                  檔案大小MB以內，檔案格式為PDF
+                  檔案大小10MB以內，檔案格式為PDF
                 </Text>
               </Flex>
             </FormLabel>

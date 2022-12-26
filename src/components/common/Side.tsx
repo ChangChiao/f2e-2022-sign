@@ -25,7 +25,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 const Side = () => {
   const { nextStep, prevStep, activeStep } = useStep();
-  const { saveSequence, nowPage } = useFile();
+  const { saveSequence, nowPage, totalPages } = useFile();
   const navigate = useNavigate();
   const { canvas, setCanvas } = useCanvas();
   const signImgRef = useRef<HTMLImageElement>(null);
@@ -50,47 +50,34 @@ const Side = () => {
     return nowPage - 1;
   }, [nowPage])
 
-  const save = () => {
-    setCanvas(canvas.current?.[order]!, order)
-    // saveSequence(order, canvas.current?.[order]!);
-  };
-
   const saveTemp = () => {
     saveSequence(order, canvas.current?.[order]!);
   }
 
-  const goNextPage = () => {
-    nextStep();
-    saveTemp();
+  const save = () => {
+    for(let i = 0; i < totalPages; i ++ ) {
+      saveSequence(i, canvas.current?.[i]!)
+    }
+    // saveTemp();
+    // saveSequence(order, canvas.current?.[order]!);
   };
 
-  // const signOnCanvas = useCallback(() => {
-  //   const img = localStorage.getItem("sign_img");
-  //   if (!img) return;
-  //   console.log('000', order, nowPage - 1);
-    
-  //   fabric.Image.fromURL(img, (image) => {
-  //     image.top = 400;
-  //     image.scaleX = 0.5;
-  //     image.scaleY = 0.5;
-  //     console.log('saveTemp()', order, nowPage - 1);
-  //     canvas.current?.[order].add(image);
-  //     save()
-  //   });
-  // }, [order])
+
+  const goNextPage = () => {
+    nextStep();
+    save();
+  };
 
   const signOnCanvas = () => {
     const img = localStorage.getItem("sign_img");
     if (!img) return;
-    console.log('000', order, nowPage - 1);
     
     fabric.Image.fromURL(img, (image) => {
       image.top = 400;
       image.scaleX = 0.5;
       image.scaleY = 0.5;
-      console.log('saveTemp()', order, nowPage - 1);
       canvas.current?.[order].add(image);
-      save()
+      // save()
     });
   };
 
@@ -106,7 +93,6 @@ const Side = () => {
       fontFamily,
     });
     canvas.current?.[order]!.add(text);
-    save()
   };
 
   const setContent = useCallback((content: string, fontFamily?: string) => {
@@ -114,13 +100,7 @@ const Side = () => {
     onClose();
     onCloseCxt();
     onCloseDate();
-  }, []);
-
-  useEffect(() => {
-    console.log('nowPage', nowPage);
-    
-    saveTemp();
-  }, [nowPage])
+  }, [ order ]);
 
   return (
     <Box

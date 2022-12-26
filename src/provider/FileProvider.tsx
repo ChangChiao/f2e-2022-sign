@@ -18,6 +18,7 @@ interface FileContextInterface {
   nowPage: number;
   setNowPage: (pages: number) => void;
   setSequence: (str: string[]) => void;
+  clearSequence: () => void;
   saveSequence: (order: number, canvas: Canvas | HTMLCanvasElement) => void;
   getFileName: () => string;
   setFileNameLocal: (name: string) => void;
@@ -45,17 +46,17 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
     // const newArr = [...sequence];
     console.log("sequence-- .order", order);
     console.log("sequence-- .nowPage", nowPage);
-    // newArr[(order ?? nowPage) - 1] = canvasEleURL ?? "";
-    // console.log("sequence-- newArr", newArr);
-
-    // setSequence(newArr);
     setSequence((prevState) => {
       console.log("sequence-- .prevState", prevState);
       const newArr = [...prevState];
-      newArr[(order ?? nowPage) - 1] = canvasEleURL ?? "";
+      newArr[order] = canvasEleURL ?? "";
       return newArr;
     });
   };
+
+  const clearSequence = () => {
+    setSequence([])
+  }
 
   const getFile = () => {
     if (file.current) return file;
@@ -107,6 +108,7 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
         sequence,
         setSequence,
         saveSequence,
+        clearSequence,
         nowPage,
         setNowPage,
         totalPages,
