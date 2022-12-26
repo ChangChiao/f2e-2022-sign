@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useMemo } from "react";
 import { fabric } from "fabric";
 import { ReactComponent as Add } from "@/assets/icon/Add.svg";
 import { ReactComponent as Edit } from "@/assets/icon/Edit.svg";
@@ -25,9 +25,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 const Side = () => {
   const { nextStep, prevStep, activeStep } = useStep();
-  const { saveSequence } = useFile();
+  const { saveSequence, nowPage } = useFile();
   const navigate = useNavigate();
-  const { canvas } = useCanvas();
+  const { canvas, setCanvas } = useCanvas();
   const signImgRef = useRef<HTMLImageElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isOpenMenu, toggleMenu] = useState(false);
@@ -46,37 +46,67 @@ const Side = () => {
     navigate("/");
   };
 
+  const order = useMemo(() => {
+    return nowPage - 1;
+  }, [nowPage])
 
+  const save = () => {
+    setCanvas(canvas.current?.[order]!, order)
+    // saveSequence(order, canvas.current?.[order]!);
+  };
+
+  const saveTemp = () => {
+    saveSequence(order, canvas.current?.[order]!);
+  }
 
   const goNextPage = () => {
     nextStep();
-    saveSequence();
+    saveTemp();
   };
+
+  // const signOnCanvas = useCallback(() => {
+  //   const img = localStorage.getItem("sign_img");
+  //   if (!img) return;
+  //   console.log('000', order, nowPage - 1);
+    
+  //   fabric.Image.fromURL(img, (image) => {
+  //     image.top = 400;
+  //     image.scaleX = 0.5;
+  //     image.scaleY = 0.5;
+  //     console.log('saveTemp()', order, nowPage - 1);
+  //     canvas.current?.[order].add(image);
+  //     save()
+  //   });
+  // }, [order])
 
   const signOnCanvas = () => {
     const img = localStorage.getItem("sign_img");
     if (!img) return;
-    fabric.Image.fromURL(img, function (image) {
+    console.log('000', order, nowPage - 1);
+    
+    fabric.Image.fromURL(img, (image) => {
       image.top = 400;
       image.scaleX = 0.5;
       image.scaleY = 0.5;
-      canvas.current!.add(image);
+      console.log('saveTemp()', order, nowPage - 1);
+      canvas.current?.[order].add(image);
+      save()
     });
   };
 
   const setSign = useCallback(() => {
     signOnCanvas();
     onClose();
-  }, []);
+  }, [order]);
 
   const contentOnCanvas = (content: string, fontFamily = "Noto Sans TC") => {
-
     const text = new fabric.Text(content, {
       top: 400,
       fill: "black",
       fontFamily,
     });
-    canvas.current!.add(text);
+    canvas.current?.[order]!.add(text);
+    save()
   };
 
   const setContent = useCallback((content: string, fontFamily?: string) => {
@@ -86,13 +116,18 @@ const Side = () => {
     onCloseDate();
   }, []);
 
+  useEffect(() => {
+    console.log('nowPage', nowPage);
+    
+    saveTemp();
+  }, [nowPage])
 
   return (
     <Box
       position={{ base: "absolute", lg: "relative" }}
       bgColor={"#fff"}
       w={{ base: "95%", lg: "400px" }}
-      h={'full'}
+      h={"full"}
       transitionDuration={"0.5s"}
       transform={
         isOpenMenu

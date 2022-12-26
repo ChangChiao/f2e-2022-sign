@@ -1,3 +1,4 @@
+import { Canvas } from "fabric/fabric-impl";
 import {
   createContext,
   RefObject,
@@ -17,7 +18,7 @@ interface FileContextInterface {
   nowPage: number;
   setNowPage: (pages: number) => void;
   setSequence: (str: string[]) => void;
-  saveSequence: (order: number, canvas: HTMLCanvasElement) => void;
+  saveSequence: (order: number, canvas: Canvas | HTMLCanvasElement) => void;
   getFileName: () => string;
   setFileNameLocal: (name: string) => void;
   getFile: () => RefObject<File> | null;
@@ -37,7 +38,7 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [nowPage, setNowPage] = useState(1);
 
-  const saveSequence = (order: number, canvasEle: HTMLCanvasElement) => {
+  const saveSequence = (order: number, canvasEle: Canvas | HTMLCanvasElement) => {
     const canvasEleURL = canvasEle?.toDataURL();
     // const canvasURL = canvas.current!.toDataURL({ format: "image/png" });
 
