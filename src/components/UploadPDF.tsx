@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import addFile from "@/assets/images/Add file.svg";
-import { useStep } from "@/components/StepProvider";
-import { useFile } from "@/components/FileProvider";
+import { useStep } from "@/provider/StepProvider";
+import { useFile } from "@/provider/FileProvider";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import wrongImg from "../assets/images/Wrong.svg";
 const UploadPDF = () => {
-  const { setFile, resetFile } = useFile();
+  const { setFile, resetFile, clearSequence } = useFile();
   const navigate = useNavigate();
   const [isFail, setFail] = useState(false);
   const { nextStep, prevStep, reset } = useStep();
@@ -47,6 +47,7 @@ const UploadPDF = () => {
   useEffect(() => {
     resetFile();
     reset();
+    clearSequence()
   }, []);
 
   return (
@@ -104,7 +105,7 @@ const UploadPDF = () => {
                   fontSize={"sm"}
                   fontWeight="700"
                 >
-                  檔案大小MB以內，檔案格式為PDF
+                  檔案大小10MB以內，檔案格式為PDF
                 </Text>
               </Flex>
             </FormLabel>

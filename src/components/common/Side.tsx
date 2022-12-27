@@ -1,10 +1,10 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useMemo } from "react";
 import { fabric } from "fabric";
 import { ReactComponent as Add } from "@/assets/icon/Add.svg";
 import { ReactComponent as Edit } from "@/assets/icon/Edit.svg";
 import { ReactComponent as CalendarToday } from "@/assets/icon/CalendarToday.svg";
-import { useStep } from "@/components/StepProvider";
-import { useCanvas } from "@/components/CanvasProvider";
+import { useStep } from "@/provider/StepProvider";
+import { useCanvas } from "@/provider/CanvasProvider";
 import { ReactComponent as ArrowLeft } from "@/assets/icon/ArrowLeft.svg";
 import { ReactComponent as ArrowRight } from "@/assets/icon/ArrowRight.svg";
 import {
@@ -20,14 +20,14 @@ import ModalBox from "@/components/modal/ModalBox";
 import Sign from "@/components/modal/Sign";
 import Content from "@/components/modal/Content";
 import DateSelect from "@/components/modal/DateSelect";
-import { useFile } from "@/components/FileProvider";
+import { useFile } from "@/provider/FileProvider";
 import { useState } from "react";
 import { useEffect } from "react";
 const Side = () => {
   const { nextStep, prevStep, activeStep } = useStep();
-  const { saveSequence } = useFile();
+  const { saveSequence, nowPage, totalPages } = useFile();
   const navigate = useNavigate();
-  const { canvas } = useCanvas();
+  const { canvas, setCanvas } = useCanvas();
   const signImgRef = useRef<HTMLImageElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isOpenMenu, toggleMenu] = useState(false);
@@ -46,37 +46,53 @@ const Side = () => {
     navigate("/");
   };
 
+  const order = useMemo(() => {
+    return nowPage - 1;
+  }, [nowPage])
+
+  const saveTemp = () => {
+    saveSequence(order, canvas.current?.[order]!);
+  }
+
+  const save = () => {
+    for(let i = 0; i < totalPages; i ++ ) {
+      saveSequence(i, canvas.current?.[i]!)
+    }
+    // saveTemp();
+    // saveSequence(order, canvas.current?.[order]!);
+  };
 
 
   const goNextPage = () => {
     nextStep();
-    saveSequence();
+    save();
   };
 
   const signOnCanvas = () => {
     const img = localStorage.getItem("sign_img");
     if (!img) return;
-    fabric.Image.fromURL(img, function (image) {
+    
+    fabric.Image.fromURL(img, (image) => {
       image.top = 400;
       image.scaleX = 0.5;
       image.scaleY = 0.5;
-      canvas.current!.add(image);
+      canvas.current?.[order].add(image);
+      // save()
     });
   };
 
   const setSign = useCallback(() => {
     signOnCanvas();
     onClose();
-  }, []);
+  }, [order]);
 
   const contentOnCanvas = (content: string, fontFamily = "Noto Sans TC") => {
-
     const text = new fabric.Text(content, {
       top: 400,
       fill: "black",
       fontFamily,
     });
-    canvas.current!.add(text);
+    canvas.current?.[order]!.add(text);
   };
 
   const setContent = useCallback((content: string, fontFamily?: string) => {
@@ -84,15 +100,14 @@ const Side = () => {
     onClose();
     onCloseCxt();
     onCloseDate();
-  }, []);
-
+  }, [ order ]);
 
   return (
     <Box
       position={{ base: "absolute", lg: "relative" }}
       bgColor={"#fff"}
       w={{ base: "95%", lg: "400px" }}
-      h={'full'}
+      h={"full"}
       transitionDuration={"0.5s"}
       transform={
         isOpenMenu

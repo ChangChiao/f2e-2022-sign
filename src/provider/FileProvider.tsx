@@ -1,3 +1,4 @@
+import { Canvas } from "fabric/fabric-impl";
 import {
   createContext,
   RefObject,
@@ -17,7 +18,8 @@ interface FileContextInterface {
   nowPage: number;
   setNowPage: (pages: number) => void;
   setSequence: (str: string[]) => void;
-  saveSequence: (order?: number, canvas?: HTMLCanvasElement) => void;
+  clearSequence: () => void;
+  saveSequence: (order: number, canvas: Canvas | HTMLCanvasElement) => void;
   getFileName: () => string;
   setFileNameLocal: (name: string) => void;
   getFile: () => RefObject<File> | null;
@@ -37,25 +39,24 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [nowPage, setNowPage] = useState(1);
 
-  const saveSequence = (order?: number, canvasEle?: HTMLCanvasElement) => {
+  const saveSequence = (order: number, canvasEle: Canvas | HTMLCanvasElement) => {
     const canvasEleURL = canvasEle?.toDataURL();
-    const canvasURL = canvas.current!.toDataURL({ format: "image/png" });
+    // const canvasURL = canvas.current!.toDataURL({ format: "image/png" });
 
-    const target = canvasEleURL ?? canvasURL;
-    const newArr = [...sequence];
+    // const newArr = [...sequence];
     console.log("sequence-- .order", order);
     console.log("sequence-- .nowPage", nowPage);
-    newArr[(order ?? nowPage) - 1] = target ?? "";
-    console.log("sequence-- newArr", newArr);
-
-    // setSequence(newArr);
     setSequence((prevState) => {
       console.log("sequence-- .prevState", prevState);
       const newArr = [...prevState];
-      newArr[(order ?? nowPage) - 1] = target ?? "";
+      newArr[order] = canvasEleURL ?? "";
       return newArr;
     });
   };
+
+  const clearSequence = () => {
+    setSequence([])
+  }
 
   const getFile = () => {
     if (file.current) return file;
@@ -107,6 +108,7 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
         sequence,
         setSequence,
         saveSequence,
+        clearSequence,
         nowPage,
         setNowPage,
         totalPages,

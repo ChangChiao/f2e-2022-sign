@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Text, Box, Center } from "@chakra-ui/react";
-import { useStep } from "@/components/StepProvider";
+import { useStep } from "@/provider/StepProvider";
 import { ReactComponent as Check } from "@/assets/icon/Check.svg";
 const stepList = [
   { label: "上傳檔案" },

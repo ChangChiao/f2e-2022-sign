@@ -1,8 +1,8 @@
 import { jsPDF } from "jspdf";
 import { Flex, Image, Button, Box, Text } from "@chakra-ui/react";
 import SharedGoals from "@/assets/images/Shared goals.svg";
-import { useFile } from "@/components/FileProvider";
-import { useCanvas } from "@/components/CanvasProvider";
+import { useFile } from "@/provider/FileProvider";
+import { useCanvas } from "@/provider/CanvasProvider";
 import { useNavigate } from "react-router-dom";
 const pdf = new jsPDF();
 const Finish = () => {
