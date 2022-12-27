@@ -62,6 +62,7 @@ const Header = () => {
             <Image src={logo} />
           </Link>
           <Text
+            pointerEvents={'none'}
             position={"absolute"}
             display={{ base: "none", lg: "block" }}
             textAlign={"center"}

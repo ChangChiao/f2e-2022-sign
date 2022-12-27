@@ -34,10 +34,10 @@ const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupPr
         </Box>
       </HStack> */}
       <HStack spacing="4px" mr="10px">
-        <Box layerStyle={"iconBox"}>
+        <Box cursor={'pointer'} layerStyle={"iconBox"}>
           <ArrowLeft onClick={() => setPage("minus")} width={"30px"} />
         </Box>
-        <Box layerStyle={"iconBox"}>
+        <Box cursor={'pointer'} layerStyle={"iconBox"}>
           <ArrowRight onClick={() => setPage("plus")} width={"30px"} />
         </Box>
       </HStack>

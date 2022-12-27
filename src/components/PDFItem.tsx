@@ -158,17 +158,17 @@ function PDFItem({ order }: { order: number }) {
     handlePDFInit(docFile?.current!);
   }, []);
 
-  useEffect(() => {
-    console.warn("xxxxxxx", canvas.current);
-  }, [canvas.current]);
 
   return (
     <Box
       height="calc(100vh - 152px)"
-      mb={"100px"}
       position={nowPage === pageOrder ? "relative" : "absolute"}
       hidden={nowPage !== pageOrder}
+      left={0}
+      right={0}
       ref={pdfWrapper}
+      width={{base:'100%', lg:'594px'}}
+      mx="auto"
       // w={{ base: "100%", lg: "auto" }}
     >
       <canvas
