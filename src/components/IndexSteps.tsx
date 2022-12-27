@@ -40,7 +40,7 @@ const IndexSteps = () => {
               {item.title}
             </Text>
             <Text as="span">{item.content}</Text>
-            <Image w={"200px"} h={"200px"} src={item.img} />
+            <Image  w={{ base: "160px", '2xl': "200px" }} src={item.img} />
           </Flex>
         ))}
       </Flex>

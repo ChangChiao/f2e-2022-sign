@@ -51,7 +51,6 @@ const UploadPDF = () => {
   }, []);
 
   return (
-    // <FileUploader hoverTitle="" handleChange={handleChange} name="file" types={fileTypes}>
     <Box pt={4}>
       <Text
         display={{ base: "block", lg: "none" }}
@@ -65,7 +64,7 @@ const UploadPDF = () => {
         w={"100%"}
         justifyContent={"center"}
         alignItems={"center"}
-        h={"400px"}
+        h="40vh"
         mt={4}
         bgColor={"primary.light"}
         borderRadius={1}
