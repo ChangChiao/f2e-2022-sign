@@ -39,15 +39,12 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [nowPage, setNowPage] = useState(1);
 
-  const saveSequence = (order: number, canvasEle: Canvas | HTMLCanvasElement) => {
+  const saveSequence = (
+    order: number,
+    canvasEle: Canvas | HTMLCanvasElement
+  ) => {
     const canvasEleURL = canvasEle?.toDataURL();
-    // const canvasURL = canvas.current!.toDataURL({ format: "image/png" });
-
-    // const newArr = [...sequence];
-    console.log("sequence-- .order", order);
-    console.log("sequence-- .nowPage", nowPage);
     setSequence((prevState) => {
-      console.log("sequence-- .prevState", prevState);
       const newArr = [...prevState];
       newArr[order] = canvasEleURL ?? "";
       return newArr;
@@ -55,8 +52,8 @@ const FileContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const clearSequence = () => {
-    setSequence([])
-  }
+    setSequence([]);
+  };
 
   const getFile = () => {
     if (file.current) return file;

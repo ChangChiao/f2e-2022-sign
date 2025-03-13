@@ -33,12 +33,8 @@ function PDFItem({ order }: { order: number }) {
 
   const initFabric = () => {
     const fabricObject = new fabric.Canvas(`canvasPDF_${order}`);
-    console.log("fabricObject", fabricObject);
 
     setCanvas(fabricObject, order);
-    // const canvasEle = document.getElementById("canvasPDF");
-    console.warn("canvasEle", canvasEle);
-    console.warn("pdfWrapper", pdfWrapper.current?.clientHeight);
 
     canvasEle.current!.style.width = `${pdfWrapper.current?.clientWidth}px`;
     canvasEle.current!.style.height = `${pdfWrapper.current?.clientHeight}px`;
@@ -46,9 +42,6 @@ function PDFItem({ order }: { order: number }) {
 
   const handleCanvasWidth = (pdfImage: fabric.Image) => {
     const target = canvas.current?.[order];
-    console.warn("canvas.current", canvas.current);
-    console.warn("pdfImage===", pdfImage);
-    console.warn("devicePixelRatio", devicePixelRatio);
 
     // 透過比例設定 canvas 尺寸
     target!.setWidth(pdfImage.width! / window.devicePixelRatio);
@@ -79,7 +72,6 @@ function PDFItem({ order }: { order: number }) {
     const data = window.atob(pdfData.substring(Base64Prefix.length));
 
     const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
-    console.warn("87777", order);
 
     const pdfPage = await pdfDoc.getPage(order + 1);
 
@@ -108,8 +100,6 @@ function PDFItem({ order }: { order: number }) {
     target!.requestRenderAll();
     const pdfData = await genPDFCanvas(paramPDF!);
     const pdfImage = await pdfToImage(pdfData!);
-    console.log("pdfData", pdfData);
-    console.log("pdfImage", pdfImage);
 
     saveSequence(order, pdfData!);
     handleCanvasWidth(pdfImage);
@@ -158,7 +148,6 @@ function PDFItem({ order }: { order: number }) {
     handlePDFInit(docFile?.current!);
   }, []);
 
-
   return (
     <Box
       height="calc(100vh - 152px)"
@@ -167,7 +156,7 @@ function PDFItem({ order }: { order: number }) {
       left={0}
       right={0}
       ref={pdfWrapper}
-      width={{base:'100%', lg:'594px'}}
+      width={{ base: "100%", lg: "594px" }}
       mx="auto"
       // w={{ base: "100%", lg: "auto" }}
     >

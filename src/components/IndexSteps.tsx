@@ -1,4 +1,3 @@
-import React from "react";
 import Order from "./common/Order";
 import FileUpload from "@/assets/images/File-upload.svg";
 import Signing from "@/assets/images/Signing.svg";
@@ -25,7 +24,7 @@ const stepList = [
 const IndexSteps = () => {
   return (
     <Box pt={4}>
-      <Text textAlign={"center"} py={5} textStyle={'h1'}>
+      <Text textAlign={"center"} py={5} textStyle={"h1"}>
         輕鬆幾步驟，完成您的簽署
       </Text>
       <Flex
@@ -36,7 +35,7 @@ const IndexSteps = () => {
         {stepList.map((item, i) => (
           <Flex key={i} flexDir={"column"} alignItems={"center"}>
             <Order num={i + 1} />
-            <Text fontWeight={700} fontSize={'18px'} py="2">
+            <Text fontWeight={700} fontSize={"18px"} py="2">
               {item.title}
             </Text>
             <Text as="span">{item.content}</Text>
@@ -46,6 +45,6 @@ const IndexSteps = () => {
       </Flex>
     </Box>
   );
-}
+};
 
 export default IndexSteps;

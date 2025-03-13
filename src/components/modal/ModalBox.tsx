@@ -5,12 +5,10 @@ import {
   ModalContent,
   ModalBody,
   ModalCloseButton,
-  Button,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 type ModalProps = {
-  isOpen: boolean,
+  isOpen: boolean;
   onClose: () => void;
   children?: ReactNode;
 };
@@ -20,9 +18,13 @@ const ModalBox = ({ children, isOpen, onClose }: ModalProps) => {
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay>
-          <ModalContent w={{base:'90%', lg:'auto'}} maxH="500px" maxW="500px">
+          <ModalContent
+            w={{ base: "90%", lg: "auto" }}
+            maxH="500px"
+            maxW="500px"
+          >
             <ModalCloseButton />
-            <ModalBody py={10} overflowY={'scroll'}>
+            <ModalBody py={10} overflowY={"scroll"}>
               {children}
             </ModalBody>
           </ModalContent>
@@ -30,6 +32,6 @@ const ModalBox = ({ children, isOpen, onClose }: ModalProps) => {
       </Modal>
     </>
   );
-}
+};
 
 export default ModalBox;

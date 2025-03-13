@@ -29,11 +29,7 @@ const Header = () => {
   };
 
   const rename = () => {
-    // const newFile = new File([file.current!], fileName, {
-    //   type: file.current!.type,
-    // });
     setFileNameLocal(editName);
-    // setFile(newFile);
     onClose();
   };
 
@@ -62,7 +58,7 @@ const Header = () => {
             <Image src={logo} />
           </Link>
           <Text
-            pointerEvents={'none'}
+            pointerEvents={"none"}
             position={"absolute"}
             display={{ base: "none", lg: "block" }}
             textAlign={"center"}
@@ -94,14 +90,12 @@ const Header = () => {
         >
           重新命名檔案
         </Text>
-        <FormLabel pt={2} htmlFor="fileName">
-          
-        </FormLabel>
+        <FormLabel pt={2} htmlFor="fileName"></FormLabel>
         <Input
           value={editName}
           onChange={handleChange}
           id="fileName"
-          w={'300px'}
+          w={"300px"}
           maxLength={50}
           placeholder="請輸入檔案名稱"
         />

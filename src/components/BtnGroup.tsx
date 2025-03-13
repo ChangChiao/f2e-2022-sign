@@ -17,38 +17,41 @@ type BtnGroupProps = {
   setPage: (param: string) => void;
 };
 
-const BtnGroup = ({ scale, fitScreen, setPage, nowPage, totalPages }: BtnGroupProps) => {
+const BtnGroup = ({
+  scale,
+  fitScreen,
+  setPage,
+  nowPage,
+  totalPages,
+}: BtnGroupProps) => {
   return (
-    <Flex pl={{base:'10px', lg:'0px'}}  alignItems={'center'} position={"fixed"} left="20" bottom="14" >
-      {/* <HStack spacing="4px" mr="10px">
-        <Box onClick={fitScreen} layerStyle={"iconBox"}>
-          <FitScreen width={"30px"} />
-        </Box>
-      </HStack> */}
-      {/* <HStack spacing="4px" mr="10px">
-        <Box layerStyle={"iconBox"}>
-          <Add onClick={() => scale("plus")} width={"30px"} />
-        </Box>
-        <Box layerStyle={"iconBox"}>
-          <Remove onClick={() => scale("minus")} width={"30px"} />
-        </Box>
-      </HStack> */}
+    <Flex
+      pl={{ base: "10px", lg: "0px" }}
+      alignItems={"center"}
+      position={"fixed"}
+      left="20"
+      bottom="14"
+    >
       <HStack spacing="4px" mr="10px">
-        <Box cursor={'pointer'} layerStyle={"iconBox"}>
+        <Box cursor={"pointer"} layerStyle={"iconBox"}>
           <ArrowLeft onClick={() => setPage("minus")} width={"30px"} />
         </Box>
-        <Box cursor={'pointer'} layerStyle={"iconBox"}>
+        <Box cursor={"pointer"} layerStyle={"iconBox"}>
           <ArrowRight onClick={() => setPage("plus")} width={"30px"} />
         </Box>
       </HStack>
-      {/* <Box layerStyle={"iconBox"}>
-        <Rotate90 width={"30px"} />
-      </Box> */}
-      <Box bg={'#fff'}  ml={{base:'0px', lg:'20px'}} py={'10px'} px={'30px'} border={'1px'} borderColor={'gray.300'}>
+      <Box
+        bg={"#fff"}
+        ml={{ base: "0px", lg: "20px" }}
+        py={"10px"}
+        px={"30px"}
+        border={"1px"}
+        borderColor={"gray.300"}
+      >
         {nowPage} / {totalPages} 頁
       </Box>
     </Flex>
   );
-}
+};
 
 export default BtnGroup;

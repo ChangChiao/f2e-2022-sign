@@ -9,8 +9,6 @@ const Finish = () => {
   const navigate = useNavigate();
   const { file, fileName, sequence } = useFile();
   const downloadPDF = () => {
-    console.log('sequence', sequence.length);
-    
     sequence.forEach((doc, i) => {
       const width = pdf.internal.pageSize.width;
       const height = pdf.internal.pageSize.height;
@@ -38,7 +36,11 @@ const Finish = () => {
         flexDir={{ base: "column", lg: "row" }}
         alignItems={"center"}
       >
-        <Image maxW={{base:'300px', lg:"400px"}} w={"1/2"} src={SharedGoals} />
+        <Image
+          maxW={{ base: "300px", lg: "400px" }}
+          w={"1/2"}
+          src={SharedGoals}
+        />
         <Box w={"1/2"}>
           <Text textStyle="h1" mb={2} color={"primary.default"}>
             恭喜您！檔案已就緒
@@ -49,7 +51,12 @@ const Finish = () => {
           <Button mb={2} w={"100%"} onClick={downloadPDF}>
             下載檔案
           </Button>
-          <Text cursor={'pointer'} color={"gray.500"} onClick={goIndex} textAlign={"center"}>
+          <Text
+            cursor={"pointer"}
+            color={"gray.500"}
+            onClick={goIndex}
+            textAlign={"center"}
+          >
             重新上傳
           </Text>
         </Box>
