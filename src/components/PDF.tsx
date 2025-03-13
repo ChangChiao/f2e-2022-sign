@@ -16,7 +16,6 @@ const Base64Prefix = "data:application/pdf;base64,";
 //   "https://mozilla.github.io/pdf.js/build/pdf.worker.js";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
-// let canvas: Canvas | null = null;
 let multiple = 1;
 
 const PDF = () => {
@@ -52,7 +51,7 @@ const PDF = () => {
 
     const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
     setTotalPages(pdfDoc.numPages);
-  }
+  };
 
   const range = (number: number, max: number, min: number) => {
     return Math.max(min, Math.min(number, max));
@@ -72,7 +71,6 @@ const PDF = () => {
     const wrapperHeight = pdfWrapper.current!.clientHeight;
     const canvasHeiight = canvasEle.current!.clientHeight;
     const rate = Number((wrapperHeight / canvasHeiight).toFixed(2));
-    console.log("rate", rate);
 
     canvas.current![nowPage].setZoom(rate);
   };
@@ -88,23 +86,20 @@ const PDF = () => {
     setNowPage(page);
   };
 
-
   useEffect(() => {
-    console.log('canvas.current', canvas.current)
     getPDFPages();
   }, []);
-
 
   return (
     <Box
       flex="1"
-      alignItems={'center'}
+      alignItems={"center"}
       w={{ base: "90%", lg: "auto" }}
       overflowY={"scroll"}
       overflowX={{ base: "scroll", lg: "hidden" }}
       position={"relative"}
       backgroundColor={"gray.200"}
-      mx={'auto'}
+      mx={"auto"}
       css={{
         "&::-webkit-scrollbar": {
           width: "4px",
@@ -118,11 +113,9 @@ const PDF = () => {
         },
       }}
     >
-      {
-        Array.from({length: totalPages}).map((item, i) => {
-          return <PDFItem key={i} order={i} />
-        })
-      }
+      {Array.from({ length: totalPages }).map((item, i) => {
+        return <PDFItem key={i} order={i} />;
+      })}
       <BtnGroup
         nowPage={nowPage}
         totalPages={totalPages}

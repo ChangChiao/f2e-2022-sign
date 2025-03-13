@@ -48,20 +48,17 @@ const Side = () => {
 
   const order = useMemo(() => {
     return nowPage - 1;
-  }, [nowPage])
+  }, [nowPage]);
 
   const saveTemp = () => {
     saveSequence(order, canvas.current?.[order]!);
-  }
-
-  const save = () => {
-    for(let i = 0; i < totalPages; i ++ ) {
-      saveSequence(i, canvas.current?.[i]!)
-    }
-    // saveTemp();
-    // saveSequence(order, canvas.current?.[order]!);
   };
 
+  const save = () => {
+    for (let i = 0; i < totalPages; i++) {
+      saveSequence(i, canvas.current?.[i]!);
+    }
+  };
 
   const goNextPage = () => {
     nextStep();
@@ -71,7 +68,7 @@ const Side = () => {
   const signOnCanvas = () => {
     const img = localStorage.getItem("sign_img");
     if (!img) return;
-    
+
     fabric.Image.fromURL(img, (image) => {
       image.top = 400;
       image.scaleX = 0.5;
@@ -95,12 +92,15 @@ const Side = () => {
     canvas.current?.[order]!.add(text);
   };
 
-  const setContent = useCallback((content: string, fontFamily?: string) => {
-    contentOnCanvas(content, fontFamily);
-    onClose();
-    onCloseCxt();
-    onCloseDate();
-  }, [ order ]);
+  const setContent = useCallback(
+    (content: string, fontFamily?: string) => {
+      contentOnCanvas(content, fontFamily);
+      onClose();
+      onCloseCxt();
+      onCloseDate();
+    },
+    [order]
+  );
 
   return (
     <Box
