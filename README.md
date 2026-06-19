@@ -16,10 +16,10 @@
 
 ## 系統說明
 
-`Node版本: v14.18.1`
+`Node版本: >=20`
 
-- 安裝： `yarn`
-- 執行： `yarn dev`
+- 安裝： `pnpm install`
+- 執行： `pnpm dev`
 
 ## 使用技術
 - 框架： react
