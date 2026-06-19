@@ -7,13 +7,10 @@ import { Flex, Box, Image } from "@chakra-ui/react";
 import { useCanvas } from "../provider/CanvasProvider";
 import BtnGroup from "@/components/BtnGroup";
 import PDFItem from "@/components/PDFItem";
+import pdfjsWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 const pdf = new jsPDF();
-// @ts-ignore
-const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
 const Base64Prefix = "data:application/pdf;base64,";
 
-// pdfjsLib.GlobalWorkerOptions.workerSrc =
-//   "https://mozilla.github.io/pdf.js/build/pdf.worker.js";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 let multiple = 1;

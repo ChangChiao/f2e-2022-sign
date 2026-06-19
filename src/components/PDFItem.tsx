@@ -5,10 +5,9 @@ import { useCanvas } from "../provider/CanvasProvider";
 import { useFile } from "@/provider/FileProvider";
 import { Box, calc } from "@chakra-ui/react";
 import * as pdfjsLib from "pdfjs-dist";
+import pdfjsWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 
 const pdf = new jsPDF();
-// @ts-ignore
-const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
 const Base64Prefix = "data:application/pdf;base64,";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
